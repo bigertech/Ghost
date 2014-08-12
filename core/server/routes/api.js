@@ -27,6 +27,7 @@ apiRoutes = function (middleware) {
     router.get('/users/slug/:slug', api.http(api.users.read));
     router.get('/users/email/:email', api.http(api.users.read));
     router.put('/users/password', api.http(api.users.changePassword));
+    router.put('/users/owner', api.http(api.users.transferOwnership));
     router.put('/users/:id', api.http(api.users.edit));
     router.post('/users', api.http(api.users.add));
     router.del('/users/:id', api.http(api.users.destroy));
@@ -57,26 +58,21 @@ apiRoutes = function (middleware) {
     // ## Mail
     router.post('/mail', api.http(api.mail.send));
     router.post('/mail/test', function (req, res) {
-        api.settings.read('email').then(function (result) {
-            // attach the to: address to the request body so that it is available
-            // to the http api handler
-            req.body = { to: result.settings[0].value };
-
-            api.http(api.mail.sendTest)(req, res);
-        }).catch(function () {
-            api.http(api.mail.sendTest)(req, res);
-        });
+        api.http(api.mail.sendTest)(req, res);
     });
 
 
     // ## Authentication
-    router.post('/authentication/passwordreset', api.http(api.authentication.generateResetToken));
+    router.post('/authentication/passwordreset',
+        middleware.spamForgottenPrevention,
+        api.http(api.authentication.generateResetToken)
+    );
     router.put('/authentication/passwordreset', api.http(api.authentication.resetPassword));
     router.post('/authentication/invitation', api.http(api.authentication.acceptInvitation));
     router.post('/authentication/setup', api.http(api.authentication.setup));
     router.get('/authentication/setup', api.http(api.authentication.isSetup));
     router.post('/authentication/token',
-        middleware.spamPrevention,
+        middleware.spamSigninPrevention,
         middleware.addClientSecret,
         middleware.authenticateClient,
         middleware.generateAccessToken

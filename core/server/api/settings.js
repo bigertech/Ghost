@@ -196,15 +196,15 @@ populateDefaultSetting = function (key) {
     // Call populateDefault and update the settings cache
     return dataProvider.Settings.populateDefault(key).then(function (defaultSetting) {
         // Process the default result and add to settings cache
-        var readResult = readSettingsResult(defaultSetting);
+        var readResult = readSettingsResult([defaultSetting]);
 
         // Add to the settings cache
         return updateSettingsCache(readResult).then(function () {
-            // Update theme with the new settings
-            return config.theme.update(settings, config.url);
+            // Try to update theme with the new settings
+            // if we're in the middle of populating, this might not work
+            return config.theme.update(settings, config.url).then(function () { return; }, function () { return; });
         }).then(function () {
             // Get the result from the cache with permission checks
-            return defaultSetting;
         });
     }).otherwise(function (err) {
         // Pass along NotFoundError
@@ -232,7 +232,10 @@ canEditAllSettings = function (settingsInfo, options) {
                 );
             }
 
-            return canThis(options.context).edit.setting(setting.key);
+            return canThis(options.context).edit.setting(setting.key).catch(function () {
+                return when.reject(new errors.NoPermissionError('You do not have permission to edit settings.'));
+            });
+
         },
         checks = _.map(settingsInfo, function (settingInfo) {
             var setting = settingsCache[settingInfo.key];

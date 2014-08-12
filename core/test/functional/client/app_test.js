@@ -3,21 +3,22 @@
 
 /*globals CasperTest, casper */
 
-CasperTest.begin('Admin navigation bar is correct', 27, function suite(test) {
+CasperTest.begin('Admin navigation bar is correct', 29, function suite(test) {
     casper.thenOpenAndWaitForPageLoad('root', function testTitleAndUrl() {
         test.assertTitle('Ghost Admin', 'Ghost admin has no title');
         test.assertUrlMatch(/ghost\/\d+\/$/, 'Landed on the correct URL');
     });
 
     casper.then(function testNavItems() {
-        var logoHref = this.getElementAttribute('a.ghost-logo', 'href'),
+        var logoHref = this.getElementAttribute('.ghost-logo-link', 'href'),
             contentHref = this.getElementAttribute('#main-menu li.content a', 'href'),
             editorHref = this.getElementAttribute('#main-menu li.editor a', 'href'),
             settingsHref = this.getElementAttribute('#main-menu li.settings a', 'href');
 
         // Logo
-        test.assertExists('a.ghost-logo', 'Ghost logo home page link exists');
-        test.assertEquals(logoHref, '/', 'Ghost logo href is correct');
+        test.assertExists('.ghost-logo-button', 'Ghost logo home page button exists');
+        test.assertExists('.ghost-logo-link', 'Ghost logo home page link exists');
+        test.assertEquals(logoHref, '/', 'Ghost logo link href is correct');
 
         // Content
         test.assertExists('#main-menu li.content a', 'Content nav item exists');
@@ -43,7 +44,7 @@ CasperTest.begin('Admin navigation bar is correct', 27, function suite(test) {
         test.assertNotExists('#usermenu ul.overlay.open', 'User menu should not be visible');
     });
 
-    casper.thenClick('#usermenu a');
+    casper.thenClick('#usermenu button');
     casper.waitForSelector('#usermenu ul.overlay.open', function then() {
         var profileHref = this.getElementAttribute('#usermenu li.usermenu-profile a', 'href'),
             helpHref = this.getElementAttribute('#usermenu li.usermenu-help a', 'href'),
@@ -62,7 +63,7 @@ CasperTest.begin('Admin navigation bar is correct', 27, function suite(test) {
 
         test.assertExists('#usermenu li.usermenu-signout a', 'Sign Out menu item exists');
         test.assertSelectorHasText('#usermenu li.usermenu-signout a', 'Sign Out', 'Signout menu item has correct text');
-        // test.assertEquals(signoutHref, '/ghost/signout/', 'Sign Out href is correct');
+        test.assertEquals(signoutHref, '/ghost/signout/', 'Sign Out href is correct');
     }, casper.failOnTimeout(test, 'WaitForSelector #usermenu ul.overlay failed'));
 });
 

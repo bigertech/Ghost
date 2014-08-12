@@ -13,7 +13,17 @@ var PostSettingsMenuController = Ember.ObjectController.extend({
             this.addObserver('titleScratch', this, 'titleObserver');
         }
     },
-    selectedAuthor: Ember.computed.oneWay('author'),
+
+    selectedAuthor: null,
+    initializeSelectedAuthor: Ember.observer('model', function () {
+        var self = this;
+
+        return this.get('author').then(function (author) {
+            self.set('selectedAuthor', author);
+            return author;
+        });
+    }).on('init'),
+
     changeAuthor: function () {
         var author = this.get('author'),
             selectedAuthor = this.get('selectedAuthor'),
@@ -24,6 +34,12 @@ var PostSettingsMenuController = Ember.ObjectController.extend({
             return;
         }
         model.set('author', selectedAuthor);
+
+        //if this is a new post (never been saved before), don't try to save it
+        if (this.get('isNew')) {
+            return;
+        }
+
         model.save(this.get('saveOptions')).catch(function (errors) {
             self.showErrors(errors);
             self.set('selectedAuthor', author);
@@ -33,9 +49,15 @@ var PostSettingsMenuController = Ember.ObjectController.extend({
     authors: function () {
         //Loaded asynchronously, so must use promise proxies.
         var deferred = {};
+
         deferred.promise = this.store.find('user').then(function (users) {
             return users.rejectBy('id', 'me');
+        }).then(function (users) {
+            return users.filter(function (user) {
+                return user.get('active');
+            });
         });
+
         return Ember.ArrayProxy
             .extend(Ember.PromiseProxyMixin)
             .create(deferred);
@@ -59,7 +81,8 @@ var PostSettingsMenuController = Ember.ObjectController.extend({
     //Lazy load the slug generator for slugPlaceholder
     slugGenerator: Ember.computed(function () {
         return SlugGenerator.create({
-            ghostPaths: this.get('ghostPaths')
+            ghostPaths: this.get('ghostPaths'),
+            slugType: 'post'
         });
     }),
     //Requests slug from title
@@ -95,11 +118,9 @@ var PostSettingsMenuController = Ember.ObjectController.extend({
 
     showErrors: function (errors) {
         errors = Ember.isArray(errors) ? errors : [errors];
-        this.notifications.closePassive();
         this.notifications.showErrors(errors);
     },
     showSuccess: function (message) {
-        this.notifications.closePassive();
         this.notifications.showSuccess(message);
     },
     actions: {

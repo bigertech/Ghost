@@ -73,7 +73,9 @@ Post = ghostBookshelf.Model.extend({
                 this.set('published_at', new Date());
             }
             // This will need to go elsewhere in the API layer.
-            this.set('published_by', this.contextUser(options));
+            if (!this.get('published_by')) {
+                this.set('published_by', this.contextUser(options));
+            }
         }
 
         if (this.hasChanged('slug') || !this.get('slug')) {
@@ -283,7 +285,11 @@ Post = ghostBookshelf.Model.extend({
             authorInstance = options.author !== undefined ? User.forge({slug: options.author}) : false;
 
         if (options.limit) {
-            options.limit = parseInt(options.limit) || 15;
+            options.limit = parseInt(options.limit, 10) || 15;
+        }
+
+        if (options.page) {
+            options.page = parseInt(options.page, 10) || 1;
         }
 
         options = this.filterOptions(options, 'findPage');
@@ -400,7 +406,7 @@ Post = ghostBookshelf.Model.extend({
                     meta = {},
                     data = {};
 
-                pagination.page = parseInt(options.page, 10);
+                pagination.page = options.page;
                 pagination.limit = options.limit;
                 pagination.pages = calcPages === 0 ? 1 : calcPages;
                 pagination.total = totalPosts;
@@ -521,7 +527,32 @@ Post = ghostBookshelf.Model.extend({
         });
     },
 
-    permissable: function (postModelOrId, context, loadedPermissions, hasUserPermission, hasAppPermission) {
+
+    /**
+     * ### destroyByAuthor
+     * @param  {[type]} options has context and id. Context is the user doing the destroy, id is the user to destroy
+     */
+    destroyByAuthor: function (options) {
+        var postCollection = Posts.forge(),
+            authorId = options.id;
+
+        options = this.filterOptions(options, 'destroyByAuthor');
+        if (authorId) {
+            return postCollection.query('where', 'author_id', '=', authorId).fetch(options).then(function (results) {
+                return when.map(results.models, function (post) {
+                    return post.related('tags').detach(null, options).then(function () {
+                        return post.destroy(options);
+                    });
+                });
+            }, function (error) {
+                return when.reject(new errors.InternalServerError(error.message || error));
+            });
+        }
+        return when.reject(new errors.NotFoundError('No user found'));
+    },
+
+
+    permissible: function (postModelOrId, action, context, loadedPermissions, hasUserPermission, hasAppPermission) {
         var self = this,
             postModel = postModelOrId,
             origArgs;
@@ -536,7 +567,7 @@ Post = ghostBookshelf.Model.extend({
                 // Build up the original args but substitute with actual model
                 var newArgs = [foundPostModel].concat(origArgs);
 
-                return self.permissable.apply(self, newArgs);
+                return self.permissible.apply(self, newArgs);
             }, errors.logAndThrowError);
         }
 

@@ -4,7 +4,7 @@ var _ = require('lodash'),
 
 var effective = {
     user: function (id) {
-        return Models.User.findOne({id: id}, { include: ['permissions', 'roles', 'roles.permissions'] })
+        return Models.User.findOne({id: id, status: 'all'}, { include: ['permissions', 'roles', 'roles.permissions'] })
             .then(function (foundUser) {
                 var seenPerms = {},
                     rolePerms = _.map(foundUser.related('roles').models, function (role) {
@@ -12,11 +12,6 @@ var effective = {
                     }),
                     allPerms = [],
                     user = foundUser.toJSON();
-
-                // TODO: using 'Owner' as return value is a bit hacky.
-                if (_.find(user.roles, { 'name': 'Owner' })) {
-                    return 'Owner';
-                }
 
                 rolePerms.push(foundUser.related('permissions').models);
 
@@ -34,7 +29,7 @@ var effective = {
                     });
                 });
 
-                return allPerms;
+                return {permissions: allPerms, roles: user.roles};
             }, errors.logAndThrowError);
     },
 
@@ -45,7 +40,7 @@ var effective = {
                     return [];
                 }
 
-                return foundApp.related('permissions').models;
+                return {permissions: foundApp.related('permissions').models};
             }, errors.logAndThrowError);
     }
 };

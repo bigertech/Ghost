@@ -9,8 +9,10 @@ var path           = require('path'),
     colors         = require('colors'),
     fs             = require('fs'),
     _              = require('lodash'),
-    buildDirectory = path.resolve(process.cwd(), '.build'),
-    distDirectory  = path.resolve(process.cwd(), '.dist'),
+    escapeChar     = process.platform.match(/^win/) ? '^' : '\\',
+    cwd            = process.cwd().replace(/( |\(|\))/g, escapeChar + '$1'),
+    buildDirectory = path.resolve(cwd, '.build'),
+    distDirectory  = path.resolve(cwd, '.dist'),
 
     // ## Build File Patterns
     // A list of files and patterns to include when creating a release zip.
@@ -75,8 +77,8 @@ var path           = require('path'),
                 },
                 livereload: {
                     files: [
-                        'content/themes/casper/css/*.css',
-                        'content/themes/casper/js/*.js',
+                        'content/themes/casper/assets/css/*.css',
+                        'content/themes/casper/assets/js/*.js',
                         'core/client/assets/css/*.css',
                         'core/built/scripts/*.js'
                     ],
@@ -222,7 +224,16 @@ var path           = require('path'),
                 // Used as part of `grunt init`. See the section on [Building Assets](#building%20assets) for more
                 // information.
                 bower: {
-                    command: path.resolve(__dirname.replace(' ', '\\ ') + '/node_modules/.bin/bower --allow-root install'),
+                    command: path.resolve(cwd + '/node_modules/.bin/bower --allow-root install'),
+                    options: {
+                        stdout: true
+                    }
+                },
+                // #### Update Ghost-UI
+                // Used as part of `grunt init`. See the section on [Building Assets](#building%20assets) for more
+                // information.
+                ghost_ui: {
+                    command: path.resolve(cwd  + '/node_modules/.bin/bower update ghost-ui'),
                     options: {
                         stdout: true
                     }
@@ -230,12 +241,8 @@ var path           = require('path'),
                 // #### Generate coverage report
                 // See the `grunt test-coverage` task in the section on [Testing](#testing) for more information.
                 coverage: {
-                    command: function () {
-                        // **Note:** will only work on windows if mocha is globally installed
-                        var cmd = !!process.platform.match(/^win/) ? 'mocha' : './node_modules/mocha/bin/mocha';
-                        return cmd +
-                            ' --timeout 15000 --reporter html-cov > coverage.html ./core/test/blanket_coverage.js';
-                    },
+                    command: path.resolve(cwd  + '/node_modules/mocha/bin/mocha  --timeout 15000 --reporter' +
+                    ' html-cov > coverage.html ./core/test/blanket_coverage.js'),
                     execOptions: {
                         env: 'NODE_ENV=' + process.env.NODE_ENV
                     }
@@ -392,6 +399,9 @@ var path           = require('path'),
                         dest: 'core/client/assets/',
                         expand: true
                     }, {
+                        src: 'core/client/config-prod.js',
+                        dest: 'core/client/config.js'
+                    }, {
                         expand: true,
                         src: buildGlob,
                         dest: '<%= paths.releaseBuild %>/'
@@ -441,8 +451,9 @@ var path           = require('path'),
                         'bower_components/jquery-file-upload/js/jquery.fileupload.js',
                         'bower_components/fastclick/lib/fastclick.js',
                         'bower_components/nprogress/nprogress.js',
-                        'bower_components/ember-simple-auth/ember-simple-auth.js',
-                        'bower_components/ember-simple-auth/ember-simple-auth-oauth2.js',
+                        'bower_components/ember-simple-auth/simple-auth.js',
+                        'bower_components/ember-simple-auth/simple-auth-oauth2.js',
+                        'bower_components/google-caja/html-css-sanitizer-bundle.js',
 
                         'core/shared/lib/showdown/extensions/ghostimagepreview.js',
                         'core/shared/lib/showdown/extensions/ghostgfm.js'
@@ -475,8 +486,9 @@ var path           = require('path'),
                         'bower_components/jquery-file-upload/js/jquery.fileupload.js',
                         'bower_components/fastclick/lib/fastclick.js',
                         'bower_components/nprogress/nprogress.js',
-                        'bower_components/ember-simple-auth/ember-simple-auth.js',
-                        'bower_components/ember-simple-auth/ember-simple-auth-oauth2.js',
+                        'bower_components/ember-simple-auth/simple-auth.js',
+                        'bower_components/ember-simple-auth/simple-auth-oauth2.js',
+                        'bower_components/google-caja/html-css-sanitizer-bundle.js',
 
                         'core/shared/lib/showdown/extensions/ghostimagepreview.js',
                         'core/shared/lib/showdown/extensions/ghostgfm.js'
@@ -489,7 +501,17 @@ var path           = require('path'),
             uglify: {
                 prod: {
                     options: {
-                        sourceMap: true,
+                        sourceMap: true
+                    },
+                    files: {
+                        'core/built/public/jquery.min.js': 'core/built/public/jquery.js',
+                        'core/built/scripts/vendor.min.js': 'core/built/scripts/vendor.js',
+                        'core/built/scripts/ghost.min.js': 'core/built/scripts/ghost.js'
+                    }
+                },
+                release: {
+                    options: {
+                        sourceMap: false
                     },
                     files: {
                         'core/built/public/jquery.min.js': 'core/built/public/jquery.js',
@@ -746,9 +768,9 @@ var path           = require('path'),
         //
         // You can use the `--target` argument to run any individual test file, or the admin or frontend tests:
         //
-        // `grunt test-functional --target=admin/editor_test.js` - run just the editor tests
+        // `grunt test-functional --target=client/editor_test.js` - run just the editor tests
         //
-        // `grunt test-functional --target=admin/` - run all of the tests in the admin directory
+        // `grunt test-functional --target=client/` - run all of the tests in the client directory
         //
         // Functional tests are run with [phantom.js](http://phantomjs.org/) and defined using the testing api from
         // [casper.js](http://docs.casperjs.org/en/latest/testing.html).
@@ -831,14 +853,14 @@ var path           = require('path'),
         // `bower` does have some quirks, such as not running as root. If you have problems please try running
         // `grunt init --verbose` to see if there are any errors.
         grunt.registerTask('init', 'Prepare the project for development',
-            ['shell:bower', 'update_submodules', 'default']);
+            ['shell:bower', 'shell:ghost_ui', 'update_submodules', 'default']);
 
         // ### Production assets
         // `grunt prod` - will build the minified assets used in production.
         //
         // It is otherwise the same as running `grunt`, but is only used when running Ghost in the `production` env.
         grunt.registerTask('prod', 'Build JS & templates for production',
-            ['concat:prod', 'copy:prod', 'emberBuildProd', 'uglify', 'master-warn']);
+            ['concat:prod', 'copy:prod', 'emberBuildProd', 'uglify:prod', 'master-warn']);
 
         // ### Default asset build
         // `grunt` - default grunt task
@@ -873,8 +895,7 @@ var path           = require('path'),
             ' - Copy files to release-folder/#/#{version} directory\n' +
             ' - Clean out unnecessary files (travis, .git*, etc)\n' +
             ' - Zip files in release-folder to dist-folder/#{version} directory',
-            ['shell:bower', 'update_submodules', 'concat:prod', 'copy:prod', 'emberBuildProd', 'uglify',
-            'clean:release', 'copy:release', 'compress:release']);
+            ['init', 'concat:prod', 'copy:prod', 'emberBuildProd', 'uglify:release', 'clean:release', 'copy:release', 'compress:release']);
     };
 
 // Export the configuration

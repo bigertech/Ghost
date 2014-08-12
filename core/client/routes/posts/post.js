@@ -1,11 +1,13 @@
 import loadingIndicator from 'ghost/mixins/loading-indicator';
 import ShortcutsRoute from 'ghost/mixins/shortcuts-route';
+import {mobileQuery} from 'ghost/utils/mobile';
 
-var PostsPostRoute = Ember.Route.extend(Ember.SimpleAuth.AuthenticatedRouteMixin, loadingIndicator, ShortcutsRoute, {
+var PostsPostRoute = Ember.Route.extend(SimpleAuth.AuthenticatedRouteMixin, loadingIndicator, ShortcutsRoute, {
     model: function (params) {
         var self = this,
             post,
-            postId;
+            postId,
+            paginationSettings;
 
         postId = Number(params.post_id);
 
@@ -20,20 +22,43 @@ var PostsPostRoute = Ember.Route.extend(Ember.SimpleAuth.AuthenticatedRouteMixin
             return post;
         }
 
-        return this.store.find('post', {
-            id: params.post_id,
+        paginationSettings = {
+            id: postId,
             status: 'all',
-            staticPages: 'all',
-        }).then(function (records) {
-            var post = records.get('firstObject');
+            staticPages: 'all'
+        };
 
-            if (post) {
-                return post;
+        return this.store.find('user', 'me').then(function (user) {
+            if (user.get('isAuthor')) {
+                paginationSettings.author = user.get('slug');
             }
 
-            return self.transitionTo('posts.index');
+            return self.store.find('post', paginationSettings).then(function (records) {
+                var post = records.get('firstObject');
+
+                if (user.get('isAuthor') && !post.isAuthoredByUser(user)) {
+                    // do not show the post if they are an author but not this posts author
+                    post = null;
+                }
+
+                if (post) {
+                    return post;
+                }
+
+                return self.transitionTo('posts.index');
+            });
         });
     },
+    setupController: function (controller, model) {
+        this._super(controller, model);
+
+        this.controllerFor('posts').set('currentPost', model);
+
+        if (mobileQuery.matches) {
+            this.controllerFor('posts').send('hideContentPreview');
+        }
+    },
+
     shortcuts: {
         'enter': 'openEditor'
     },

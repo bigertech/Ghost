@@ -35,7 +35,7 @@ logInfo = function logInfo(message) {
 populateDefaultSettings = function populateDefaultSettings() {
     // Initialise the default settings
     logInfo('Populating default settings');
-    return models.Settings.populateDefaults().then(function () {
+    return models.Settings.populateDefault('databaseVersion').then(function () {
         logInfo('Complete');
     });
 };
@@ -44,10 +44,12 @@ backupDatabase = function backupDatabase() {
     logInfo('Creating database backup');
     return dataExport().then(function (exportedData) {
         // Save the exported data to the file system for download
-        var fileName = path.resolve(config.paths.contentPath + '/data/' + dataExport.fileName());
+        return dataExport.fileName().then(function (fileName) {
+            fileName = path.resolve(config.paths.contentPath + '/data/' + fileName);
 
-        return nodefn.call(fs.writeFile, fileName, JSON.stringify(exportedData)).then(function () {
-            logInfo('Database backup written to: ' + fileName);
+            return nodefn.call(fs.writeFile, fileName, JSON.stringify(exportedData)).then(function () {
+                logInfo('Database backup written to: ' + fileName);
+            });
         });
     });
 };

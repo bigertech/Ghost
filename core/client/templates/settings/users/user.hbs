@@ -1,22 +1,26 @@
-<header class="user-settings-header">
+<header class="settings-content-header user-settings-header">
 
     <h2 class="hidden">Your Profile</h2>
 
     <div class="settings-header-inner">
         {{#link-to 'settings' class='button-back button'}}Back{{/link-to}}
         <section class="page-actions page-actions-alt">
-            {{#link-to "settings.users" class="button has-icon users-back" tagName="button"}}<i class="icon-chevron-left"></i>Users{{/link-to}}
+            {{#unless session.user.isAuthor}}
+                {{#link-to "settings.users" class="button has-icon users-back" tagName="button"}}<i class="icon-chevron-left"></i>Users{{/link-to}}
+            {{/unless}}
         </section>
 
         <section class="page-actions">
 
-            {{#gh-popover-button popoverName="user-actions-menu" tagName="a" classNames="button only-has-icon user-actions-cog" title="User Actions"}}
-                <i class="icon-settings"></i>
-                <span class="hidden">User Settings</span>
-            {{/gh-popover-button}}
-            {{#gh-popover name="user-actions-menu" classNames="user-actions-menu menu-drop-right"}}
-                {{render "user-actions-menu" model}}
-            {{/gh-popover}}
+            {{#if view.userActionsAreVisible}}
+                {{#gh-popover-button popoverName="user-actions-menu" classNames="button only-has-icon user-actions-cog" title="User Actions"}}
+                    <i class="icon-settings"></i>
+                    <span class="hidden">User Settings</span>
+                {{/gh-popover-button}}
+                {{#gh-popover name="user-actions-menu" classNames="user-actions-menu menu-drop-right"}}
+                    {{render "user-actions-menu" model}}
+                {{/gh-popover}}
+            {{/if}}
 
             <button class="button-save" {{action "save"}}>Save</button>
         </section>
@@ -32,6 +36,10 @@
     </header>
 
     <form class="user-profile" novalidate="novalidate" autocomplete="off">
+
+        {{!-- Horrible hack to prevent Chrome from incorrectly auto-filling inputs --}}
+        <input style="display:none;" type="text" name="fakeusernameremembered"/>
+        <input style="display:none;" type="password" name="fakepasswordremembered"/>
 
         <fieldset class="user-details-top">
 
@@ -50,34 +58,28 @@
 
         <fieldset class="user-details-bottom">
 
-            {{!-- <div class="form-group">
+            <div class="form-group">
                 <label for="user-slug">Slug</label>
-                {{input value=user.slug id="user-slug" placeholder="Slug" autocorrect="off"}}
-                <p>http://blog-url.com/user/{{user.slug}}</p>
-            </div> --}}
+                {{!-- {{input value=user.slug id="user-slug" placeholder="Slug" autocorrect="off"}} --}}
+                {{gh-blur-input class="user-name" id="user-slug" value=user.slug name="user" action="updateSlug" placeholder="Slug" selectOnClick="true" autocorrect="off"}}
+                <p>{{gh-blog-url}}/author/{{user.slug}}</p>
+            </div>
 
             <div class="form-group">
                 <label for="user-email">Email</label>
                 {{input type="email" value=user.email id="user-email" placeholder="Email Address" autocapitalize="off" autocorrect="off" autocomplete="off"}}
                 <p>Used for notifications</p>
             </div>
-
-            {{!-- The correct markup for select boxes. Needs changing to the correct data --}}
-            {{!-- <div class="form-group">
+            {{#if view.rolesDropdownIsVisible}}
+            <div class="form-group">
                 <label for="user-role">Role</label>
-                <span class="gh-select" {{bind-attr data-select-text=selectedTheme.label}}>
-                   {{view Ember.Select
-                       id="activeTheme"
-                       name="general[activeTheme]"
-                       content=themes
-                       optionValuePath="content.name"
-                       optionLabelPath="content.label"
-                       value=activeTheme
-                       selection=selectedTheme}}
-               </span>
+                {{gh-role-selector
+                    initialValue=role
+                    onChange="changeRole"
+                    selectId="user-role"}}
                 <p>What permissions should this user have?</p>
-            </div> --}}
-
+            </div>
+            {{/if}}
             <div class="form-group">
                 <label for="user-location">Location</label>
                 {{input type="text" value=user.location id="user-location"}}

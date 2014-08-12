@@ -169,6 +169,38 @@ describe('Core Helpers', function () {
         });
     });
 
+    describe('Title Helper', function () {
+        it('has loaded title helper', function () {
+            should.exist(handlebars.helpers.title);
+        });
+
+        it('can render title', function () {
+            var title = 'Hello World',
+                rendered = helpers.title.call({title: title});
+
+            should.exist(rendered);
+            rendered.string.should.equal(title);
+        });
+
+        it('escapes correctly', function () {
+            var rendered = helpers.title.call({'title': '<h1>I am a title</h1>'});
+
+            rendered.string.should.equal('&lt;h1&gt;I am a title&lt;/h1&gt;');
+        });
+
+        it('returns a blank string where title is missing', function () {
+            var rendered = helpers.title.call({'title': null});
+
+            rendered.string.should.equal('');
+        });
+
+        it('returns a blank string where data missing', function () {
+            var rendered = helpers.title.call({});
+
+            rendered.string.should.equal('');
+        });
+    });
+
     describe('Author Helper', function () {
 
         it('has loaded author helper', function () {
@@ -177,7 +209,7 @@ describe('Core Helpers', function () {
 
         it('Returns the link to the author from the context', function () {
             var data = {'author': {'name': 'abc 123', slug: 'abc123', bio: '', website: '', status: '', location: ''}},
-                result = helpers.author.call(data);
+                result = helpers.author.call(data, {hash: {}});
 
             String(result).should.equal('<a href="/author/abc123/">abc 123</a>');
         });
@@ -192,12 +224,21 @@ describe('Core Helpers', function () {
 
         it('Returns a blank string where author data is missing', function () {
             var data = {'author': null},
-                result = helpers.author.call(data);
+                result = helpers.author.call(data, {hash: {}});
 
             String(result).should.equal('');
         });
 
+        it('Functions as block helper if called with #', function () {
+            var data = {'author': {'name': 'abc 123', slug: 'abc123'}},
+                // including fn emulates the #
+                result = helpers.author.call(data, {hash: {}, fn: function () { return 'FN'; }});
+
+            // It outputs the result of fn
+            String(result).should.equal('FN');
+        });
     });
+
 
     describe('encode Helper', function () {
 
@@ -214,6 +255,57 @@ describe('Core Helpers', function () {
             String(escaped).should.equal(expected);
         });
     });
+
+    describe('Plural Helper', function () {
+
+       it('has loaded plural helper', function () {
+           should.exist(handlebars.helpers.plural);
+       });
+
+       it('will show no-value string', function () {
+           var expected = 'No Posts',
+               rendered = helpers.plural.call({}, 0, {
+                   'hash': {
+                       'empty': 'No Posts',
+                       'singular': '% Post',
+                       'plural': '% Posts'
+                   }
+               });
+
+           should.exist(rendered);
+           rendered.string.should.equal(expected);
+       });
+
+       it('will show singular string', function () {
+           var expected = '1 Post',
+               rendered = helpers.plural.call({}, 1, {
+                   'hash': {
+                       'empty': 'No Posts',
+                       'singular': '% Post',
+                       'plural': '% Posts'
+                   }
+               });
+
+           should.exist(rendered);
+           rendered.string.should.equal(expected);
+       });
+
+       it('will show plural string', function () {
+           var expected = '2 Posts',
+               rendered = helpers.plural.call({}, 2, {
+                   'hash': {
+                       'empty': 'No Posts',
+                       'singular': '% Post',
+                       'plural': '% Posts'
+                   }
+               });
+
+           should.exist(rendered);
+           rendered.string.should.equal(expected);
+       });
+
+   });
+
 
     describe('Excerpt Helper', function () {
 
@@ -307,21 +399,27 @@ describe('Core Helpers', function () {
                 helpers.body_class.call({relativeUrl: '/a-post-title', post: {}}),
                 helpers.body_class.call({relativeUrl: '/page/4'}),
                 helpers.body_class.call({relativeUrl: '/tag/foo', tag: { slug: 'foo'}}),
-                helpers.body_class.call({relativeUrl: '/tag/foo/page/2', tag: { slug: 'foo'}})
+                helpers.body_class.call({relativeUrl: '/tag/foo/page/2', tag: { slug: 'foo'}}),
+                helpers.body_class.call({relativeUrl: '/author/bar', author: { slug: 'bar'}}),
+                helpers.body_class.call({relativeUrl: '/author/bar/page/2', author: { slug: 'bar'}})
             ]).then(function (rendered) {
-                rendered.length.should.equal(5);
+                rendered.length.should.equal(7);
 
                 should.exist(rendered[0]);
                 should.exist(rendered[1]);
                 should.exist(rendered[2]);
                 should.exist(rendered[3]);
                 should.exist(rendered[4]);
+                should.exist(rendered[5]);
+                should.exist(rendered[6]);
 
                 rendered[0].string.should.equal('home-template');
                 rendered[1].string.should.equal('post-template');
                 rendered[2].string.should.equal('archive-template');
                 rendered[3].string.should.equal('tag-template tag-foo');
                 rendered[4].string.should.equal('archive-template tag-template tag-foo');
+                rendered[5].string.should.equal('author-template author-bar');
+                rendered[6].string.should.equal('archive-template author-template author-bar');
 
                 done();
             }).catch(done);
@@ -528,6 +626,19 @@ describe('Core Helpers', function () {
             inverse.called.should.be.true;
         });
 
+        it('should not do anything if there are no attributes', function () {
+            var fn = sinon.spy(),
+                inverse = sinon.spy();
+
+            helpers.has.call(
+                {tags: [{ name: 'foo'}, { name: 'bar'}, { name: 'baz'}]},
+                {fn: fn, inverse: inverse}
+            );
+
+            fn.called.should.be.false;
+            inverse.called.should.be.false;
+        });
+
         it('should not do anything when an invalid attribute is given', function () {
             var fn = sinon.spy(),
                 inverse = sinon.spy();
@@ -540,15 +651,98 @@ describe('Core Helpers', function () {
             fn.called.should.be.false;
             inverse.called.should.be.false;
         });
+
+        it('should handle author list that evaluates to true', function () {
+            var fn = sinon.spy(),
+                inverse = sinon.spy();
+
+            helpers.has.call(
+                {author: { name: 'sam'}},
+                {hash: { author: 'joe, sam, pat'}, fn: fn, inverse: inverse}
+            );
+
+            fn.called.should.be.true;
+            inverse.called.should.be.false;
+        });
+
+        it('should handle author list that evaluates to false', function () {
+            var fn = sinon.spy(),
+                inverse = sinon.spy();
+
+            helpers.has.call(
+                {author: { name: 'jamie'}},
+                {hash: { author: 'joe, sam, pat'}, fn: fn, inverse: inverse}
+            );
+
+            fn.called.should.be.false;
+            inverse.called.should.be.true;
+        });
+
+        it('should handle authors with case-insensitivity', function () {
+            var fn = sinon.spy(),
+                inverse = sinon.spy();
+
+            helpers.has.call(
+                {author: { name: 'Sam'}},
+                {hash: { author: 'joe, sAm, pat'}, fn: fn, inverse: inverse}
+            );
+
+            fn.called.should.be.true;
+            inverse.called.should.be.false;
+        });
+
+        it('should handle tags and authors like an OR query (pass)', function () {
+            var fn = sinon.spy(),
+                inverse = sinon.spy();
+
+            helpers.has.call(
+                {author: {name: 'sam'}, tags: [{name: 'foo'}, {name: 'bar'}, {name: 'baz'}]},
+                {hash: {author: 'joe, sam, pat', tag: 'much, such, wow'}, fn: fn, inverse: inverse}
+            );
+
+            fn.called.should.be.true;
+            inverse.called.should.be.false;
+        });
+
+        it('should handle tags and authors like an OR query (pass)', function () {
+            var fn = sinon.spy(),
+               inverse = sinon.spy();
+
+            helpers.has.call(
+                {author: { name: 'sam'}, tags: [{ name: 'much'}, { name: 'bar'}, { name: 'baz'}]},
+                {hash: { author: 'joe, sam, pat', tag: 'much, such, wow'}, fn: fn, inverse: inverse}
+            );
+
+            fn.called.should.be.true;
+            inverse.called.should.be.false;
+        });
+
+        it('should handle tags and authors like an OR query (fail)', function () {
+            var fn = sinon.spy(),
+                inverse = sinon.spy();
+
+            helpers.has.call(
+                {author: { name: 'fred'}, tags: [{ name: 'foo'}, { name: 'bar'}, { name: 'baz'}]},
+                {hash: { author: 'joe, sam, pat', tag: 'much, such, wow'}, fn: fn, inverse: inverse}
+            );
+
+            fn.called.should.be.false;
+            inverse.called.should.be.true;
+        });
     });
 
     describe('url Helper', function () {
+        var configUrl = config.url;
 
         beforeEach(function () {
             apiStub.restore();
             apiStub = sandbox.stub(api.settings, 'read', function () {
                 return when({ settings: [{ value: '/:slug/' }] });
             });
+        });
+
+        afterEach(function () {
+            configUpdate({url: configUrl});
         });
 
         it('has loaded url helper', function () {
@@ -648,6 +842,27 @@ describe('Core Helpers', function () {
             helpers.page_url.call(tagContext, 1).should.equal('/blog/tag/pumpkin/');
             helpers.page_url.call(tagContext, 2).should.equal('/blog/tag/pumpkin/page/2/');
             helpers.page_url.call(tagContext, 50).should.equal('/blog/tag/pumpkin/page/50/');
+        });
+
+        it('can return a valid url for tag pages', function () {
+            var authorContext = {
+                authorSlug: 'pumpkin'
+            };
+            helpers.page_url.call(authorContext, 1).should.equal('/author/pumpkin/');
+            helpers.page_url.call(authorContext, 2).should.equal('/author/pumpkin/page/2/');
+            helpers.page_url.call(authorContext, 50).should.equal('/author/pumpkin/page/50/');
+        });
+
+        it('can return a valid url for tag pages with subdirectory', function () {
+            _.extend(helpers.__get__('config'), {
+                paths: {'subdir': '/blog'}
+            });
+            var authorContext = {
+                authorSlug: 'pumpkin'
+            };
+            helpers.page_url.call(authorContext, 1).should.equal('/blog/author/pumpkin/');
+            helpers.page_url.call(authorContext, 2).should.equal('/blog/author/pumpkin/page/2/');
+            helpers.page_url.call(authorContext, 50).should.equal('/blog/author/pumpkin/page/50/');
         });
     });
 
@@ -918,6 +1133,26 @@ describe('Core Helpers', function () {
             helpers.meta_title.call(post).then(function (rendered) {
                 should.exist(rendered);
                 String(rendered).should.equal('Post Title');
+
+                done();
+            }).then(null, done);
+        });
+
+        it('can return title for a tag page', function (done) {
+            var tag = {relativeUrl: '/tag/rasper-red', tag: {name: 'Rasper Red'}};
+            helpers.meta_title.call(tag).then(function (rendered) {
+                should.exist(rendered);
+                String(rendered).should.equal('Rasper Red - Ghost');
+
+                done();
+            }).then(null, done);
+        });
+
+        it('can return title for an author page', function (done) {
+            var author = {relativeUrl: '/author/donald', author: {name: 'Donald Duck'}};
+            helpers.meta_title.call(author).then(function (rendered) {
+                should.exist(rendered);
+                String(rendered).should.equal('Donald Duck - Ghost');
 
                 done();
             }).then(null, done);
@@ -1519,6 +1754,21 @@ describe('Core Helpers', function () {
             should.exist(fileStorage);
             fileStorage.should.equal(setting);
         });
+
+        it('should just return true if config.fileStorage is an object', function () {
+            var setting = {someKey: 'someValue'},
+                cfg = helpers.__get__('config'),
+                fileStorage;
+
+            _.extend(cfg, {
+                fileStorage: setting
+            });
+
+            fileStorage = helpers.file_storage();
+
+            should.exist(fileStorage);
+            fileStorage.should.equal('true');
+        });
     });
 
     describe('apps helper', function () {
@@ -1543,10 +1793,31 @@ describe('Core Helpers', function () {
                 apps: setting
             });
 
+
             apps = helpers.apps();
 
             should.exist(apps);
             apps.should.equal(setting);
+        });
+    });
+
+    describe('blog_url helper', function () {
+        var configUrl = config.url;
+
+        afterEach(function () {
+            configUpdate({url: configUrl});
+        });
+
+        it('is loaded', function () {
+            should.exist(helpers.blog_url);
+        });
+
+        it('should return the test url by default', function () {
+            var blog_url = helpers.blog_url();
+
+            should.exist(blog_url);
+            // this is set in another test == bad!
+            blog_url.should.equal('http://testurl.com');
         });
     });
 });

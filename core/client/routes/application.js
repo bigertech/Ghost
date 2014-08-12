@@ -1,15 +1,15 @@
 import ShortcutsRoute from 'ghost/mixins/shortcuts-route';
 
-var ApplicationRoute = Ember.Route.extend(Ember.SimpleAuth.ApplicationRouteMixin, ShortcutsRoute, {
+var ApplicationRoute = Ember.Route.extend(SimpleAuth.ApplicationRouteMixin, ShortcutsRoute, {
+
+    afterModel: function (model, transition) {
+        if (this.get('session').isAuthenticated) {
+            transition.send('loadServerNotifications');
+        }
+    },
 
     shortcuts: {
         'esc': 'closePopups'
-    },
-
-    setupController: function () {
-        Ember.run.next(this, function () {
-            this.send('loadServerNotifications');
-        });
     },
 
     actions: {
@@ -24,7 +24,35 @@ var ApplicationRoute = Ember.Route.extend(Ember.SimpleAuth.ApplicationRouteMixin
             this.send('loadServerNotifications', true);
         },
 
+        sessionAuthenticationFailed: function (error) {
+            if (error.errors) {
+                this.notifications.showErrors(error.errors);
+            } else {
+                // connection errors don't return proper status message, only req.body
+                this.notifications.showError('There was a problem on the server.');
+            }
+        },
+
+        sessionAuthenticationSucceeded: function () {
+            var self = this;
+            this.store.find('user', 'me').then(function (user) {
+                self.send('signedIn', user);
+                var attemptedTransition = self.get('session').get('attemptedTransition');
+                if (attemptedTransition) {
+                    attemptedTransition.retry();
+                    self.get('session').set('attemptedTransition', null);
+                } else {
+                    self.transitionTo(SimpleAuth.Configuration.routeAfterAuthentication);
+                }
+            });
+        },
+
+        sessionInvalidationFailed: function (error) {
+            this.notifications.showError(error.message);
+        },
+
         openModal: function (modalName, model, type) {
+            this.get('popover').closePopovers();
             modalName = 'modals/' + modalName;
             // We don't always require a modal to have a controller
             // so we're skipping asserting if one exists

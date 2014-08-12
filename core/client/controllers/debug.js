@@ -1,10 +1,6 @@
 var DebugController = Ember.Controller.extend(Ember.Evented, {
     uploadButtonText: 'Import',
-
-    exportPath: function () {
-        return this.get('ghostPaths.url').api('db') +
-            '?access_token=' + this.get('session.access_token');
-    }.property(),
+    importErrors: '',
 
     actions: {
         onUpload: function (file) {
@@ -12,6 +8,7 @@ var DebugController = Ember.Controller.extend(Ember.Evented, {
                 formData = new FormData();
 
             this.set('uploadButtonText', 'Importing');
+            this.notifications.closePassive();
 
             formData.append('importfile', file);
 
@@ -25,7 +22,10 @@ var DebugController = Ember.Controller.extend(Ember.Evented, {
             }).then(function () {
                 self.notifications.showSuccess('Import successful.');
             }).catch(function (response) {
-                self.notifications.showAPIError(response);
+                if (response && response.jqXHR && response.jqXHR.responseJSON && response.jqXHR.responseJSON.errors) {
+                    self.set('importErrors', response.jqXHR.responseJSON.errors);
+                }
+                self.notifications.showError('Import Failed');
             }).finally(function () {
                 self.set('uploadButtonText', 'Import');
                 self.trigger('reset');
@@ -33,15 +33,15 @@ var DebugController = Ember.Controller.extend(Ember.Evented, {
         },
 
         exportData: function () {
-            var self = this;
+            var iframe = $('#iframeDownload'),
+                downloadURL = this.get('ghostPaths.url').api('db') +
+                    '?access_token=' + this.get('session.access_token');
 
-            ic.ajax.request(this.get('ghostPaths.url').api('db'), {
-                type: 'GET'
-            }).then(function () {
-                self.notifications.showSuccess('Data exported successfully.');
-            }).catch(function (response) {
-                self.notifications.showErrors(response);
-            });
+            if (iframe.length === 0) {
+                iframe = $('<iframe>', { id: 'iframeDownload' }).hide().appendTo('body');
+            }
+
+            iframe.attr('src', downloadURL);
         },
 
         sendTestEmail: function () {

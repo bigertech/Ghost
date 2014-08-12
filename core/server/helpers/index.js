@@ -99,6 +99,10 @@ coreHelpers.page_url = function (context, block) {
         url += '/tag/' + this.tagSlug;
     }
 
+    if (this.authorSlug !== undefined) {
+        url += '/author/' + this.authorSlug;
+    }
+
     if (context > 1) {
         url += '/page/' + context;
     }
@@ -198,11 +202,15 @@ coreHelpers.asset = function (context, options) {
 // Returns the full name of the author of a given post, or a blank string
 // if the author could not be determined.
 //
-coreHelpers.author = function (options) {
-    options = options || {};
-    options.hash = options.hash || {};
+coreHelpers.author = function (context, options) {
+    if (_.isUndefined(options)) {
+        options = context;
+    }
 
-    /*jshint unused:false*/
+    if (options.fn) {
+        return hbs.handlebars.helpers['with'].call(this, this.author, options);
+    }
+
     var autolink = _.isString(options.hash.autolink) && options.hash.autolink === 'false' ? false : true,
         output = '';
 
@@ -298,6 +306,10 @@ coreHelpers.content = function (options) {
     return new hbs.handlebars.SafeString(this.html);
 };
 
+coreHelpers.title = function () {
+    return  new hbs.handlebars.SafeString(hbs.handlebars.Utils.escapeExpression(this.title || ''));
+};
+
 // ### Excerpt Helper
 //
 // *Usage example:*
@@ -343,7 +355,7 @@ coreHelpers.excerpt = function (options) {
 coreHelpers.file_storage = function (context, options) {
     /*jshint unused:false*/
     if (config.hasOwnProperty('fileStorage')) {
-        return config.fileStorage.toString();
+        return _.isObject(config.fileStorage) ? 'true' : config.fileStorage.toString();
     }
     return 'true';
 };
@@ -360,6 +372,17 @@ coreHelpers.apps = function (context, options) {
         return config.apps.toString();
     }
     return 'false';
+};
+
+// ### Blog Url helper
+//
+// *Usage example:*
+// `{{blog_url}}`
+//
+// Returns the config value for url.
+coreHelpers.blog_url = function (context, options) {
+    /*jshint unused:false*/
+    return config.theme().url.toString();
 };
 
 coreHelpers.ghost_script_tags = function () {
@@ -397,6 +420,11 @@ coreHelpers.body_class = function (options) {
     if (this.tag !== undefined) {
         classes.push('tag-template');
         classes.push('tag-' + this.tag.slug);
+    }
+
+    if (this.author !== undefined) {
+        classes.push('author-template');
+        classes.push('author-' + this.author.slug);
     }
 
     if (tags) {
@@ -510,6 +538,8 @@ coreHelpers.meta_title = function (options) {
             title = this.post.title;
         } else if (this.tag) {
             title = this.tag.name + ' - ' + blog.title;
+        } else if (this.author) {
+            title = this.author.name + ' - ' + blog.title;
         }
     }
 
@@ -638,10 +668,18 @@ coreHelpers.foreach = function (context, options) {
 
 // ### Has Helper
 // `{{#has tag="video, music"}}`
+// `{{#has author="sam, pat"}}`
 // Checks whether a post has at least one of the tags
 coreHelpers.has = function (options) {
+    options = options || {};
+    options.hash = options.hash || {};
+
     var tags = _.pluck(this.tags, 'name'),
-        tagList = options && options.hash ? options.hash.tag : false;
+        author = this.author ? this.author.name : null,
+        tagList = options.hash.tag || false,
+        authorList = options.hash.author || false,
+        tagsOk,
+        authorOk;
 
     function evaluateTagList(expr, tags) {
         return expr.split(',').map(function (v) {
@@ -656,12 +694,23 @@ coreHelpers.has = function (options) {
         }, false);
     }
 
-    if (!tagList) {
+    function evaluateAuthorList(expr, author) {
+        var authorList =  expr.split(',').map(function (v) {
+            return v.trim().toLocaleLowerCase();
+        });
+
+        return _.contains(authorList, author.toLocaleLowerCase());
+    }
+
+    if (!tagList && !authorList) {
         errors.logWarn('Invalid or no attribute given to has helper');
         return;
     }
 
-    if (tagList && evaluateTagList(tagList, tags)) {
+    tagsOk = tagList && evaluateTagList(tagList, tags) || false;
+    authorOk = authorList && evaluateAuthorList(authorList, author) || false;
+
+    if (tagsOk || authorOk) {
         return options.fn(this);
     }
     return options.inverse(this);
@@ -697,7 +746,33 @@ coreHelpers.pagination = function (options) {
         context.tagSlug = this.tag.slug;
     }
 
+    if (this.author !== undefined) {
+        context.authorSlug = this.author.slug;
+    }
+
     return template.execute('pagination', context);
+};
+
+// ## Pluralize strings depending on item count
+// {{plural 0 empty='No posts' singular='% post' plural='% posts'}}
+// The 1st argument is the numeric variable which the helper operates on
+// The 2nd argument is the string that will be output if the variable's value is 0
+// The 3rd argument is the string that will be output if the variable's value is 1
+// The 4th argument is the string that will be output if the variable's value is 2+
+// coreHelpers.plural = function (number, empty, singular, plural) {
+coreHelpers.plural = function (context, options) {
+    if (_.isUndefined(options.hash) || _.isUndefined(options.hash.empty) ||
+        _.isUndefined(options.hash.singular) || _.isUndefined(options.hash.plural)) {
+        return errors.logAndThrowError('All values must be defined for empty, singular and plural');
+    }
+
+    if (context === 0) {
+        return new hbs.handlebars.SafeString(options.hash.empty);
+    } else if (context === 1) {
+        return new hbs.handlebars.SafeString(options.hash.singular.replace("%", context));
+    } else if (context >= 2) {
+        return new hbs.handlebars.SafeString(options.hash.plural.replace("%", context));
+    }
 };
 
 coreHelpers.helperMissing = function (arg) {
@@ -745,6 +820,8 @@ function registerAdminHelper(name, fn) {
     coreHelpers.adminHbs.registerHelper(name, fn);
 }
 
+
+
 registerHelpers = function (adminHbs, assetHash) {
 
     // Expose hbs instance for admin
@@ -760,6 +837,8 @@ registerHelpers = function (adminHbs, assetHash) {
     registerThemeHelper('author', coreHelpers.author);
 
     registerThemeHelper('content', coreHelpers.content);
+
+    registerThemeHelper('title', coreHelpers.title);
 
     registerThemeHelper('date', coreHelpers.date);
 
@@ -778,6 +857,8 @@ registerHelpers = function (adminHbs, assetHash) {
     registerThemeHelper('pagination', coreHelpers.pagination);
 
     registerThemeHelper('tags', coreHelpers.tags);
+
+    registerThemeHelper('plural', coreHelpers.plural);
 
     registerAsyncThemeHelper('body_class', coreHelpers.body_class);
 
@@ -804,6 +885,8 @@ registerHelpers = function (adminHbs, assetHash) {
     registerAdminHelper('apps', coreHelpers.apps);
 
     registerAdminHelper('file_storage', coreHelpers.file_storage);
+
+    registerAdminHelper('blog_url', coreHelpers.blog_url);
 };
 
 module.exports = coreHelpers;

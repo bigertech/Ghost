@@ -15,7 +15,6 @@ describe('User API', function () {
 
     before(function (done) {
         var app = express();
-        app.set('disableLoginLimiter', true);
 
         // starting ghost automatically populates the db
         // TODO: prevent db init, and manage bringing up the DB with fixtures ourselves
@@ -134,7 +133,7 @@ describe('User API', function () {
         });
 
         it('can retrieve a user by slug', function (done) {
-            request.get(testUtils.API.getApiQuery('users/slug/joe-blogs/'))
+            request.get(testUtils.API.getApiQuery('users/slug/joe-bloggs/'))
                 .set('Authorization', 'Bearer ' + accesstoken)
                 .expect('Content-Type', /json/)
                 .expect(200)
@@ -222,7 +221,7 @@ describe('User API', function () {
         });
 
         it('can retrieve a user by slug with role and permissions', function (done) {
-            request.get(testUtils.API.getApiQuery('users/slug/joe-blogs/?include=roles,roles.permissions'))
+            request.get(testUtils.API.getApiQuery('users/slug/joe-bloggs/?include=roles,roles.permissions'))
                 .set('Authorization', 'Bearer ' + accesstoken)
                 .expect('Content-Type', /json/)
                 .expect(200)

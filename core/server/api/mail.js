@@ -1,9 +1,14 @@
 // # Mail API
 // API for sending Mail
-var when       = require('when'),
-    config     = require('../config'),
-    canThis    = require('../permissions').canThis,
-    errors     = require('../errors'),
+var _            = require('lodash'),
+    when         = require('when'),
+    config       = require('../config'),
+    canThis      = require('../permissions').canThis,
+    errors       = require('../errors'),
+    path         = require('path'),
+    fs           = require('fs'),
+    templatesDir = path.resolve(__dirname, '..', 'email-templates'),
+    htmlToText   = require('html-to-text'),
     mail;
 
 /**
@@ -53,24 +58,65 @@ mail = {
      * @param {Object} required property 'to' which contains the recipient address
      * @returns {Promise}
      */
-    sendTest: function (object, options) {
-        var html = '<p><strong>Hello there!</strong></p>' +
-            '<p>Excellent!' +
-            ' You\'ve successfully setup your email config for your Ghost blog over on ' + config.url + '</p>' +
-            '<p>If you hadn\'t, you wouldn\'t be reading this email, but you are, so it looks like all is well :)</p>' +
-            '<p>xoxo</p>' +
-            '<p>Team Ghost<br>' +
-            '<a href="https://ghost.org">https://ghost.org</a></p>',
+    sendTest: function (options) {
+        var user = require('../models/user').User;
 
-            payload = {mail: [{
-                message: {
-                    to: object.to,
-                    subject: 'Test Ghost Email',
-                    html: html
+        return user.findOne({id: options.context.user}).then(function (result) {
+            return mail.generateContent({template: 'test'}).then(function (emailContent) {
+                var payload = {mail: [{
+                    message: {
+                        to: result.get('email'),
+                        subject: 'Test Ghost Email',
+                        html: emailContent.html,
+                        text: emailContent.text
+                    }
+                }]};
+                return mail.send(payload, options);
+            });
+        }, function () {
+            return when.reject(new errors.NotFoundError('Could not find the current user'));
+        });
+    },
+
+    /**
+     *
+     * @param {
+     *              data: JSON object representing the data that will go into the email
+     *              template: which email template to load (files are stored in /core/server/email-templates/)
+     *          }
+     * @returns {*}
+     */
+    generateContent: function (options) {
+
+        var defaultData = {
+                siteUrl: config.forceAdminSSL ? (config.urlSSL || config.url) : config.url
+            },
+            emailData = _.defaults(defaultData, options.data);
+
+        _.templateSettings.interpolate = /{{([\s\S]+?)}}/g;
+
+        //read the proper email body template
+        return when.promise(function (resolve, reject) {
+            fs.readFile(templatesDir + '/' + options.template + '.html', {encoding: 'utf8'}, function (err, fileContent) {
+                if (err) {
+                    reject(err);
                 }
-            }]};
 
-        return mail.send(payload, options);
+                //insert user-specific data into the email
+                var htmlContent = _.template(fileContent, emailData),
+                    textContent;
+
+                //generate a plain-text version of the same email
+                textContent = htmlToText.fromString(htmlContent);
+
+                resolve({
+                    html: htmlContent,
+                    text: textContent
+                });
+
+            });
+        });
+
     }
 };
 

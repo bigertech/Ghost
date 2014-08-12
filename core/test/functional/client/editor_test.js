@@ -172,7 +172,7 @@ CasperTest.begin('Image Uploads', 17, function suite(test) {
         test.assertUrlMatch(/ghost\/editor\/$/, 'Landed on the correct URL');
     });
 
-    var testFileLocation = 'test/file/location';
+    var testFileLocation = '/test/file/location';
 
     casper.then(function () {
         var markdownImageString = '![](' + testFileLocation + ')';
@@ -203,7 +203,7 @@ CasperTest.begin('Image Uploads', 17, function suite(test) {
         casper.thenClick('.entry-preview .image-uploader a.image-url');
     });
 
-    var imageURL = 'random.url';
+    var imageURL = 'http://www.random.url';
     casper.waitForSelector('.image-uploader-url', function onSuccess() {
         casper.sendKeys('.image-uploader-url input.url.js-upload-url', imageURL);
         casper.thenClick('.js-button-accept.button-save');
@@ -282,8 +282,8 @@ CasperTest.begin('Post settings menu', 30, function suite(test) {
 
     casper.waitForSelector('.notification-success', function waitForSuccess() {
         test.assert(true, 'got success notification');
-        test.assertSelectorHasText('.notification-success', 'Your post has been saved as a draft.');
-        casper.click('.notification-success a.close');
+        test.assertSelectorHasText('.notification-success', 'Saved.');
+        casper.click('.notification-success .close');
     }, function onTimeout() {
         test.assert(false, 'No success notification');
     });
@@ -312,7 +312,7 @@ CasperTest.begin('Post settings menu', 30, function suite(test) {
     casper.waitForSelector('.notification-success', function waitForSuccess() {
         test.assert(true, 'got success notification');
         test.assertSelectorHasText('.notification-success', 'Permalink successfully changed to new-url-editor.');
-        casper.click('.notification-success a.close');
+        casper.click('.notification-success .close');
     }, function onTimeout() {
         test.assert(false, 'No success notification');
     });

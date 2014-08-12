@@ -26,11 +26,12 @@ var ForgottenController = Ember.Controller.extend(ValidationEngine, {
                     }
                 }).then(function (resp) {
                     self.toggleProperty('submitting');
-                    self.notifications.showSuccess('Please check your email for instructions.');
+                    self.notifications.showSuccess('Please check your email for instructions.', {delayed: true});
+                    self.set('email', '');
                     self.transitionToRoute('signin');
                 }).catch(function (resp) {
                     self.toggleProperty('submitting');
-                    self.notifications.showAPIError(resp, 'There was a problem logging in, please try again.');
+                    self.notifications.showAPIError(resp, { defaultErrorText: 'There was a problem logging in, please try again.' });
                 });
             }).catch(function (errors) {
                 self.toggleProperty('submitting');

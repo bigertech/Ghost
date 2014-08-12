@@ -88,10 +88,16 @@ var EditorControllerMixin = Ember.Mixin.create(MarkerManager, {
 
         var model = this.get('model'),
             markdown = this.get('markdown'),
+            title = this.get('title'),
+            titleScratch = this.get('titleScratch'),
             scratch = this.getMarkdown().withoutMarkers,
             changedAttributes;
 
         if (!this.tagNamesEqual()) {
+            return true;
+        }
+
+        if (titleScratch !== title) {
             return true;
         }
 
@@ -139,12 +145,12 @@ var EditorControllerMixin = Ember.Mixin.create(MarkerManager, {
         errors: {
             post: {
                 published: {
-                    'published': 'Your post could not be updated.',
-                    'draft': 'Your post could not be saved as a draft.'
+                    'published': 'Update failed.',
+                    'draft': 'Saving failed.'
                 },
                 draft: {
-                    'published': 'Your post could not be published.',
-                    'draft': 'Your post could not be saved as a draft.'
+                    'published': 'Publish failed.',
+                    'draft': 'Saving failed.'
                 }
 
             }
@@ -153,12 +159,12 @@ var EditorControllerMixin = Ember.Mixin.create(MarkerManager, {
         success: {
             post: {
                 published: {
-                    'published': 'Your post has been updated.',
-                    'draft': 'Your post has been saved as a draft.'
+                    'published': 'Updated.',
+                    'draft': 'Saved.'
                 },
                 draft: {
-                    'published': 'Your post has been published.',
-                    'draft': 'Your post has been saved as a draft.'
+                    'published': 'Published!',
+                    'draft': 'Saved.'
                 }
             }
         }
@@ -166,19 +172,21 @@ var EditorControllerMixin = Ember.Mixin.create(MarkerManager, {
 
     showSaveNotification: function (prevStatus, status, delay) {
         var message = this.messageMap.success.post[prevStatus][status];
-        this.notifications.closePassive();
 
-        this.notifications.showSuccess(message, delay);
+        this.notifications.showSuccess(message, { delayed: delay });
     },
 
     showErrorNotification: function (prevStatus, status, errors, delay) {
         var message = this.messageMap.errors.post[prevStatus][status];
-        this.notifications.closePassive();
 
         message += '<br />' + errors[0].message;
 
-        this.notifications.showError(message, delay);
+        this.notifications.showError(message, { delayed: delay });
     },
+
+    shouldFocusTitle: Ember.computed('model', function () {
+        return !!this.get('model.isNew');
+    }),
 
     actions: {
         save: function () {

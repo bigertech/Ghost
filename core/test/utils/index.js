@@ -23,6 +23,7 @@ var when          = require('when'),
     setup,
     doAuth,
 
+    initFixtures,
     initData,
     clearData;
 
@@ -31,12 +32,71 @@ var when          = require('when'),
 fixtures = {
     insertPosts: function insertPosts() {
         var knex = config.database.knex;
-        // ToDo: Get rid of pyramid of doom
-        return when(knex('posts').insert(DataGenerator.forKnex.posts).then(function () {
-            return knex('tags').insert(DataGenerator.forKnex.tags).then(function () {
-                return knex('posts_tags').insert(DataGenerator.forKnex.posts_tags);
-            });
-        }));
+        return when(knex('posts').insert(DataGenerator.forKnex.posts)).then(function () {
+            return knex('tags').insert(DataGenerator.forKnex.tags);
+        }).then(function () {
+            return knex('posts_tags').insert(DataGenerator.forKnex.posts_tags);
+        });
+    },
+
+    insertMultiAuthorPosts: function insertMultiAuthorPosts(max) {
+        var knex = config.database.knex,
+            tags,
+            author,
+            authors,
+            i, j, k = postsInserted,
+            posts = [];
+
+        max = max || 50;
+        // insert users of different roles
+        return when(fixtures.createUsersWithRoles()).then(function (results) {
+            // create the tags
+            return knex('tags').insert(DataGenerator.forKnex.tags);
+        }).then(function (results) {
+            return knex('users').select('id');
+        }).then(function (results) {
+            authors = _.pluck(results, 'id');
+
+            // Let's insert posts with random authors
+            for (i = 0; i < max; i += 1) {
+                author = authors[i % authors.length];
+                posts.push(DataGenerator.forKnex.createGenericPost(k++, null, null, author));
+            }
+
+            // Keep track so we can run this function again safely
+            postsInserted = k;
+
+            return sequence(_.times(posts.length, function (index) {
+                return function () {
+                    return knex('posts').insert(posts[index]);
+                };
+            }));
+        }).then(function () {
+            return when.all([
+                // PostgreSQL can return results in any order
+                knex('posts').orderBy('id', 'asc').select('id'),
+                knex('tags').select('id')
+            ]);
+        }).then(function (results) {
+            var posts = _.pluck(results[0], 'id'),
+                tags = _.pluck(results[1], 'id'),
+                promises = [],
+                i;
+
+            if (max > posts.length) {
+                throw new Error('Trying to add more posts_tags than the number of posts.');
+            }
+
+            for (i = 0; i < max; i += 1) {
+                promises.push(DataGenerator.forKnex.createPostsTags(posts[i], tags[i % tags.length]));
+            }
+
+            return sequence(_.times(promises.length, function (index) {
+                return function () {
+                    return knex('posts_tags').insert(promises[index]);
+                };
+            }));
+        });
     },
 
     insertMorePosts: function insertMorePosts(max) {
@@ -101,6 +161,10 @@ fixtures = {
             }));
         });
     },
+    insertRoles: function insertRoles() {
+        var knex = config.database.knex;
+        return knex('roles').insert(DataGenerator.forKnex.roles);
+    },
 
     initOwnerUser: function initOwnerUser() {
         var user = DataGenerator.Content.users[0],
@@ -109,7 +173,11 @@ fixtures = {
         user = DataGenerator.forKnex.createBasic(user);
         user = _.extend({}, user, {'status': 'inactive'});
 
-        return knex('users').insert(user);
+        return knex('roles').insert(DataGenerator.forKnex.roles).then(function () {
+            return knex('users').insert(user);
+        }).then(function () {
+            return knex('roles_users').insert(DataGenerator.forKnex.roles_users[0]);
+        });
     },
 
     insertOwnerUser: function insertOwnerUser() {
@@ -118,7 +186,9 @@ fixtures = {
 
         user = DataGenerator.forKnex.createUser(DataGenerator.Content.users[0]);
 
-        return knex('users').insert(user);
+        return knex('users').insert(user).then(function () {
+            return knex('roles_users').insert(DataGenerator.forKnex.roles_users[0]);
+        });
     },
 
     overrideOwnerUser: function overrideOwnerUser() {
@@ -138,6 +208,49 @@ fixtures = {
             return knex('users').insert(DataGenerator.forKnex.users);
         }).then(function () {
             return knex('roles_users').insert(DataGenerator.forKnex.roles_users);
+        });
+    },
+
+    createExtraUsers: function createExtraUsers() {
+        var knex = config.database.knex,
+            // grab 3 more users
+            extraUsers = DataGenerator.Content.users.slice(2, 5);
+
+        extraUsers = _.map(extraUsers, function (user) {
+            return DataGenerator.forKnex.createUser(_.extend({}, user, {
+                email: 'a' + user.email,
+                slug: 'a' + user.slug
+            }));
+        });
+
+        return knex('users').insert(extraUsers).then(function () {
+            return knex('roles_users').insert([
+                    { user_id: 5, role_id: 1},
+                    { user_id: 6, role_id: 2},
+                    { user_id: 7, role_id: 3}
+            ]);
+        });
+    },
+
+    createInvitedUsers: function createInvitedUser() {
+        var knex = config.database.knex,
+            // grab 3 more users
+            extraUsers = DataGenerator.Content.users.slice(2, 5);
+
+        extraUsers = _.map(extraUsers, function (user) {
+            return DataGenerator.forKnex.createUser(_.extend({}, user, {
+                email: 'inv' + user.email,
+                slug: 'inv' + user.slug,
+                status: 'invited-pending'
+            }));
+        });
+
+        return knex('users').insert(extraUsers).then(function () {
+            return knex('roles_users').insert([
+                    { user_id: 8, role_id: 1},
+                    { user_id: 9, role_id: 2},
+                    { user_id: 10, role_id: 3}
+            ]);
         });
     },
 
@@ -164,7 +277,7 @@ fixtures = {
             try {
                 data = JSON.parse(fileContents);
             } catch (e) {
-                return when.reject(new Error("Failed to parse the file"));
+                return when.reject(new Error('Failed to parse the file'));
             }
 
             return data;
@@ -237,13 +350,17 @@ toDoList = {
     },
     'permission': function insertPermission() { return fixtures.insertOne('permissions', 'createPermission'); },
     'role': function insertRole() { return fixtures.insertOne('roles', 'createRole'); },
-    'tag': function insertRole() { return fixtures.insertOne('tags', 'createTag'); },
+    'roles': function insertRoles() { return fixtures.insertRoles(); },
+    'tag': function insertTag() { return fixtures.insertOne('tags', 'createTag'); },
+
     'posts': function insertPosts() { return fixtures.insertPosts(); },
+    'posts:mu': function insertMultiAuthorPosts() { return fixtures.insertMultiAuthorPosts(); },
     'apps': function insertApps() { return fixtures.insertApps(); },
-    'settings': function populate() {
+    'settings': function populateSettings() {
         return settings.populateDefaults().then(function () { return SettingsAPI.updateSettingsCache(); });
     },
     'users:roles': function createUsersWithRoles() { return fixtures.createUsersWithRoles(); },
+    'users': function createExtraUsers() { return fixtures.createExtraUsers(); },
     'owner': function insertOwnerUser() { return fixtures.insertOwnerUser(); },
     'owner:pre': function initOwnerUser() { return fixtures.initOwnerUser(); },
     'owner:post': function overrideOwnerUser() { return fixtures.overrideOwnerUser(); },
@@ -296,6 +413,16 @@ getFixtureOps = function getFixtureOps(toDos) {
 
 // ## Test Setup and Teardown
 
+initFixtures = function initFixtures() {
+    var options = _.merge({'init': true}, _.transform(arguments, function (result, val) {
+                result[val] = true;
+            })
+        ),
+        fixtureOps = getFixtureOps(options);
+
+    return sequence(fixtureOps);
+};
+
 /**
  * ## Setup Integration Tests
  * Setup takes a list of arguments like: 'default', 'tag', 'perms:tag', 'perms:init'
@@ -303,14 +430,11 @@ getFixtureOps = function getFixtureOps(toDos) {
  * @returns {Function}
  */
 setup = function setup() {
-    var options = _.merge({'init': true}, _.transform(arguments, function (result, val) {
-                result[val] = true;
-            })
-        ),
-        fixtureOps = getFixtureOps(options);
+    var self = this,
+        args = arguments;
 
     return function (done) {
-       return sequence(fixtureOps).then(function () {
+        return initFixtures.apply(self, args).then(function () {
             done();
         }).catch(done);
     };
@@ -319,7 +443,7 @@ setup = function setup() {
 /**
  * ## DoAuth For Route Tests
  *
- * This function manages the work of ensuring we have an overriden owner user, and grabbing an access token
+ * This function manages the work of ensuring we have an overridden owner user, and grabbing an access token
  * @returns {deferred.promise<AccessToken>}
  */
 // TODO make this do the DB init as well
@@ -366,6 +490,7 @@ module.exports = {
     setup: setup,
     doAuth: doAuth,
 
+    initFixtures: initFixtures,
     initData: initData,
     clearData: clearData,
 
@@ -376,11 +501,33 @@ module.exports = {
 
     fork: fork,
 
+    // Helpers to make it easier to write tests which are easy to read
     context: {
         internal:   {context: {internal: true}},
         owner:      {context: {user: 1}},
         admin:      {context: {user: 2}},
         editor:     {context: {user: 3}},
         author:     {context: {user: 4}}
-    }
+    },
+    users: {
+        ids: {
+            owner: 1,
+            admin: 2,
+            editor: 3,
+            author: 4,
+            admin2: 5,
+            editor2: 6,
+            author2: 7
+        }
+    },
+    roles: {
+        ids: {
+            owner: 4,
+            admin: 1,
+            editor: 2,
+            author: 3
+        }
+    },
+    ONE_HOUR_S: 3600,
+    ONE_YEAR_S: 31536000
 };

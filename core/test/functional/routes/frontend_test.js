@@ -15,12 +15,10 @@ var request    = require('supertest'),
     ghost      = require('../../../../core'),
     httpServer,
 
-    ONE_HOUR_S = 60 * 60,
-    ONE_YEAR_S = 365 * 24 * ONE_HOUR_S,
     cacheRules = {
         'public': 'public, max-age=0',
-        'hour':  'public, max-age=' + ONE_HOUR_S,
-        'year':  'public, max-age=' + ONE_YEAR_S,
+        'hour':  'public, max-age=' + testUtils.ONE_HOUR_S,
+        'year':  'public, max-age=' + testUtils.ONE_YEAR_S,
         'private': 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0'
     };
 
@@ -223,12 +221,12 @@ describe('Frontend Routing', function () {
 
     describe('Archive pages', function () {
 
-        // Add enough posts to trigger pages for both the archive (6 pp) and rss (15 pp)
+        // Add enough posts to trigger pages for both the archive (5 pp) and rss (15 pp)
         // insertPosts adds 5 published posts, 1 draft post, 1 published static page and one draft page
         // we then insert with max 11 which ensures we have 16 published posts
         before(function (done) {
             testUtils.fixtures.insertPosts().then(function () {
-                return testUtils.fixtures.insertMorePosts(11);
+                return testUtils.fixtures.insertMorePosts(9);
             }).then(function () {
                 done();
             }).catch(done);
@@ -277,6 +275,11 @@ describe('Frontend Routing', function () {
     });
 
     describe('RSS pages', function () {
+        before(function (done) {
+            testUtils.fixtures.insertMorePosts(2).then(function () {
+                done();
+            }).catch(done);
+        });
         it('should redirect without slash', function (done) {
             request.get('/rss/2')
                 .expect('Location', '/rss/2/')
@@ -356,6 +359,49 @@ describe('Frontend Routing', function () {
         it('should redirect to first page if page too low', function (done) {
             request.get('/tag/getting-started/rss/0/')
                 .expect('Location', '/tag/getting-started/rss/')
+                .expect('Cache-Control', cacheRules['public'])
+                .expect(302)
+                .end(doEnd(done));
+        });
+    });
+
+    describe('Author based RSS pages', function () {
+        it('should redirect without slash', function (done) {
+            request.get('/author/ghost-owner/rss')
+                .expect('Location', '/author/ghost-owner/rss/')
+                .expect('Cache-Control', cacheRules.year)
+                .expect(301)
+                .end(doEnd(done));
+        });
+
+        it('should respond with xml', function (done) {
+            request.get('/author/ghost-owner/rss/')
+                .expect('Content-Type', /xml/)
+                .expect('Cache-Control', cacheRules['public'])
+                .expect(200)
+                .end(doEnd(done));
+        });
+
+        it('should redirect page 1', function (done) {
+            request.get('/author/ghost-owner/rss/1/')
+                .expect('Location', '/author/ghost-owner/rss/')
+                .expect('Cache-Control', cacheRules['public'])
+                // TODO: This should probably be a 301?
+                .expect(302)
+                .end(doEnd(done));
+        });
+
+        it('should redirect to last page if page too high', function (done) {
+            request.get('/author/ghost-owner/rss/3/')
+                .expect('Location', '/author/ghost-owner/rss/2/')
+                .expect('Cache-Control', cacheRules['public'])
+                .expect(302)
+                .end(doEnd(done));
+        });
+
+        it('should redirect to first page if page too low', function (done) {
+            request.get('/author/ghost-owner/rss/0/')
+                .expect('Location', '/author/ghost-owner/rss/')
                 .expect('Cache-Control', cacheRules['public'])
                 .expect(302)
                 .end(doEnd(done));
@@ -475,7 +521,7 @@ describe('Frontend Routing', function () {
 
         it('should redirect to last page if page too high', function (done) {
             request.get('/tag/injection/page/4/')
-                .expect('Location', '/tag/injection/page/2/')
+                .expect('Location', '/tag/injection/page/3/')
                 .expect('Cache-Control', cacheRules['public'])
                 .expect(302)
                 .end(doEnd(done));
@@ -489,6 +535,66 @@ describe('Frontend Routing', function () {
                 .end(doEnd(done));
         });
     });
+
+    describe('Author pages', function () {
+
+        // Add enough posts to trigger tag pages
+        before(function (done) {
+            testUtils.clearData().then(function () {
+                // we initialise data, but not a user. No user should be required for navigating the frontend
+                return testUtils.initData();
+            }).then(function () {
+
+                return testUtils.fixtures.insertPosts();
+            }).then(function () {
+                return testUtils.fixtures.insertMorePosts(10);
+            }).then(function () {
+                done();
+            }).catch(done);
+        });
+
+        it('should redirect without slash', function (done) {
+            request.get('/author/ghost-owner/page/2')
+                .expect('Location', '/author/ghost-owner/page/2/')
+                .expect('Cache-Control', cacheRules.year)
+                .expect(301)
+                .end(doEnd(done));
+        });
+
+        it('should respond with html', function (done) {
+            request.get('/author/ghost-owner/page/2/')
+                .expect('Content-Type', /html/)
+                .expect('Cache-Control', cacheRules['public'])
+                .expect(200)
+                .end(doEnd(done));
+        });
+
+        it('should redirect page 1', function (done) {
+            request.get('/author/ghost-owner/page/1/')
+                .expect('Location', '/author/ghost-owner/')
+                .expect('Cache-Control', cacheRules['public'])
+                // TODO: This should probably be a 301?
+                .expect(302)
+                .end(doEnd(done));
+        });
+
+        it('should redirect to last page if page too high', function (done) {
+            request.get('/author/ghost-owner/page/4/')
+                .expect('Location', '/author/ghost-owner/page/3/')
+                .expect('Cache-Control', cacheRules['public'])
+                .expect(302)
+                .end(doEnd(done));
+        });
+
+        it('should redirect to first page if page too low', function (done) {
+            request.get('/author/ghost-owner/page/0/')
+                .expect('Location', '/author/ghost-owner/')
+                .expect('Cache-Control', cacheRules['public'])
+                .expect(302)
+                .end(doEnd(done));
+        });
+    });
+
 
     // ### The rest of the tests switch to date permalinks
 

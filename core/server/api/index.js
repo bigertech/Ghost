@@ -80,7 +80,7 @@ cacheInvalidationHeader = function (req, result) {
 
             // Don't set x-cache-invalidate header for drafts
             if (hasStatusChanged || wasDeleted || wasPublishedUpdated) {
-                cacheInvalidate = '/, /page/*, /rss/, /rss/*, /tag/*';
+                cacheInvalidate = '/, /page/*, /rss/, /rss/*, /tag/*, /author/*';
                 if (id && post.slug) {
                     return config.urlForPost(settings, post).then(function (postUrl) {
                         return cacheInvalidate + ', ' + postUrl;
@@ -265,7 +265,7 @@ http = function (apiMethod) {
                 // #### Error
                 var httpErrors = formatHttpErrors(error);
                 // Send a properly formatted HTTP response containing the errors
-                res.json(httpErrors.statusCode, {errors: httpErrors.errors});
+                res.status(httpErrors.statusCode).json({errors: httpErrors.errors});
             });
     };
 };

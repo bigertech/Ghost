@@ -5,9 +5,11 @@ var testUtils   = require('../../utils'),
     when        = require('when'),
     sinon       = require('sinon'),
     uuid        = require('node-uuid'),
+    _           = require('lodash'),
 
     // Stuff we are testing
     UserModel   = require('../../../server/models').User,
+    RoleModel   = require('../../../server/models').Role,
     context     = testUtils.context.admin,
     sandbox     = sinon.sandbox.create();
 
@@ -23,7 +25,7 @@ describe('User Model', function run() {
     should.exist(UserModel);
 
     describe('Registration', function runRegistration() {
-        beforeEach(testUtils.setup());
+        beforeEach(testUtils.setup('roles'));
 
         it('can add first', function (done) {
             var userData = testUtils.DataGenerator.forModel.users[0];
@@ -125,7 +127,7 @@ describe('User Model', function run() {
     });
 
     describe('Basic Operations', function () {
-        beforeEach(testUtils.setup('owner'));
+        beforeEach(testUtils.setup('users:roles'));
 
         it('sets last login time on successful login', function (done) {
             var userData = testUtils.DataGenerator.forModel.users[0];
@@ -161,15 +163,67 @@ describe('User Model', function run() {
         });
 
         it('can findAll', function (done) {
-
             UserModel.findAll().then(function (results) {
                 should.exist(results);
-
-                results.length.should.be.above(0);
+                results.length.should.equal(4);
 
                 done();
 
             }).catch(done);
+        });
+
+        it('can findPage (default)', function (done) {
+            UserModel.findPage().then(function (results) {
+                should.exist(results);
+
+                results.meta.pagination.page.should.equal(1);
+                results.meta.pagination.limit.should.equal(15);
+                results.meta.pagination.pages.should.equal(1);
+                results.users.length.should.equal(4);
+
+                done();
+            }).catch(done);
+        });
+
+        it('can findPage by role', function (done) {
+            return testUtils.fixtures.createExtraUsers().then(function () {
+                return UserModel.findPage({role: 'Administrator'});
+            }).then(function (results) {
+                results.meta.pagination.page.should.equal(1);
+                results.meta.pagination.limit.should.equal(15);
+                results.meta.pagination.pages.should.equal(1);
+                results.meta.pagination.total.should.equal(2);
+                results.users.length.should.equal(2);
+
+                return UserModel.findPage({role: 'Owner'});
+            }).then(function (results) {
+                results.meta.pagination.page.should.equal(1);
+                results.meta.pagination.limit.should.equal(15);
+                results.meta.pagination.pages.should.equal(1);
+                results.meta.pagination.total.should.equal(1);
+                results.users.length.should.equal(1);
+
+                return UserModel.findPage({role: 'Editor', limit: 1});
+            }).then(function (results) {
+                results.meta.pagination.page.should.equal(1);
+                results.meta.pagination.limit.should.equal(1);
+                results.meta.pagination.pages.should.equal(2);
+                results.meta.pagination.total.should.equal(2);
+                results.users.length.should.equal(1);
+
+                done();
+            }).catch(done);
+        });
+
+        it('can NOT findPage for a page that overflows the datatype', function (done) {
+            UserModel.findPage({ page: 5700000000055345439587894375457849375284932759842375894372589243758947325894375894275894275894725897432859724309 })
+                .then(function (paginationResult) {
+                    should.exist(paginationResult.meta);
+
+                    paginationResult.meta.pagination.page.should.be.a.Number;
+                    
+                    done();
+                }).catch(done);
         });
 
         it('can findOne', function (done) {
@@ -208,6 +262,28 @@ describe('User Model', function run() {
 
                 done();
 
+            }).catch(done);
+        });
+
+        it('can add', function (done) {
+            var userData = testUtils.DataGenerator.forModel.users[4];
+
+            sandbox.stub(UserModel, 'gravatarLookup', function (userData) {
+                return when.resolve(userData);
+            });
+
+            RoleModel.findOne().then(function (role) {
+                userData.roles = [role.toJSON()];
+
+                return  UserModel.add(userData, _.extend({}, context));
+            }).then(function (createdUser) {
+                should.exist(createdUser);
+                createdUser.has('uuid').should.equal(true);
+                createdUser.get('password').should.not.equal(userData.password, 'password was hashed');
+                createdUser.get('email').should.eql(userData.email, 'email address correct');
+                createdUser.related('roles').toJSON()[0].name.should.eql('Administrator', 'role set correctly');
+
+                done();
             }).catch(done);
         });
 

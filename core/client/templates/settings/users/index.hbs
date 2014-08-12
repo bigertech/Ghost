@@ -1,8 +1,8 @@
-<header>
+<header class="settings-content-header">
     {{#link-to 'settings' class='button-back button'}}Back{{/link-to}}
     <h2 class="title">Users</h2>
     <section class="page-actions">
-        <button class="button-add" {{action "openModal" "invite-new-user" this}} >New&nbsp;User</button>
+        <button class="button-add" {{action "openModal" "invite-new-user"}} >New&nbsp;User</button>
     </section>
 </header>
 
@@ -36,7 +36,7 @@
 
     {{/if}}
 
-    <section class="object-list">
+    <section class="object-list active-users">
 
         <h4 class="object-list-title">Active users</h4>
 
@@ -48,15 +48,17 @@
 
                 <div class="object-list-item-body">
                     <span class="name">
-                        {{user.name}}
+                        {{name}}
                     </span>
                     <br>
                     <span class="description">Last seen: {{unbound last_login}}</span>
                 </div>
                 <aside class="object-list-item-aside">
-                    {{#each roles}}
-                       <span class="role-label {{unbound lowerCaseName}}">{{name}}</span>
-                    {{/each}}
+                    {{#unless isAuthor}}
+                        {{#each roles}}
+                            <span class="role-label {{unbound lowerCaseName}}">{{name}}</span>
+                        {{/each}}
+                    {{/unless}}
                 </aside>
             {{/link-to}}
         {{/each}}
