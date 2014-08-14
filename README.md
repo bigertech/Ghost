@@ -1,14 +1,12 @@
 # [Ghost](https://github.com/TryGhost/Ghost) [![Build Status](https://travis-ci.org/TryGhost/Ghost.svg?branch=master)](https://travis-ci.org/TryGhost/Ghost)
 
+博客基于ghost 0.5版本，做了很多优化，加入了新功能。
 
 ##  demo
 
 [笔戈科技](http://www.bigertech.com)
 
-
-
-博客基于ghost 0.5版本，做了很多优化，加入了新功能。
-#### Quickstart:
+## Quickstart:
 1. 请先切换到 stable-china 分支，再clone 代码
 2. 复制 config.example.js ，命名为 config.js 。
 3. 如果你使用mysql 数据库，修改文件config.js  中的development 下的数据库配置信息 ，并且在数据中建立一个utf-8格式的数据库
@@ -73,7 +71,12 @@ database: {
 
 
 ###  每篇文章指定一张图片
-在文章内容输出界面，输入 #### ![bg](图片地址)  这种图片会被认为是文章的标志图片
+在文章内容输出界面，输入 
+
+···
+![bg](图片地址)  //这种图片会被认为是文章的标志图片
+```
+
 在前端输出 
 
 ```
