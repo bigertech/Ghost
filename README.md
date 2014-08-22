@@ -1,18 +1,10 @@
 # [Ghost](https://github.com/TryGhost/Ghost) [![Build Status](https://travis-ci.org/TryGhost/Ghost.svg?branch=master)](https://travis-ci.org/TryGhost/Ghost)
 
-博客基于ghost 0.5版本，做了很多优化，加入了新功能。
-
-##  demo
-
-[笔戈科技](http://www.bigertech.com)
-
-## Quickstart:
-1. 请先切换到 stable-china 分支，再clone 代码
-2. 复制 config.example.js ，命名为 config.js 。
-3. 如果你使用mysql 数据库，修改文件config.js  中的development 下的数据库配置信息 ，并且在数据中建立一个utf-8格式的数据库
-blog_name
-
-charset 设置为 UTF8_GENERAL_CI 解决中文插入到数据库乱码的问题。
+#### Quickstart:
+1. 请先切换到 stable 分支，再clone 代码
+2. 数据库脚本 见 /360云盘/项目/笔戈博客/数据库/bigertech_blog2.0.sql
+3. 复制 config.example.js ，命名为 config.js 。
+修改文件config.js  中的development 下的数据库配置信息 ，
 
 ```
 database: {
@@ -21,7 +13,7 @@ database: {
                 host     : '127.0.0.1',
                 user     : 'root',
                 password : 'root',
-                database : 'blog_name',
+                database : 'bigertech_blog',
                 charset  : 'UTF8_GENERAL_CI'
             }
         },
@@ -35,54 +27,40 @@ database: {
 1. `grunt init` (and `grunt prod` if you want to run Ghost in production mode)
 1. `npm start`
 
+### Production
 
-## 新增改动
-*  界面汉化
-*  邮件汉化 （未完成）
-*  文章类别选择
-*  每篇文章加入 文章图片
-*  默认文章url为标题的拼音链接， 修改为10000开始的数字
-*  文章在界面中的位置指定（为完成）
-*  点赞功能（待）
-*  多说评论（待）
-*  百度统计 根据自己的系统进行配置
+在`config.example.js`中，新增了`cdn`配置，配置项如下：
 
+```Javascript
+isProduction: 配置是否线上环境（NODE_ENV=production，待改进）
 
-## 新增表 post_type
-文章的类型，或许你需要插入不同类型的文章比如，日志、科技博客、生活日记等等，然后希望在不同的前端界面展示。
-原ghost 使用post.hbs作为模板  
+staticAssetsUrl: 静态资源CDN, 如css, js等
 
-现在新增模板，post-article.hbs、post-video.hbs
+dynamicAssetsUrl: 动态资源, 如用户上传的图片等
 
-### 后台插入文章类别和模板对应关系,你还可以新增post_type
+syncImagesPath: 同步文件到CDN服务器上的路径
+```
+
+## 后台插入文章类别和模板对应关系
+编辑文章界面可以选择文章的类型，如果是视频 则需要在 tag 中的第一个位置插入，优酷的视频ID
 
 文章类型    | 前端模板
 ----|-------
 文字博客  | post-article.hbs
-视频  | post-video.hbs
+评测视频  | post-video.hbs
+活动宣传  | post-active.hbs
+专题      | post-topic.hbs
 
-
-### 输出某一个类型文章列表 
-
-列表类型    | 前端模板  |           请求方式
-----|-------|----------
-文字博客  | articles.hbs |          http://domain/t/articles
-视频  | videos.hbs      |           http://domain/t/articles
-
-
-###  每篇文章指定一张图片
-在文章内容输出界面，输入 
-
-```
-![bg](图片地址)  //这种图片会被认为是文章的标志图片
-```
-
-在前端输出 
-
-```
-{{image}}   //输出文章图片的地址
-<img src="{{image}}" >
-```
+## 新增改动
+*  文章类别选择
+*  每篇文章加入 文章图片
+*  默认文章url为标题的拼音链接， 修改为数字
+*  文章在界面中的位置指定
+*  点赞功能
+*  多说评论
+*  百度统计
+*  图片自动裁剪
+*  线上环境CDN资源切换
 
 ## Copyright & License
 笔戈科技出品
