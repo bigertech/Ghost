@@ -30,7 +30,17 @@ var downsize        = require('downsize'),
             'templates-dev.js',
             'ghost-dev.js'
         ]
-    };
+    },
+    typeLinks = [];
+
+//初始化所有的 文章类型 和对应的url
+api.postType.browse().then(function(result){
+    if(result.postTypes){
+        _.forEach(result.postTypes,function(item){
+            typeLinks.push('/category/'+item.slug);
+        });
+    }
+});
 
 if (!isProduction) {
     hbs.handlebars.logger.level = 0;
@@ -103,10 +113,14 @@ coreHelpers.page_url = function (context, block) {
     if (this.authorSlug !== undefined) {
         url += '/author/' + this.authorSlug;
     }
-    url += '/'+block+'/' + context;
+    // add by liuxing
+    //author  作者列表 http://127.0.0.1:2368/author/bigertech/page/2/
+    //tag http://127.0.0.1:2368/tag/bi-ge-ke-ji/page/2/
+    if(_.indexOf(typeLinks,block) != -1){
+        url += '/'+block;    //类型列表
+    }
+    url += '/page/'+context;    //主页列表
 
-
-    url += '/';
 
     return url;
 };
@@ -318,7 +332,6 @@ coreHelpers.slug = function () {
     return  new hbs.handlebars.SafeString(this.slug);
 };
 coreHelpers.image = function () {
-    console.log(this.post);
     return  new hbs.handlebars.SafeString(this.image);
 };
 //end add
@@ -421,13 +434,18 @@ coreHelpers.body_class = function (options) {
         tags = this.post && this.post.tags ? this.post.tags : this.tags || [],
         page = this.post && this.post.page ? this.post.page : this.page || false;
 
-    if (_.isString(this.relativeUrl) && (this.relativeUrl.match(/\/(page\/\d)/)) || this.relativeUrl.match(/^.*[list].*$/)) {
+    if (_.isString(this.relativeUrl) && this.relativeUrl.match(/\/(page\/\d)/)) {
         classes.push('archive-template');
     } else if (!this.relativeUrl || this.relativeUrl === '/' || this.relativeUrl === '') {
         classes.push('home-template');
     } else if (post) {
         classes.push('post-template');
     }
+    //add by liuxing
+    if( this.relativeUrl.match(/^.*(category).*$/)){
+        classes.push('category-template');
+    }
+    //end by liuxing
 
     if (this.tag !== undefined) {
         classes.push('tag-template');
@@ -751,12 +769,20 @@ coreHelpers.pagination = function (options) {
             !_.isNumber(this.pagination.total) || !_.isNumber(this.pagination.limit)) {
         return errors.logAndThrowError('Invalid value, check page, pages, limit and total are numbers');
     }
-    var slug = 'category/'+this.posts[0].post_type.slug;
+    var slug = '/category/'+this.posts[0].post_type.slug;
     /* 显示页数 liuxing */
     if(options.hash.type == 'page'){  //不是默认主页（各种类型混合），则使用文章的类型（文章、视频、等等）
-        slug = options.hash.type;
+        slug = '';
     }
-    this.pagination.post_type  = slug;
+
+    if (this.tag !== undefined) {   //tag 分页
+        slug = '/tag/' + this.tag.slug;
+    }
+    if (this.author !== undefined) {  //作者信息分页
+        slug = '/author/' + this.author.slug;
+    }
+
+    this.pagination.post_type = slug;
     var pagesItem =  '';
     var result = getPagination(this.pagination.pages,this.pagination.page);
     for(var i = 0 ;i < result.length;i++){
@@ -768,12 +794,12 @@ coreHelpers.pagination = function (options) {
         if(result[i] == this.pagination.page){
             pagesItem +=  "<span class='page current'>"+result[i]+"</span>";
         }else{
-            pagesItem += "<a href=/"+ this.pagination.post_type+"/"+ result[i] +" class='page-num'><span class='page'>"+result[i]+"</span></a>";
+            pagesItem += "<a href="+ slug +"/page/"+ result[i] +" class='page-num'><span class='page'>"+result[i]+"</span></a>";
         }
     }
 
     this.pagination.pageArray = pagesItem;
-    /* 显示页数 */
+    /*end  显示页数 */
     var context = _.merge({}, this.pagination);
 
     if (this.tag !== undefined) {
