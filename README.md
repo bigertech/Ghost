@@ -41,6 +41,20 @@ dynamicAssetsUrl: 动态资源, 如用户上传的图片等
 syncImagesPath: 同步文件到CDN服务器上的路径
 ```
 
+### Images cutting
+
+`config.example.js`中的`images`选项可以配置后台上传图片是否进行裁剪，以及裁剪的大小尺寸等，可配置项如下：
+
+```
+dir: 裁剪的图片存放路径，比如 300x200，那么生成的裁剪图片将会在 config.paths.imagesPath/300x200/ 下存放。
+
+cutWidth: 裁剪的宽度
+
+cutHeight: 裁剪的高度
+```
+
+以上三项任意一项留空都不会对图片进行裁剪处理。
+
 ## 后台插入文章类别和模板对应关系
 编辑文章界面可以选择文章的类型，如果是视频 则需要在 tag 中的第一个位置插入，优酷的视频ID
 
