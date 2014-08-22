@@ -416,7 +416,7 @@ coreHelpers.body_class = function (options) {
         tags = this.post && this.post.tags ? this.post.tags : this.tags || [],
         page = this.post && this.post.page ? this.post.page : this.page || false;
 
-    if (_.isString(this.relativeUrl) && this.relativeUrl.match(/\/(page\/\d)/)) {
+    if (_.isString(this.relativeUrl) && (this.relativeUrl.match(/\/(page\/\d)/)) || this.relativeUrl.match(/^.*[list].*$/)) {
         classes.push('archive-template');
     } else if (!this.relativeUrl || this.relativeUrl === '/' || this.relativeUrl === '') {
         classes.push('home-template');
