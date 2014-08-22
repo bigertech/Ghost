@@ -47,6 +47,12 @@ config = {
             staticAssetsUrl: 'http://cdn.example.com/assets/',
             dynamicAssetsUrl: 'http://cdn.example.com/assets/images/',
             syncImagesPath: '/data/static/images/'
+        },
+        images: {
+            // 如果下面几项留空，则说明上传的图片无需截图
+            dir: 'dirname',
+            cutWidth: 180,
+            cutHeight: 180
         }
     },
 

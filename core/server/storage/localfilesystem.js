@@ -40,13 +40,18 @@ localFileStore = _.extend(baseStore, {
 
             return nodefn.call(fs.copy, image.path, targetFilename);
         }).then(function () {
+            if (!config.images.dir) {
+                return ;
+            }
+
             var thumbDir,
                 pos,
                 thumbName;
             var uploadThumbDir;
+            var imagesDir = '/' + config.images.dir + '/';
 
-            thumbDir = targetDir + '/215x213/';
-            uploadThumbDir = uploadPath + '/215x213/';
+            thumbDir = targetDir + imagesDir;
+            uploadThumbDir = uploadPath + imagesDir;
             pos = targetFilename.lastIndexOf('/') + 1;
             thumbName = targetFilename.substr(pos);
 
@@ -75,20 +80,34 @@ localFileStore = _.extend(baseStore, {
 
             return done.promise;
         }).then(function(targetThumb) {
-            var img = images(targetFilename);
+            if (!config.images.dir || !config.images.cutWidth || !config.images.cutHeight) {
+                return ;
+            }
 
-            // img.size(img.width() * 180 / img.height(), 180);
-            // if (img.width() < 300) {
-            //     return ;
-            // }
-            // if (img.height() < 180) {
-            //     return ;
-            // }
+            var img = images(targetFilename);
+            var srcWidth = img.width();
+            var srcHeight = img.height();
+            var targetWidth = config.images.cutWidth || srcWidth;
+            var targetHeight = config.images.cutHeight || srcHeight;
+
+            // img.size(srcWidth, srcHeight);
+            if (srcWidth < targetWidth || targetWidth <= 0) {
+                targetWidth = srcWidth;
+            }
+            if (srcHeight < targetHeight  || targetHeight <= 0) {
+                targetHeight = srcHeight;
+            }
 
             hasThumb = true;
-            var x = (img.width() - 300) / 2;
-            var y = (img.height() - 215) / 2;
-            return images(img, x, y, 300, 180).save(targetThumb);
+            var x = 0;
+            var y = 0;
+            if (targetWidth !== x || targetHeight !== y) {
+                // 选取图片的居中位置坐标
+                x = (srcWidth - targetWidth) / 2;
+                y = (srcHeight - targetHeight) / 2;
+            }
+
+            return images(img, x, y, targetWidth, targetHeight).save(targetThumb);
         }).then(function() {
             // 创建cdn上得目录
             if (config.cdn.isProduction) {
