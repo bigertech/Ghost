@@ -9,7 +9,7 @@ var templates     = {},
 api.postType.browse().then(function(result){
     if(result.postTypes){
         _.forEach(result.postTypes,function(item){
-            typeLinks[item.id] = item.slug;
+            typeLinks.push(item.slug);
         });
     }
 });
