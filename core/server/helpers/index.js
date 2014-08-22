@@ -349,6 +349,10 @@ coreHelpers.uuid = function () {
 coreHelpers.slug = function () {
     return  new hbs.handlebars.SafeString(this.slug);
 };
+coreHelpers.type_class = function () {
+    return  new hbs.handlebars.SafeString('type-'+this.post_type.slug);
+};
+//end add
 
 // --- Modified by happen
 // --- If current runing env is production, load the image from cdn.
@@ -1030,6 +1034,7 @@ registerHelpers = function (adminHbs, assetHash) {
     registerThemeHelper('uuid', coreHelpers.uuid);
     registerThemeHelper('slug', coreHelpers.slug);
     registerThemeHelper('image', coreHelpers.image);
+    registerThemeHelper('type_class', coreHelpers.type_class);
     //end add
 
     // Register admin helpers
