@@ -51,8 +51,9 @@ config = {
         images: {
             // 如果下面几项留空，则说明上传的图片无需截图
             dir: 'dirname',
-            cutWidth: 180,
-            cutHeight: 180
+            targetWidth: 180,
+            // 目标宽度：目标长度的比例
+            scale: 0.5
         }
     },
 

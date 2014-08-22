@@ -80,15 +80,21 @@ localFileStore = _.extend(baseStore, {
 
             return done.promise;
         }).then(function(targetThumb) {
-            if (!config.images.dir || !config.images.cutWidth || !config.images.cutHeight) {
+            if (!config.images.dir || !config.images.targetWidth || !config.images.scale) {
                 return ;
             }
 
             var img = images(targetFilename);
-            var srcWidth = img.width();
-            var srcHeight = img.height();
-            var targetWidth = config.images.cutWidth || srcWidth;
-            var targetHeight = config.images.cutHeight || srcHeight;
+            var size = img.size();
+            var srcWidth = size.width;
+            var srcHeight = size.height;
+            var targetWidth = config.images.targetWidth || srcWidth;
+            var targetHeight = config.images.targetWidth * config.images.scale || srcHeight;
+
+            // img.size()
+            // if (targetWidth > targetHeight) {
+            // } else if (targetWidth < targetHeight) {
+            // }
 
             // img.size(srcWidth, srcHeight);
             if (srcWidth < targetWidth || targetWidth <= 0) {
