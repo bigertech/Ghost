@@ -307,16 +307,21 @@ coreHelpers.content = function (options) {
     return new hbs.handlebars.SafeString(this.html);
 };
 
+//add by liuxing add helper
 coreHelpers.title = function () {
     return  new hbs.handlebars.SafeString(hbs.handlebars.Utils.escapeExpression(this.title || ''));
 };
 coreHelpers.uuid = function () {
-    return  new hbs.handlebars.SafeString(this.post.uuid);
+    return  new hbs.handlebars.SafeString(this.uuid);
 };
 coreHelpers.slug = function () {
-    return  new hbs.handlebars.SafeString(this.post.slug);
+    return  new hbs.handlebars.SafeString(this.slug);
 };
-
+coreHelpers.image = function () {
+    console.log(this.post);
+    return  new hbs.handlebars.SafeString(this.image);
+};
+//end add
 // ### Excerpt Helper
 //
 // *Usage example:*
@@ -951,10 +956,13 @@ registerHelpers = function (adminHbs, assetHash) {
 
     registerAsyncThemeHelper('post_class', coreHelpers.post_class);
 
+    //add by liuxing
     registerAsyncThemeHelper('url', coreHelpers.url);
+
     registerThemeHelper('uuid', coreHelpers.uuid);
     registerThemeHelper('slug', coreHelpers.slug);
-
+    registerThemeHelper('image', coreHelpers.image);
+    //end add
 
     // Register admin helpers
     registerAdminHelper('ghost_script_tags', coreHelpers.ghost_script_tags);
