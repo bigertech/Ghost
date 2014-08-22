@@ -4,6 +4,7 @@ var downsize        = require('downsize'),
     polyglot        = require('node-polyglot').instance,
     _               = require('lodash'),
     when            = require('when'),
+    cheerio         = require('cheerio'),
 
     api             = require('../api'),
     config          = require('../config'),
@@ -304,6 +305,23 @@ coreHelpers.content = function (options) {
         );
     }
 
+
+    // --- Modified by happen
+    // --- If current runing env is production, load the image from cdn.
+    if (config.cdn.isProduction) {
+        var $ = cheerio.load(this.html);
+
+        $('img').each(function(index, elem) {
+            var src = $(this).attr('src');
+            if (src.indexOf(config.paths.contentPath)) {
+                $(this).attr('src', getCdnImageUrl(src));
+            }
+        });
+
+        this.html = $.html();
+    }
+    // --- end
+
     return new hbs.handlebars.SafeString(this.html);
 };
 
@@ -317,10 +335,32 @@ coreHelpers.uuid = function () {
 coreHelpers.slug = function () {
     return  new hbs.handlebars.SafeString(this.slug);
 };
+
+// --- Modified by happen
+// --- If current runing env is production, load the image from cdn.
 coreHelpers.image = function () {
-    console.log(this.post);
+    if (config.cdn.isProduction) {
+        this.image = getCdnImageUrl(this.image);
+    }
     return  new hbs.handlebars.SafeString(this.image);
 };
+
+function getCdnImageUrl(image) {
+    var pos = image.indexOf('images/');
+    if (pos !== -1) {
+        var imgPath = image.substr(pos + 'images/'.length);
+        image = config.cdn.dynamicAssetsUrl;
+        if (config.cdn.dynamicAssetsUrl && config.cdn.dynamicAssetsUrl.substr(-1) !== '/') {
+            image += '/';
+        }
+
+        image += imgPath;
+    }
+
+    return image;
+}
+// --- end
+
 //end add
 // ### Excerpt Helper
 //
