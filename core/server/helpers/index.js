@@ -118,7 +118,7 @@ coreHelpers.page_url = function (context, block) {
     //author  作者列表 http://127.0.0.1:2368/author/bigertech/page/2/
     //tag http://127.0.0.1:2368/tag/bi-ge-ke-ji/page/2/
     if(_.indexOf(typeLinks,block) != -1){
-        url += '/'+block;    //类型列表
+        url += block;    //类型列表
     }
     url += '/page/'+context;    //主页列表
 
