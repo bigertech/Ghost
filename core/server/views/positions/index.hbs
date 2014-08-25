@@ -41,7 +41,7 @@
                     <li class="content js-close-sidebar"><a href="/ghost/">文章列表</a></li>
                     <li class="editor js-close-sidebar"><a href="/ghost/editor/">新建文章</a></li>
                     <li class="settings js-close-sidebar"><a href="/ghost/settings/">设置</a></li>
-                    <li class="js-close-sidebar active"><a class="active" href="/ghost/positions">位置管理</a></li>
+                    <li class="js-close-sidebar active"><a class="active" href="/ghost/positionsIndex/">位置管理</a></li>
                 </ul>
             </nav>
         </header>
@@ -54,7 +54,7 @@
                     </header>
                     <nav class="settings-menu">
                         <ul>
-                            <li class="active"><a class="active" href="/ghost/positions/">文章位置</a></li>
+                            <li class="active"><a class="active" href="/ghost/positionsIndex/">文章位置</a></li>
                         </ul>
                     </nav>
                 </aside>
@@ -82,62 +82,6 @@
                                 <td>操作</td>
                             </thead>
                             <tbody id="rows">
-                                <tr>
-                                    <td>
-                                        <input type="text" value="最新推荐位置" placeholder="URL" />
-                                    </td>
-                                    <td>
-                                        <select style="width:160px">
-                                            <option value="">This My First Post.</option>
-                                            <option value="">This My First Post.</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <input type="text" value="http://www.google.google.google.google.com" placeholder="URL" />
-                                    </td>
-                                    <td><input type="text" value="测试标题" placeholder="标题" /></td>
-                                    <td>
-                                        <select>
-                                            <option value="">No</option>
-                                            <option value="">Yes</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <select>
-                                            <option value="">No</option>
-                                            <option value="">Yes</option>
-                                        </select>
-                                    </td>
-                                    <td><a href="">Save</a> | <a href="">Delete</a></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <input type="text" value="热门文章推荐" placeholder="URL" />
-                                    </td>
-                                    <td>
-                                        <select style="width:160px">
-                                            <option value="">This My First Post.</option>
-                                            <option value="">This My First Post.</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <input type="text" value="http://www.google.google.google.google.com" placeholder="URL" />
-                                    </td>
-                                    <td><input type="text" value="测试标题" placeholder="标题" /></td>
-                                    <td>
-                                        <select>
-                                            <option value="">No</option>
-                                            <option value="">Yes</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <select>
-                                            <option value="">No</option>
-                                            <option value="">Yes</option>
-                                        </select>
-                                    </td>
-                                    <td><a href="">Save</a> | <a href="">Delete</a></td>
-                                </tr>
                             </tbody>
                         </table>
                     </section>
@@ -147,17 +91,95 @@
     </div>
 
 <script src="http://cdn.staticfile.org/jquery/2.1.1-rc2/jquery.min.js"></script>
-<script src="http://cdn.staticfile.org/handlebars.js/2.0.0-alpha.4/handlebars.min.js"></script>
 <script>
 $(function() {
-    $('#insert-new-row').click(function() {
-        $('#rows').prepend(genNewRow());
+    $.get('/ghost/positions/', function(data) {
+        posts = data.posts || [];
+        var positions = data.positions || [];
+
+        var result = '';
+        positions.forEach(function(position) {
+            result += genNewRow(position, posts);
+        });
+
+        $('#rows').append(result);
     });
 
-    function genNewRow() {
-        var newRow = '<tr><td><select style="width:160px"><option value="">请选择一个位置</option><option value="">xxx</option></select></td><td><select style="width:160px"><option value="">请选择一篇文章</option><option value="">This My First Post.</option></select></td><td><input type="text" value="http://www.google.google.google.google.com" placeholder="URL" /></td><td><input type="text" value="测试标题" placeholder="标题" /></td><td><select><option value="">No</option><option value="">Yes</option></select></td><td><select><option value="">No</option><option value="">Yes</option></select></td><td><a href="">Save</a> | <a href="">Delete</a></td></tr>';
+    $('#insert-new-row').click(function() {
+        $('#rows').prepend(genNewRow(null, posts, randomString()));
+    });
 
-        return newRow;
+    function genNewRow(argPosition, posts) {
+        position = argPosition || {};
+
+        var id = position.id || 0;
+        var name = position.name || '';
+        var post_id = position.post_id || 0;
+        var url = position.url || '';
+        var title = position.title || '';
+        var target = position.target || 0;
+        var publish = position.publish || 0;
+
+        var random = randomString();
+
+        var newRow = '<tr>';
+        newRow += '<td><input type="text" value="' + name + '" placeholder="请输入位置名称" id="name_' + random + '" /></td>';
+
+        newRow += '<td>' + genPostSelect(posts, post_id, random) + '</td>';
+
+        newRow += '<td><input type="text" value="' + url + '" placeholder="URL" id="url_' + random + '"/></td>'
+
+        newRow += '<td><input type="text" value="' + title + '" placeholder="标题" id="title_' + random + '"/></td>'
+
+        if (target) {
+            newRow += '<td><select id="target_' + random + '"><option value="0">No</option><option value="1" selected="selected">Yes</option></select></td>';
+        } else {
+            newRow += '<td><select id="target_' + random + '"><option value="0" selected="selected">No</option><option value="1">Yes</option></select></td>';
+        }
+
+        if (publish) {
+            newRow += '<td><select id="publish_' + random + '"><option value="0">No</option><option value="1" selected="selected">Yes</option></select></td>';
+        } else {
+            newRow += '<td><select id="publish_' + random + '"><option value="0" selected="selected">No</option><option value="1">Yes</option></select></td>';
+        }
+
+        if (argPosition === null) {
+            newRow += '<td><a href="#" url="/ghost/positions/add/" value="' + random + '" class="save">Save</a></td>';
+        } else {
+            newRow += '<td><a href="#" url="/ghost/positions/add/" value="' + random + '" class="save">Save</a> | <a href="">Delete</a></td>';
+        }
+
+        newRow += '<td><input type="hidden" value="' + id + '" id="id_' + random + '"/></td>'
+
+        return newRow + '</tr>';
+    }
+
+    function genPostSelect(posts, id, random) {
+        var str = '<select style="width:160px" id="post_' + random + '"><option value="0">请选择一篇文章</option>';
+
+        posts.forEach(function(post) {
+            if (post.id == id) {
+                str += '<option value="' + post.id + '" selected="selected">' + post.title + '</option>';
+            } else {
+                str += '<option value="' + post.id + '">' + post.title + '</option>';
+            }
+        });
+
+        str += '</select>';
+
+        return str;
+    }
+
+    var alpha_num_chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz'.split('');
+    function randomString(length) {
+        if (! length) {
+            length = Math.floor(Math.random() * alpha_num_chars.length);
+        }
+        var str = '';
+        for (var i = 0; i < length; i++) {
+            str += alpha_num_chars[Math.floor(Math.random() * alpha_num_chars.length)];
+        }
+        return str;
     }
 });
 </script>

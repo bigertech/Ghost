@@ -42,8 +42,25 @@ adminControllers = {
         }).catch(errors.logError);
     },
 
-    'positions': function(req, res) {
+    'positionsIndex': function(req, res) {
         res.render('positions/index');
+    },
+
+    'positions': function(req, res) {
+        var data = {};
+
+        api.positions.findAll().then(function(positions) {
+            data.positions = positions.toJSON();
+
+            return api.posts.browse();
+        }).then(function(posts) {
+            data.posts = [];
+            posts.posts.forEach(function(post) {
+                data.posts.push(_.pick(post, 'id', 'title'))
+            });
+
+            res.jsonp(data);
+        });
     }
 };
 
