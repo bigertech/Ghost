@@ -1,11 +1,6 @@
 
 {{! This is the post loop - each post will be output using this markup }}
 {{#foreach posts}}
-		{{#if isVideo}}
-				我是视频
-		{{/if}}
-		<h1>comment:{{post_star}}</h1>
-
 <article class="{{post_class}}">
     <header class="post-header">
         <h2 class="post-title"><a href="{{url}}">{{{title}}}</a></h2>
