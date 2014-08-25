@@ -22,7 +22,10 @@ var moment      = require('moment'),
     oldRoute,
     dummyRouter = require('express').Router(),
     //add by liuxing  post type  and url relation
-    typeLinks = [];
+    typeLinks = [],
+    request = require('request'),
+    doshuoUrl = 'http://api.duoshuo.com/threads/counts.json?short_name=bigertech&threads=';
+
 api.postType.browse().then(function(result){
     if(result.postTypes){
         _.forEach(result.postTypes,function(item){
@@ -68,7 +71,48 @@ function getPostPage(options) {
         return api.posts.browse(options);
     });
 }
+//add by liuxing  获取文章的 多说信息
+function postAddDuoshuo(posts, postUuids) {
+    var defer = when.defer();
+    request(doshuoUrl+postUuids,function(err,res){
+       if(err){
 
+       }
+       var reposonse =JSON.parse(res.body).response;
+       posts = _.each(posts,function(post){
+           post.duoshuo = reposonse[post.uuid];
+           return post;
+       });
+       defer.resolve(posts);
+    });
+    return defer.promise;
+}
+//为响应文章增加多说
+function formatPageResponseDuoshuo(posts, page) {
+    // Delete email from author for frontend output
+    // TODO: do this on API level if no context is available
+    var defer = when.defer();
+    var postUuids = '';
+    posts = _.each(posts, function (post) {
+        if (post.author) {
+            delete post.author.email;
+        }
+        if(post.post_type.slug == 'videos'){
+            post.isVideo = 1;
+        }
+        postUuids += post.uuid+',';
+        return post;
+    });
+    postAddDuoshuo(posts,postUuids).then(function(posts){
+        defer.resolve({
+            posts: posts,
+            pagination: page.meta.pagination
+        });
+    });
+    return defer.promise;
+
+}
+//end add
 function formatPageResponse(posts, page) {
     // Delete email from author for frontend output
     // TODO: do this on API level if no context is available
@@ -160,7 +204,11 @@ frontendControllers = {
                         view = 'index';
                     }
 
-                    res.render(view, formatPageResponse(posts, page));
+                    //res.render(view, formatPageResponse(posts, page));
+                    formatPageResponseDuoshuo(posts, page).then(function(data){
+                        res.render(view, data);
+                    });
+
                 });
             });
         }).otherwise(handleError(next));
@@ -198,7 +246,10 @@ frontendControllers = {
                         view = category;
                     }
 
-                    res.render('list-'+view, formatPageResponse(posts, page));
+                    //res.render('list-'+view, formatPageResponse(posts, page));
+                    formatPageResponseDuoshuo(posts, page).then(function(data){
+                        res.render('list-'+view, data);
+                    });
                 });
             });
         }).otherwise(handleError(next));
@@ -243,17 +294,27 @@ frontendControllers = {
             filters.doFilter('prePostsRender', page.posts).then(function (posts) {
                 getActiveThemePaths().then(function (paths) {
                     var view = paths.hasOwnProperty('tag.hbs') ? 'tag' : 'index',
+                        result;
 
                         // Format data for template
-                        result = _.extend(formatPageResponse(posts, page), {
+//                        result = _.extend(formatPageResponse(posts, page), {
+//                            tag: page.meta.filters.tags ? page.meta.filters.tags[0] : ''
+//                        });
+                        //add by liuxing   增加评论点赞数据
+                    formatPageResponseDuoshuo(posts,page).then(function(data){
+
+                        result = _.extend(data, {
                             tag: page.meta.filters.tags ? page.meta.filters.tags[0] : ''
                         });
+                        //end add
+                        // If the resulting tag is '' then 404.
+                        if (!result.tag) {
+                            return next();
+                        }
+                        res.render(view, result);
 
-                    // If the resulting tag is '' then 404.
-                    if (!result.tag) {
-                        return next();
-                    }
-                    res.render(view, result);
+                    });
+
                 });
             });
         }).otherwise(handleError(next));
@@ -300,7 +361,8 @@ frontendControllers = {
             filters.doFilter('prePostsRender', page.posts).then(function (posts) {
                 getActiveThemePaths().then(function (paths) {
                     var view = paths.hasOwnProperty('author.hbs') ? 'author' : 'index',
-
+                        result;
+                        /*
                         // Format data for template
                         result = _.extend(formatPageResponse(posts, page), {
                             author: page.meta.filters.author ? page.meta.filters.author : ''
@@ -311,6 +373,22 @@ frontendControllers = {
                         return next();
                     }
                     res.render(view, result);
+                    */
+                    //add by liuxing   增加评论点赞数据
+                    formatPageResponseDuoshuo(posts,page).then(function(data){
+
+                        result = _.extend(data, {
+                            author: page.meta.filters.author ? page.meta.filters.author : ''
+                        });
+                        //end add
+
+                        // If the resulting author is '' then 404.
+                        if (!result.author) {
+                            return next();
+                        }
+                        res.render(view, result);
+
+                    });
                 });
             });
         }).otherwise(handleError(next));
