@@ -246,7 +246,10 @@ frontendControllers = {
                         view = category;
                     }
 
-                    res.render('list-'+view, formatPageResponse(posts, page));
+                    //res.render('list-'+view, formatPageResponse(posts, page));
+                    formatPageResponseDuoshuo(posts, page).then(function(data){
+                        res.render('list-'+view, data);
+                    });
                 });
             });
         }).otherwise(handleError(next));
