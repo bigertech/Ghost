@@ -61,6 +61,12 @@ adminControllers = {
 
             res.jsonp(data);
         });
+    },
+
+    'positionsAdd': function(req, res) {
+        console.log(req.body);
+
+        res.jsonp({name: 'happen'});
     }
 };
 

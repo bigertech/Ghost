@@ -31,6 +31,8 @@ adminRoutes = function (middleware) {
 
     router.get('/ghost/positions/', admin.positions);
 
+    router.post('/ghost/positions/add/', admin.positionsAdd);
+
     router.get('/ghost/*', middleware.redirectToSetup, admin.index);
 
     return router;

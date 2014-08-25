@@ -73,9 +73,10 @@
                     <section class="content">
                         <table>
                             <thead>
-                                <td>位置描述</td>
+                                <td>位置名称</td>
                                 <td>文章标题</td>
                                 <td>URL</td>
+                                <td>图片地址</td>
                                 <td>标题</td>
                                 <td>新窗口</td>
                                 <td>激活</td>
@@ -109,6 +110,37 @@ $(function() {
         $('#rows').prepend(genNewRow(null, posts, randomString()));
     });
 
+    $('body').on('click', '.save', function(self) {
+        var random = $(this).attr('value').trim();
+        var remote = $(this).attr('url').trim();
+        var name = $('#name_' + random).val().trim();
+        var post = $('#post_' + random).val().trim();
+        var url = $('#url_' + random).val().trim();
+        var title = $('#title_' + random).val().trim();
+        var target = $('#target_' + random).val().trim();
+        var publish = $('#publish_' + random).val().trim();
+        var id = $('#id_' + random).val().trim();
+
+        if (name === '') {
+            alert('位置名称不能为空');
+            return false;
+        }
+
+        var data = {
+            id: id,
+            name: name,
+            post_id: post,
+            url: url,
+            title: title,
+            target: target,
+            publish: publish,
+        };
+
+        $.post(remote, data, function(result) {
+
+        });
+    });
+
     function genNewRow(argPosition, posts) {
         position = argPosition || {};
 
@@ -116,20 +148,23 @@ $(function() {
         var name = position.name || '';
         var post_id = position.post_id || 0;
         var url = position.url || '';
+        var img = position.img || '';
         var title = position.title || '';
         var target = position.target || 0;
         var publish = position.publish || 0;
 
-        var random = randomString();
+        var random = randomString(8);
 
         var newRow = '<tr>';
         newRow += '<td><input type="text" value="' + name + '" placeholder="请输入位置名称" id="name_' + random + '" /></td>';
 
         newRow += '<td>' + genPostSelect(posts, post_id, random) + '</td>';
 
-        newRow += '<td><input type="text" value="' + url + '" placeholder="URL" id="url_' + random + '"/></td>'
+        newRow += '<td><input type="text" style="width:120px;" value="' + url + '" placeholder="URL" id="url_' + random + '"/></td>'
 
-        newRow += '<td><input type="text" value="' + title + '" placeholder="标题" id="title_' + random + '"/></td>'
+        newRow += '<td><input type="text" style="width:120px;" value="' + img + '" placeholder="图片地址" id="img_' + random + '"/></td>';
+
+        newRow += '<td><input type="text" style="width:120px; value="' + title + '" placeholder="标题" id="title_' + random + '"/></td>'
 
         if (target) {
             newRow += '<td><select id="target_' + random + '"><option value="0">No</option><option value="1" selected="selected">Yes</option></select></td>';
