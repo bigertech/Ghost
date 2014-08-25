@@ -22,7 +22,10 @@ var moment      = require('moment'),
     oldRoute,
     dummyRouter = require('express').Router(),
     //add by liuxing  post type  and url relation
-    typeLinks = [];
+    typeLinks = [],
+    request = require('request'),
+    doshuoUrl = 'http://api.duoshuo.com/threads/counts.json?short_name=bigertech&threads=';
+
 api.postType.browse().then(function(result){
     if(result.postTypes){
         _.forEach(result.postTypes,function(item){
@@ -68,7 +71,48 @@ function getPostPage(options) {
         return api.posts.browse(options);
     });
 }
+//add by liuxing  获取文章的 多说信息
+function postAddDuoshuo(posts, postUuids) {
+    var defer = when.defer();
+    request(doshuoUrl+postUuids,function(err,res){
+       if(err){
 
+       }
+       var reposonse =JSON.parse(res.body).response;
+       posts = _.each(posts,function(post){
+           post.duoshuo = reposonse[post.uuid];
+           return post;
+       });
+       defer.resolve(posts);
+    });
+    return defer.promise;
+}
+//为响应文章增加多说
+function formatPageResponseDuoshuo(posts, page) {
+    // Delete email from author for frontend output
+    // TODO: do this on API level if no context is available
+    var defer = when.defer();
+    var postUuids = '';
+    posts = _.each(posts, function (post) {
+        if (post.author) {
+            delete post.author.email;
+        }
+        if(post.post_type.slug == 'videos'){
+            post.isVideo = 1;
+        }
+        postUuids += post.uuid+',';
+        return post;
+    });
+    postAddDuoshuo(posts,postUuids).then(function(posts){
+        defer.resolve({
+            posts: posts,
+            pagination: page.meta.pagination
+        });
+    });
+    return defer.promise;
+
+}
+//end add
 function formatPageResponse(posts, page) {
     // Delete email from author for frontend output
     // TODO: do this on API level if no context is available
@@ -160,7 +204,11 @@ frontendControllers = {
                         view = 'index';
                     }
 
-                    res.render(view, formatPageResponse(posts, page));
+                    //res.render(view, formatPageResponse(posts, page));
+                    formatPageResponseDuoshuo(posts, page).then(function(data){
+                        res.render(view, data);
+                    });
+
                 });
             });
         }).otherwise(handleError(next));

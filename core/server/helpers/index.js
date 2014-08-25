@@ -352,6 +352,25 @@ coreHelpers.slug = function () {
 coreHelpers.type_class = function () {
     return  new hbs.handlebars.SafeString('type-'+this.post_type.slug);
 };
+
+/*
+* 多说数据模板
+* duoshuo:
+ { thread_id: '1249821464362746038',
+ channel_key: null,
+ thread_key: '53b2e44a-1c29-4048-867c-80919c3c247b',
+ comments: 4,
+ reposts: 0,
+ likes: 0,
+ weibo_reposts: 1,
+ qqt_reposts: 0 } }
+
+ 获取到点赞数量
+* */
+coreHelpers.post_star = function () {
+    var star = this.duoshuo ? this.duoshuo.likes:0;
+    return  new hbs.handlebars.SafeString(star);
+};
 //end add
 
 // --- Modified by happen
@@ -1029,12 +1048,15 @@ registerHelpers = function (adminHbs, assetHash) {
     registerAsyncThemeHelper('post_class', coreHelpers.post_class);
 
     //add by liuxing
+
     registerAsyncThemeHelper('url', coreHelpers.url);
 
     registerThemeHelper('uuid', coreHelpers.uuid);
     registerThemeHelper('slug', coreHelpers.slug);
     registerThemeHelper('image', coreHelpers.image);
     registerThemeHelper('type_class', coreHelpers.type_class);
+    registerThemeHelper('post_star', coreHelpers.post_star);
+
     //end add
 
     // Register admin helpers
