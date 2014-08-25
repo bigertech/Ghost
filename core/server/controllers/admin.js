@@ -40,6 +40,10 @@ adminControllers = {
         }).finally(function () {
             renderIndex();
         }).catch(errors.logError);
+    },
+
+    'positions': function(req, res) {
+        res.render('positions/index');
     }
 };
 

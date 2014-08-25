@@ -27,6 +27,8 @@ adminRoutes = function (middleware) {
         res.redirect(subdir + '/ghost/');
     });
 
+    router.get('/ghost/positions/', admin.positions);
+
     router.get('/ghost/*', middleware.redirectToSetup, admin.index);
 
     return router;
