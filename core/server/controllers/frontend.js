@@ -294,17 +294,27 @@ frontendControllers = {
             filters.doFilter('prePostsRender', page.posts).then(function (posts) {
                 getActiveThemePaths().then(function (paths) {
                     var view = paths.hasOwnProperty('tag.hbs') ? 'tag' : 'index',
+                        result;
 
                         // Format data for template
-                        result = _.extend(formatPageResponse(posts, page), {
+//                        result = _.extend(formatPageResponse(posts, page), {
+//                            tag: page.meta.filters.tags ? page.meta.filters.tags[0] : ''
+//                        });
+                        //add by liuxing   增加评论点赞数据
+                    formatPageResponseDuoshuo(posts,page).then(function(data){
+
+                        result = _.extend(data, {
                             tag: page.meta.filters.tags ? page.meta.filters.tags[0] : ''
                         });
+                        //end add
+                        // If the resulting tag is '' then 404.
+                        if (!result.tag) {
+                            return next();
+                        }
+                        res.render(view, result);
 
-                    // If the resulting tag is '' then 404.
-                    if (!result.tag) {
-                        return next();
-                    }
-                    res.render(view, result);
+                    });
+
                 });
             });
         }).otherwise(handleError(next));
@@ -351,7 +361,8 @@ frontendControllers = {
             filters.doFilter('prePostsRender', page.posts).then(function (posts) {
                 getActiveThemePaths().then(function (paths) {
                     var view = paths.hasOwnProperty('author.hbs') ? 'author' : 'index',
-
+                        result;
+                        /*
                         // Format data for template
                         result = _.extend(formatPageResponse(posts, page), {
                             author: page.meta.filters.author ? page.meta.filters.author : ''
@@ -362,6 +373,22 @@ frontendControllers = {
                         return next();
                     }
                     res.render(view, result);
+                    */
+                    //add by liuxing   增加评论点赞数据
+                    formatPageResponseDuoshuo(posts,page).then(function(data){
+
+                        result = _.extend(data, {
+                            author: page.meta.filters.author ? page.meta.filters.author : ''
+                        });
+                        //end add
+
+                        // If the resulting author is '' then 404.
+                        if (!result.author) {
+                            return next();
+                        }
+                        res.render(view, result);
+
+                    });
                 });
             });
         }).otherwise(handleError(next));
