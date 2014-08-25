@@ -18,6 +18,7 @@ models = {
     Accesstoken: require('./accesstoken').Accesstoken,
     Refreshtoken: require('./refreshtoken').Refreshtoken,
     PostType: require('./postType').PostType,
+    Position: require('./position').Position,
 
     init: function () {
         return true;

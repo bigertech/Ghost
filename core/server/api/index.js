@@ -18,7 +18,8 @@ var _              = require('lodash'),
     themes         = require('./themes'),
     users          = require('./users'),
     slugs          = require('./slugs'),
-    postType          = require('./postType'),
+    postType       = require('./postType'),
+    positions      = require('./positions'),
     authentication = require('./authentication'),
     uploads        = require('./upload'),
     dataExport     = require('../data/export'),
@@ -291,7 +292,8 @@ module.exports = {
     slugs: slugs,
     authentication: authentication,
     uploads: uploads,
-    postType: postType
+    postType: postType,
+    positions: positions
 };
 
 /**

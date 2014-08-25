@@ -189,6 +189,12 @@ var db = {
             name: {type: 'string', nullable: false, unique: true},
             slug: {type: 'string', nullable: false, unique: true},
             desc: {type: 'string', nullable: true}
+        },
+        positions: {
+            id: {type: 'increments', nullable: false, primary: true},
+            desc: {type: 'string', maxlength: 255, nullable: false},
+            post_id: {type: 'integer', nullable: false},
+            pos: { type: 'integer', nullable: false }
         }
     };
 
