@@ -192,9 +192,13 @@ var db = {
         },
         positions: {
             id: {type: 'increments', nullable: false, primary: true},
-            desc: {type: 'string', maxlength: 255, nullable: false},
-            post_id: {type: 'integer', nullable: false},
-            pos: { type: 'integer', nullable: false }
+            name: {type: 'string', maxlength: 255, nullable: false},
+            post_id: {type: 'integer', nullable: true},
+            url: {type: 'text', maxlength: 2000, nullable: true},
+            title: {type: 'string', maxlength: 255, nullable: true},
+            img: {type: 'text', maxlength: 2000, nullable: true},
+            target: {type: 'integer', nullable: true},
+            publish: {type: 'integer', nullable: true},
         }
     };
 
