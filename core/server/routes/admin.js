@@ -39,7 +39,7 @@ adminRoutes = function (middleware) {
 
     router.post('/ghost/position/update/', admin.positionUpdate);
 
-    router.post('/ghost/position/delete/', admin.positionDelete);
+    router.get('/ghost/position/delete/:id/', admin.positionDelete);
 
     router.get('/ghost/*', middleware.redirectToSetup, admin.index);
 

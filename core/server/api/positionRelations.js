@@ -29,6 +29,10 @@ positionRelations = {
                 return object.save(data, options);
             }
         });
+    },
+
+    destroy: function(options) {
+        return dataProvider['PositionRelation'].destroy(options);
     }
 };
 

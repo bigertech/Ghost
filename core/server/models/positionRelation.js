@@ -27,6 +27,10 @@ PositionRelation = ghostBookshelf.Model.extend({
 
     add: function(data, options) {
         return ghostBookshelf.Model.add.call(this, data, options);
+    },
+
+    destroy: function(options) {
+        return ghostBookshelf.Model.destroy.call(this, options);
     }
 });
 

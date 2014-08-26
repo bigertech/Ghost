@@ -115,7 +115,7 @@ $(function() {
         $('#rows').prepend(genNewRow(null, posts, randomString()));
     });
 
-    $('body').on('click', '.save', function(self) {
+    $('body').on('click', '.save', function() {
         var random = $(this).attr('value').trim();
         var remote = $(this).attr('url').trim();
         var post = $('#post_' + random).val().trim();
@@ -144,6 +144,25 @@ $(function() {
                 window.location.reload();
             } else {
                 alert('保存失败！');
+            }
+        });
+    });
+
+    $('body').on('click', '.delete', function() {
+        if (!confirm('确认删除？')) {
+            return false;
+        }
+
+        var random = $(this).attr('value').trim();
+        var realId = $('#real_' + random).val().trim();
+        var remote = $(this).attr('url').trim();
+
+        $.get(remote + realId, function(result) {
+            if (result.status) {
+                alert('删除成功！');
+                window.location.reload();
+            } else {
+                alert('删除失败！');
             }
         });
     });
@@ -187,7 +206,7 @@ $(function() {
         if (argPosition === null) {
             newRow += '<td><a href="#" url="/ghost/position/add/" value="' + random + '" class="save">Save</a></td>';
         } else {
-            newRow += '<td><a href="#" url="/ghost/position/update/" value="' + random + '" class="save">Save</a> | <a href="#" class="delete">Delete</a></td>';
+            newRow += '<td><a href="#" url="/ghost/position/update/" value="' + random + '" class="save">Save</a> | <a href="#" url="/ghost/position/delete/" value="' + random + '" class="delete">Delete</a></td>';
         }
 
         newRow += '<td><input type="hidden" value="' + id + '" id="real_' + random + '"/></td>'

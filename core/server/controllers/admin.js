@@ -176,7 +176,14 @@ adminControllers = {
     },
 
     'positionDelete': function(req, res) {
+        api.positionRelations.destroy({id: req.params.id}).then(function(result) {
+            if (!result) {
+                res.jsonp({ status: false });
+                return ;
+            }
 
+            res.jsonp({status: true});
+        });
     }
 };
 
