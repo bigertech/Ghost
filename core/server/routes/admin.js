@@ -31,7 +31,15 @@ adminRoutes = function (middleware) {
 
     router.get('/ghost/positions/', admin.positions);
 
-    router.post('/ghost/positions/add/', admin.positionsAdd);
+    router.get('/ghost/position/:id/', admin.position);
+
+    router.get('/ghost/positionJson/:id/', admin.positionJson);
+
+    router.post('/ghost/position/add/', admin.positionAdd);
+
+    router.post('/ghost/position/update/', admin.positionUpdate);
+
+    router.post('/ghost/position/delete/', admin.positionDelete);
 
     router.get('/ghost/*', middleware.redirectToSetup, admin.index);
 

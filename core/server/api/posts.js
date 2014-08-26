@@ -32,6 +32,18 @@ function prepareInclude(include) {
  */
 posts = {
 
+    findByIn: function findByIn(ids, options) {
+        if (_.isEmpty(ids) || !_.isArray(ids)) {
+            return when.resolve([]);
+        }
+
+        return dataProvider.Post.query(function(qb) {
+            qb.where('id', 'IN', ids);
+        }).fetchAll(options).then(function(result) {
+            return when.resolve(result.toJSON());
+        });
+    },
+
     /**
      * ### Browse
      * Find a paginated set of posts
