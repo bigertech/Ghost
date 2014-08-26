@@ -7,12 +7,19 @@ PositionRelation = ghostBookshelf.Model.extend({
     hasTimestamps: false,
     tableName: 'position_relations',
 
+    initialize: function () {
+    },
+
     posts: function() {
         return this.belongsTo(require('./post').Post, 'post_id');
     },
 
     positions: function() {
         return this.belongsTo(require('./position').Position, 'position_id');
+    }
+}, {
+    edit: function(data, options) {
+        return ghostBookshelf.Model.edit.call(this, data, options);
     }
 });
 

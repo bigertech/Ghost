@@ -82,6 +82,9 @@ adminControllers = {
         //     console.log(position.toJSON());
         // });
 
+        // api.positionRelations.edit({post_id: 3}, {id: 1}).then(function(real) {
+        //     console.log(real);
+        // });
     },
 
     'position': function(req, res, next) {
@@ -142,13 +145,20 @@ adminControllers = {
     },
 
     'positionAdd': function(req, res) {
-        console.log(req.body);
         res.jsonp({name: 'happen'});
     },
 
     'positionUpdate': function(req, res) {
-        console.log(req.body);
-        res.jsonp({name: 'hhhhh'});
+        var data = req.body;
+
+        api.positionRelations.edit(data, {id: data.id}).then(function(real) {
+            if (!real) {
+                res.jsonp({ status: false });
+                return ;
+            }
+
+            res.jsonp({status: true});
+        });
     },
 
     'positionDelete': function(req, res) {

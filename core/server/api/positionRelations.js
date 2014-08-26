@@ -17,6 +17,14 @@ positionRelations = {
                 .then(function(result) {
             return when.resolve(result.toJSON());
         });
+    },
+
+    edit: function(data, options) {
+        return dataProvider['PositionRelation'].forge({id: options.id}).fetch(options).then(function(object) {
+            if (object) {
+                return object.save(data, options);
+            }
+        });
     }
 };
 

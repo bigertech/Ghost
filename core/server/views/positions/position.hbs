@@ -121,24 +121,29 @@ $(function() {
         var post = $('#post_' + random).val().trim();
         var url = $('#url_' + random).val().trim();
         var title = $('#title_' + random).val().trim();
+        var img = $('#img_' + random).val().trim();
         var target = $('#target_' + random).val().trim();
         var publish = $('#publish_' + random).val().trim();
-        var position_id = $('#position_' + random).val().trim();
+        var realId = $('#real_' + random).val().trim();
 
         var data = {
-            id: id,
-            position_id: position_id,
+            id: realId,
+            position_id: id,
             post_id: post,
             url: url,
             title: title,
+            img: img,
             target: target,
             publish: publish,
         };
 
-
         console.log(data);
         $.post(remote, data, function(result) {
-
+            if (result.status) {
+                alert('保存成功！');
+            } else {
+                alert('保存失败！');
+            }
         });
     });
 
@@ -184,7 +189,7 @@ $(function() {
             newRow += '<td><a href="#" url="/ghost/position/update/" value="' + random + '" class="save">Save</a> | <a href="#" class="delete">Delete</a></td>';
         }
 
-        newRow += '<td><input type="hidden" value="' + id + '" id="position_' + random + '"/></td>'
+        newRow += '<td><input type="hidden" value="' + id + '" id="real_' + random + '"/></td>'
 
         return newRow + '</tr>';
     }
