@@ -89,16 +89,16 @@ adminControllers = {
 
     'position': function(req, res, next) {
         if (!req.params.id) {
-            this.positions(req, res);
-            return ;
+            return errors.error404(req, res, next);
         }
 
         var id = req.params.id || 0;
         var data = { activeId: id };
 
+        var self = this;
         api.positions.findOne({id: id}).then(function(result) {
             if (!result) {
-                return when.reject('Not Found.');
+                return when.reject('Not found.');
             }
 
             data.pageTitle = result.toJSON().name;
@@ -106,8 +106,8 @@ adminControllers = {
         }).then(function(result) {
             data.positions = result.toJSON();
             res.render('positions/position', data);
-        }).catch(function(err) {
-            errors.error500(err, req, res, next);
+        }).otherwise(function(err) {
+            return errors.error404(req, res, next);
         });
     },
 

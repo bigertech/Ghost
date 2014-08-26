@@ -54,14 +54,17 @@
                     </header>
                     <nav class="settings-menu">
                         <ul>
-                            <li class="active"><a class="active" href="/ghost/positionsIndex/">文章位置</a></li>
+                            <li class="active"><a href="/ghost/positionsIndex/">添加位置</a></li>
+                            {{#each positions}}
+                            <li><a href="/ghost/position/{{id}}">{{name}}</a></li>
+                            {{/each}}
                         </ul>
                     </nav>
                 </aside>
 
                 <section class="settings-content fade-in">
                     <header class="settings-content-header">
-                        <h1>位置管理</h1>
+                        <h1>添加位置</h1>
                         <div class="settings-header-inner">
                             <a class="button-back button active" href="/ghost/settings/">返回</a>
                             <section class="page-actions">
