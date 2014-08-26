@@ -90,6 +90,9 @@ var EditorControllerMixin = Ember.Mixin.create(MarkerManager, {
             markdown = this.get('markdown'),
             title = this.get('title'),
             titleScratch = this.get('titleScratch'),
+            //add by liuxing meta-desc
+            metaDesc = this.get('meta_description'),
+            //end add
             scratch = this.getMarkdown().withoutMarkers,
             changedAttributes;
 
@@ -204,6 +207,9 @@ var EditorControllerMixin = Ember.Mixin.create(MarkerManager, {
             // set markdown equal to what's in the editor, minus the image markers.
             this.set('markdown', this.getMarkdown().withoutMarkers);
             this.set('title', this.get('titleScratch'));
+            //add by liuxing
+            this.set('meta_description', this.get('meta_description'));
+            //end add
             this.set('status', status);
 
             return this.get('model').save().then(function (model) {

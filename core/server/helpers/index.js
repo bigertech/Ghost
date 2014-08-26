@@ -375,6 +375,11 @@ coreHelpers.post_star = function () {
     var star = this.duoshuo ? this.duoshuo.likes:0;
     return  new hbs.handlebars.SafeString(star);
 };
+//输出文章的简介
+coreHelpers.post_desc = function () {
+    var desc = this.meta_description ? this.meta_description : '';
+    return  new hbs.handlebars.SafeString(desc);
+};
 /*
 * 响应数据
 * { id: 'XNzI1NDU4ODI0',
@@ -724,7 +729,6 @@ coreHelpers.meta_description = function (options) {
             description = '';
         }
     }
-
     return filters.doFilter('meta_description', description).then(function (description) {
         description = description || '';
         return description.trim();
@@ -1123,6 +1127,7 @@ registerHelpers = function (adminHbs, assetHash) {
     registerThemeHelper('image', coreHelpers.image);
     registerThemeHelper('type_class', coreHelpers.type_class);
     registerThemeHelper('post_star', coreHelpers.post_star);
+    registerThemeHelper('post_desc', coreHelpers.post_desc);
     registerAsyncThemeHelper('video_play_count', coreHelpers.video_play_count);
 
     //end add
