@@ -1,41 +1,41 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-    {{! Document Settings }}
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    {{! Page Meta }}
-    <title>{{meta_title}}</title>
-    <meta name="description" content="{{meta_description}}" />
+  <title>{{meta_title}}</title>
+  <meta name="description" content="{{meta_description}}" />
+  <meta name="keywords" content="笔戈科技,魅族，手机，评测，科技，博客,{{meta_title}}">
 
-    <meta name="HandheldFriendly" content="True" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" href="{{asset "favicon.ico"}}">
+  <link rel="stylesheet" type="text/css" href="{{asset "css/main.min.css"}}" />
 
-    <link rel="shortcut icon" href="{{asset "favicon.ico"}}">
+  {{{block "pageStyles"}}}
 
-    {{! Styles'n'Scripts }}
-    <link rel="stylesheet" type="text/css" href="{{asset "css/screen.css"}}" />
-
-    {{! Ghost outputs important style and meta data with this tag }}
-    {{ghost_head}}
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
 </head>
 <body class="{{body_class}}">
 
-    {{! Everything else gets inserted here }}
-    {{{body}}}
+  {{> "navbar"}}
 
-    <footer class="site-footer clearfix">
-         <section class="copyright"><a href="{{@blog.url}}">{{@blog.title}}</a> &copy; {{date format="YYYY"}}</section>
-         <section class="poweredby">Proudly published with <a href="https://ghost.org">Ghost</a></section>
-    </footer>
+  {{{body}}}
 
-    {{! Ghost outputs important scripts and data with this tag }}
-    {{ghost_foot}}
+  {{> "footer"}}
 
-    {{! The main JavaScript file for Casper }}
-    <script type="text/javascript" src="{{asset "js/jquery.fitvids.js"}}"></script>
-    <script type="text/javascript" src="{{asset "js/index.js"}}"></script>
-
+  <script src="{{asset "js/jquery.min.js"}}"></script>
+  <script src="{{asset "js/jquery.lazyload.min.js"}}"></script>
+  <script charset="utf-8">
+    $("img.lazy").lazyload();
+  </script>
+  <script src="{{asset "js/index.js"}}"></script>
+  <script src="{{asset "js/returnTop.js"}}"></script>
+  <script src="{{asset "js/navbar.js"}}"></script>
 </body>
 </html>

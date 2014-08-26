@@ -1,20 +1,33 @@
 
 {{! This is the post loop - each post will be output using this markup }}
-{{#foreach posts}}
-<article class="{{post_class}}">
-    <header class="post-header">
-        <h2 class="post-title"><a href="{{url}}">{{{title}}}</a></h2>
-    </header>
-    <section class="post-excerpt">
-        <p>{{excerpt words="30"}} <a class="read-more" href="{{url}}">&raquo;</a></p>
-    </section>
-    <footer class="post-meta">
-        {{#if author.image}}<img class="author-thumb" src="{{author.image}}" alt="Author image" nopin="nopin" />{{/if}}
+
+<articles class="container center-block">
+  <ul class="posts">
+  {{#foreach posts}}
+    <li class="post-item">
+      {{#if isVideo}}
+      <div class="isVideo icon-play desktop-display"></div>
+      {{/if}}
+      <a href="{{url}}">
+        <img class="post-image left desktop-display lazy" data-original="{{image}}">
+        <h2 class="post-title">{{title}}</h2>
+      </a>
+      <div class="post-meta">
+        {{#if author.image}}<img class="avatar lazy" data-original="{{author.image}}" alt="Author image">{{/if}}
         {{author}}
-        {{tags prefix=" on "}} 
-        <time class="post-date" datetime="{{date format='YYYY-MM-DD'}}">{{date format="DD MMMM YYYY"}}</time> 
-    </footer>
-</article>
-{{/foreach}}
-
-
+        <time class="publish-time" datetime="{{date published_at timeago="ture"}}">
+          <span class="desktop-display">•</span>{{date published_at timeago="ture"}}
+        </time>
+        {{#if isVideo}}
+          <span class="count icon-view">{{video_play_count}}</span>
+        {{else}}
+          <span class="count icon-heart">{{post_star}}</span>
+        {{/if}}
+      </div>
+      <p class="post-description desktop-display">
+        {{excerpt words="30"}}
+      </p>
+    </li>
+  {{/foreach}}
+  </ul>
+</articles>

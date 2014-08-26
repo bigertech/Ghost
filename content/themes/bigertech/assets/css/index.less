@@ -1,0 +1,509 @@
+
+// BASIC
+//----------------------------------------------------------
+.container {
+  width: 730px;
+}
+.mobile-display {
+  display: none;
+}
+
+#toTop {
+  width: 50px;
+  height: 50px;
+  background: url(../images/v_detail.png) no-repeat 0 -100px;
+  &:hover {
+    background-position: -100px -100px;
+  }
+}
+
+
+
+
+
+// FONTFACE
+//----------------------------------------------------------
+@font-face {
+	font-family: 'icomoon';
+	src:url('../fonts/icomoon.eot?-75r99');
+	src:url('../fonts/icomoon.eot?#iefix-75r99') format('embedded-opentype'),
+		url('../fonts/icomoon.woff?-75r99') format('woff'),
+		url('../fonts/icomoon.ttf?-75r99') format('truetype'),
+		url('../fonts/icomoon.svg?-75r99#icomoon') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+	font-family: 'icomoon';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.icon-down:before {
+	content: "\e60c";
+}
+.icon-up:before {
+	content: "\e60d";
+}
+.icon-play:before {
+	content: "\e610";
+}
+.icon-search:before {
+	content: "\e604";
+}
+.icon-close:before {
+	content: "\e602";
+}
+.icon-bglogo:before {
+	content: "\e603";
+}
+.icon-search:before {
+	content: "\e604";
+}
+.icon-unheart:before {
+	content: "\e609";
+}
+.icon-heart:before {
+	content: "\e60a";
+}
+.icon-view:before {
+	content: "\e60b";
+}
+.icon-rss:before {
+	content: "\e605";
+}
+.icon-youku:before {
+	content: "\e606";
+}
+.icon-wechat:before {
+	content: "\e607";
+}
+.icon-weibo:before {
+	content: "\e608";
+}
+.icon-prev-page:before {
+	content: "\e600";
+}
+.icon-next-page:before {
+	content: "\e601";
+}
+
+
+
+
+
+// NAVBAR
+//----------------------------------------------------------
+.navbar {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  .icon-bglogo, .icon-search {
+    display: inline-block;
+    margin-top: 20px;
+    font-size: 28px;
+    color: #fff;
+    cursor: pointer;
+  }
+  .icon-bglogo {
+    margin-left: 20px;
+  }
+  .icon-search {
+    margin-right: 20px;
+  }
+}
+
+
+
+
+
+// HEADER
+//----------------------------------------------------------
+.bg-header {
+  display: table;
+  width: 100%;
+  height: 380px;
+  .bg-cover {
+    position: absolute;
+    z-index: -999;
+    height: 380px;
+    overflow: hidden;
+    transition-property: height;
+    -webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+    -webkit-transition-timing-function: cubic-bezier(0.7,0,0.3,1);
+    transition-timing-function: cubic-bezier(0.7,0,0.3,1);
+    img {
+      height: auto;
+      width: 100%;
+    }
+  }
+  .bg-slogan {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    .bigertech {
+      display: block;
+      width: 264px;
+      height: 38px;
+      margin: 0 auto;
+      background: url('../images/bigertech.png') no-repeat;
+      background-size: 100%;
+    }
+    .bg-description {
+      color: #fff;
+    }
+  }
+  .author-profile {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    .author-avatar {
+      width: 122px;
+      height: 122px;
+      border: 5px solid #fff;
+      border-radius: 50%;
+    }
+    .author-name {
+      font-size: 48px;
+      color: #585a66;
+    }
+    .author-bio {
+      font-size: 18px;
+      color: #585a66;
+    }
+  }
+}
+
+// 下拉后，bg-header 的变化效果
+.modify {
+  .bg-cover {
+    height: 75px;
+  }
+  .bg-description {
+    font-size: 28px;
+    color: #000 !important;
+  }
+}
+
+
+
+
+
+// TOPIC
+//----------------------------------------------------------
+.topics {
+  border-bottom: 1px solid #d8d8d8;
+  .topic-item-left, .topic-item-right {
+    position: relative;
+    display: inline-block;
+    width: 363px;
+    height: 170px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    .topic-wrapper {
+      display: block;
+      width: 312px;
+      height: 170px;
+      overflow: hidden;
+      .topic-img {
+        width: 100%;
+        height: 170px;
+        &:hover {
+          -webkit-animation:pulse 1s .2s ease both;
+          -moz-animation:pulse 1s .2s ease both;
+        }
+      }
+    }
+    .topic-title, &:after {
+      position: absolute;
+      top: 120px;
+      left: 0px;
+      width: 245px;
+      height: 35px;
+      padding-left: 5px;
+      font-size: 22px;
+      color: #fff;
+      z-index: 89;
+    }
+    &:after {
+      content: "";
+      background-color: #000;
+      opacity: 0.5;
+      z-index: 88;
+    }
+  }
+  .topic-item-left {
+    padding-right: 50px;
+    border-right: 1px solid #d8d8d8;
+  }
+  .topic-item-right {
+    padding-left: 50px;
+    .topic-title, &:after {
+      left: 50px;
+    }
+  }
+}
+
+
+
+
+
+// POST
+//----------------------------------------------------------
+.posts {
+  width: 100%;
+  .post-item {
+    position: relative;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    border-bottom: 1px solid #d8d8d8;
+    .isVideo {
+      position: absolute;
+      top: 82.5px;
+      left: 66.5px;
+      font-size: 42px;
+      color: #fff;
+      cursor: pointer;
+    }
+    .post-image {
+      width: 175px;
+      height: 105px;
+      margin-right: 32px;
+    }
+    .post-title {
+      max-height: 1.2em;
+      overflow: hidden;
+      line-height: 1.2em;
+      font-size: 24px;
+      font-weight: 400;
+    }
+    .post-meta {
+      margin-top: 5px;
+      margin-bottom: 5px;
+      font-size: 14px;
+      .avatar {
+        float: left;
+        width: 24px;
+        height: 24px;
+        margin-right: 12px;
+        border-radius: 50%;
+      }
+      a[href*="author"], .publish-time, .count {
+        color: #9EABB3;
+      }
+      .count {
+        color: #ff3f53;
+        margin-left: 25px;
+        &::before {
+          margin-right: 5px;
+        }
+      }
+    }
+    .post-description {
+      max-height: 50px;
+      font-size: 14px;
+      line-height: 1.7em;
+      color: #4e4e4e;
+    	overflow: hidden;
+    }
+  }
+}
+
+
+
+
+// PAGINATION
+//----------------------------------------------------------
+.pagination {
+  height: 44px;
+  margin-top: 49px;
+  margin-bottom: 75px;
+  text-align: center;
+  .page {
+    width:36px;
+    height:36px;
+    padding: 6.5px 12px;
+    margin-right: 10px;
+    margin-left: -1px;
+    line-height: 1.42857143;
+    color: #333;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid #d8d8d8;
+    &:hover {
+      background-color: #eee;
+    }
+    &:active {
+      background-color: #333;
+      color: #fff;
+    }
+  }
+  .newer-posts {
+    margin-right: 10px;
+  }
+  .omit {
+    color:#000;
+  }
+  .current {
+    background-color: #eee;
+  }
+}
+
+
+
+
+// FOOTER
+//----------------------------------------------------------
+footer {
+  width: 100%;
+  height: auto;
+  text-align: center;
+  background-color: #111;
+  .social-media {
+    padding-top: 60px;
+    li {
+      display: inline-block;
+      margin: 0 15px;
+    }
+    .icon-weibo, .icon-wechat, .icon-youku, .icon-rss {
+      font-size: 38px;
+      color: #a1a1a1;
+    }
+  }
+  .icon-bglogo {
+    margin-top: 25px;
+    margin-bottom: 30px;
+    font-size: 60px;
+    color: #fff;
+  }
+  .qrcode {
+    display: none;
+    position: absolute;
+    z-index: 10;
+  }
+  .footer-info {
+    padding-bottom: 40px;
+    font-size: 12px;
+    color: #fff;
+  }
+}
+
+
+@media screen and (max-width: 768px) {
+  .desktop-display {
+    display: none;
+  }
+  .mobile-display {
+    display: block;
+  }
+  .container {
+    width: 100%;
+  }
+
+  .bg-header {
+    height: 250px;
+    margin-bottom: 20px;
+    .bg-cover {
+      height: 250px;
+    }
+    .bg-slogan {
+      .bigertech {
+        width: 180px;
+      }
+      .bg-description {
+        line-height: 1em;
+        font-size: 18px;
+      }
+    }
+  }
+
+  .posts {
+    .post-item {
+      display: block;
+      width: 90%;
+      margin-left: auto;
+      margin-right: auto;
+      padding-top: 28px;
+      padding-bottom: 20px;
+      padding-left: 26px;
+      .post-title {
+        font-size: 14px;
+      }
+      .post-meta {
+        margin-top: 12px;
+        margin-bottom: 0px;
+        font-size: 12px;
+        .avatar {
+          width: 36px;
+          height: 36px;
+          margin-right: 12px;
+        }
+        a[href*="author"], .publish-time, .count {
+          line-height: 1.5em;
+        }
+        a[href*="author"] {
+          display: block;
+        }
+        .count {
+          margin-left: 15px;
+        }
+      }
+    }
+  }
+
+  .pagination {
+    width: 112px;
+    height: 44px;
+    margin: 0 auto;
+    margin-top: 24px;
+    margin-bottom: 50px;
+    .page-num, .current, .omit {
+      display: none;
+    }
+    .newer-posts, .older-posts {
+      display: inline-block;
+      width: 44px;
+      height: 44px;
+      margin: 0 auto;
+      text-indent: -9999px;
+    }
+    .newer-posts {
+      margin-right: 18px;
+      background: url('../images/left-normal.png') no-repeat;
+    }
+    .older-posts {
+      background: url('../images/right-normal.png') no-repeat;
+    }
+  }
+}
+
+
+// keyframes
+@-webkit-keyframes pulse {
+  0%{-webkit-transform:scale(1)}
+  50%{-webkit-transform:scale(1.1)}
+  100%{-webkit-transform:scale(1)}
+}
+@-moz-keyframes pulse {
+  0%{-moz-transform:scale(1)}
+  50%{-moz-transform:scale(1.1)}
+  100%{-moz-transform:scale(1)}
+}
+@keyframes pulse {
+  0%{-moz-transform:scale(1)}
+  50%{-moz-transform:scale(1.1)}
+  100%{-moz-transform:scale(1)}
+}
