@@ -380,6 +380,14 @@ coreHelpers.post_desc = function () {
     var desc = this.meta_description ? this.meta_description : '';
     return  new hbs.handlebars.SafeString(desc);
 };
+coreHelpers.duoshuo_block = function () {
+    var context = {
+        title : this.title,
+        uuid : this.uuid,
+        duoshuo_url : config.url+'/'+ this.slug
+    };
+    return template.execute('duoshuo', context);
+};
 /*
 * 响应数据
 * { id: 'XNzI1NDU4ODI0',
@@ -1128,6 +1136,7 @@ registerHelpers = function (adminHbs, assetHash) {
     registerThemeHelper('type_class', coreHelpers.type_class);
     registerThemeHelper('post_star', coreHelpers.post_star);
     registerThemeHelper('post_desc', coreHelpers.post_desc);
+    registerThemeHelper('duoshuo_block', coreHelpers.duoshuo_block);
     registerAsyncThemeHelper('video_play_count', coreHelpers.video_play_count);
 
     //end add
