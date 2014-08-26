@@ -1,0 +1,398 @@
+
+.l-menu .container .categories, .l-menu .container .categories li a .text {
+  display: -moz-inline-stack;
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  zoom: 1;
+  *display: inline
+}
+
+.btn_close {
+  display: block;
+  cursor: pointer
+}
+
+.icon-close {
+  font-size: 32px;
+  color: #333;
+
+  -webkit-transition: -webkit-transform 0.3s cubic-bezier(0.455, 0.03, 0, 1);
+  -moz-transition: -moz-transform 0.3s cubic-bezier(0.455, 0.03, 0, 1);
+  -o-transition: -o-transform 0.3s cubic-bezier(0.455, 0.03, 0, 1);
+  transition: transform 0.3s cubic-bezier(0.455, 0.03, 0, 1)
+}
+
+.icon-close:hover {
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  transform: rotate(90deg);
+
+  text-decoration: none !important;
+}
+
+.btn_close {
+  position: absolute;
+  top: 24px;
+  right: 30px
+}
+
+.l-menu, .l-search {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 90;
+  display: none;
+  width: 100%;
+  height: 100%
+}
+
+.l-menu .container, .l-search .container {
+  position: relative;
+  display: table;
+  z-index: 92;
+  margin: 0 auto;
+  width: 100%;
+  height: 100%;
+  color: #fff;
+  text-align: center
+}
+
+.l-menu .container .btn_close, .l-search .container .btn_close {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+  opacity: 0;
+  -webkit-transition: opacity 500ms cubic-bezier(0.455, 0.03, 0, 1);
+  -moz-transition: opacity 500ms cubic-bezier(0.455, 0.03, 0, 1);
+  -o-transition: opacity 500ms cubic-bezier(0.455, 0.03, 0, 1);
+  transition: opacity 500ms cubic-bezier(0.455, 0.03, 0, 1);
+  -webkit-transition-delay: 0ms;
+  -moz-transition-delay: 0ms;
+  -o-transition-delay: 0ms;
+  transition-delay: 0ms;
+  position: absolute;
+  text-align: left;
+  top: 20px;
+  left: 20px;
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+}
+
+.l-menu .container .categories {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+  opacity: 0;
+  -webkit-transition: opacity 800ms cubic-bezier(0.39, 0.575, 0.565, 1);
+  -moz-transition: opacity 800ms cubic-bezier(0.39, 0.575, 0.565, 1);
+  -o-transition: opacity 800ms cubic-bezier(0.39, 0.575, 0.565, 1);
+  transition: opacity 800ms cubic-bezier(0.39, 0.575, 0.565, 1);
+  -webkit-transition-delay: 200ms;
+  -moz-transition-delay: 200ms;
+  -o-transition-delay: 200ms;
+  transition-delay: 200ms;
+  -webkit-perspective: 1000;
+  -moz-perspective: 1000;
+  -ms-perspective: 1000;
+  -o-perspective: 1000;
+  perspective: 1000;
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -ms-backface-visibility: hidden;
+  -o-backface-visibility: hidden;
+  backface-visibility: hidden;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -220px 0 0 -200px;
+  padding: 0;
+  width: 400px;
+  height: 400px
+}
+
+.l-search #searchform {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.l-search #searchform input[type="text"],
+.l-search #searchform input[type="submit"] {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+  opacity: 0;
+  -webkit-transition: opacity 500ms;
+  -moz-transition: opacity 500ms;
+  -o-transition: opacity 500ms;
+  transition: opacity 500ms;
+}
+
+.l-search.is-active #searchform input[type="text"],
+.l-search.is-active #searchform input[type="submit"] {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=1);
+  opacity: 1;
+}
+
+.l-search #searchform input[type="text"] {
+  padding-left: 5px;
+  width: 330px;
+  font-size: 36px;
+  color: #333;
+  line-height: 1.5em;
+  border: none;
+  border-left: 6px solid #333;
+  background-color: transparent;
+  z-index: 9999;
+}
+
+::-webkit-input-placeholder { /* WebKit browsers */
+    color:    #d9d7d8;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color:    #d9d7d8;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color:    #d9d7d8;
+}
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+    color:    #d9d7d8;
+}
+
+.l-search #searchform input[type="text"]:focus {
+  outline: #d9d7d8 auto 3px;
+}
+
+.l-search #searchform input[type="submit"] {
+  background-color: transparent;
+  border: none;
+  color: #888;
+}
+
+.l-menu .container .categories li {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+  opacity: 0;
+  -webkit-transition: opacity 500ms cubic-bezier(0.455, 0.03, 0, 1);
+  -moz-transition: opacity 500ms cubic-bezier(0.455, 0.03, 0, 1);
+  -o-transition: opacity 500ms cubic-bezier(0.455, 0.03, 0, 1);
+  transition: opacity 500ms cubic-bezier(0.455, 0.03, 0, 1);
+  -webkit-perspective: 1000;
+  -moz-perspective: 1000;
+  -ms-perspective: 1000;
+  -o-perspective: 1000;
+  perspective: 1000;
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -ms-backface-visibility: hidden;
+  -o-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transition-delay: 0ms;
+  -moz-transition-delay: 0ms;
+  -o-transition-delay: 0ms;
+  transition-delay: 0ms;
+  margin: 0 0 0.1em 0;
+  padding: 0;
+  list-style: none;
+  text-transform: uppercase;
+  letter-spacing: 5px;
+  font-size: 2em
+}
+
+.l-menu .container .categories li:nth-child(7) {
+  -webkit-transition-delay: 0ms;
+  -moz-transition-delay: 0ms;
+  -o-transition-delay: 0ms;
+  transition-delay: 0ms
+}
+
+.l-menu .container .categories li:nth-child(6) {
+  -webkit-transition-delay: 80ms;
+  -moz-transition-delay: 80ms;
+  -o-transition-delay: 80ms;
+  transition-delay: 80ms
+}
+
+.l-menu .container .categories li:nth-child(5) {
+  -webkit-transition-delay: 160ms;
+  -moz-transition-delay: 160ms;
+  -o-transition-delay: 160ms;
+  transition-delay: 160ms
+}
+
+.l-menu .container .categories li:nth-child(4) {
+  -webkit-transition-delay: 240ms;
+  -moz-transition-delay: 240ms;
+  -o-transition-delay: 240ms;
+  transition-delay: 240ms
+}
+
+.l-menu .container .categories li:nth-child(3) {
+  -webkit-transition-delay: 320ms;
+  -moz-transition-delay: 320ms;
+  -o-transition-delay: 320ms;
+  transition-delay: 320ms
+}
+
+.l-menu .container .categories li:nth-child(2) {
+  -webkit-transition-delay: 400ms;
+  -moz-transition-delay: 400ms;
+  -o-transition-delay: 400ms;
+  transition-delay: 400ms
+}
+
+.l-menu .container .categories li:nth-child(1) {
+  -webkit-transition-delay: 480ms;
+  -moz-transition-delay: 480ms;
+  -o-transition-delay: 480ms;
+  transition-delay: 480ms
+}
+
+.l-menu .container .categories li a {
+  display: block;
+  padding: 0.2em;
+  color: #333
+}
+
+.l-menu .container .categories li a .text {
+  position: relative
+}
+
+.l-menu .container .categories li a .text:after {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+  opacity: 0;
+  -webkit-transition: opacity 0.3s cubic-bezier(0.455, 0.03, 0, 1),width 0.4s cubic-bezier(0.785, 0.135, 0.15, 0.86);
+  -moz-transition: opacity 0.3s cubic-bezier(0.455, 0.03, 0, 1),width 0.4s cubic-bezier(0.785, 0.135, 0.15, 0.86);
+  -o-transition: opacity 0.3s cubic-bezier(0.455, 0.03, 0, 1),width 0.4s cubic-bezier(0.785, 0.135, 0.15, 0.86);
+  transition: opacity 0.3s cubic-bezier(0.455, 0.03, 0, 1),width 0.4s cubic-bezier(0.785, 0.135, 0.15, 0.86);
+  display: block;
+  margin: 0 auto;
+  width: 0%;
+  height: 1px;
+  background-color: #333;
+  content: ""
+}
+
+.l-menu .container .categories li a:hover .text:after {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+  opacity: 1;
+  width: 100%
+}
+
+.l-menu .bg, .l-search .bg {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+  opacity: 0;
+  -webkit-transition: opacity 700ms cubic-bezier(0.39, 0.575, 0.565, 1);
+  -moz-transition: opacity 700ms cubic-bezier(0.39, 0.575, 0.565, 1);
+  -o-transition: opacity 700ms cubic-bezier(0.39, 0.575, 0.565, 1);
+  transition: opacity 700ms cubic-bezier(0.39, 0.575, 0.565, 1);
+  -webkit-transition-delay: 500ms;
+  -moz-transition-delay: 500ms;
+  -o-transition-delay: 500ms;
+  transition-delay: 500ms;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 91;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  background-color: rgba(255, 255, 255, 0.95);
+}
+
+.l-menu.is-active .bg, .l-search.is-active .bg {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+  opacity: 1;
+  -webkit-transition-delay: 0ms;
+  -moz-transition-delay: 0ms;
+  -o-transition-delay: 0ms;
+  transition-delay: 0ms;
+  -webkit-transition: opacity 500ms cubic-bezier(0.455, 0.03, 0, 1);
+  -moz-transition: opacity 500ms cubic-bezier(0.455, 0.03, 0, 1);
+  -o-transition: opacity 500ms cubic-bezier(0.455, 0.03, 0, 1);
+  transition: opacity 500ms cubic-bezier(0.455, 0.03, 0, 1)
+}
+
+.l-menu.is-active .btn_close, .l-search.is-active .btn_close {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+  opacity: 1;
+  -webkit-transition-delay: 700ms;
+  -moz-transition-delay: 700ms;
+  -o-transition-delay: 700ms;
+  transition-delay: 700ms
+}
+
+.l-menu.is-active .categories {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+  opacity: 1;
+  -webkit-transition: opacity 800ms cubic-bezier(0.6, -0.28, 0.735, 0.045);
+  -moz-transition: opacity 800ms cubic-bezier(0.6, -0.28, 0.735, 0.045);
+  -o-transition: opacity 800ms cubic-bezier(0.6, -0.28, 0.735, 0.045);
+  transition: opacity 800ms cubic-bezier(0.6, -0.28, 0.735, 0.045);
+  -webkit-transition-delay: 0ms;
+  -moz-transition-delay: 0ms;
+  -o-transition-delay: 0ms;
+  transition-delay: 0ms
+}
+
+.l-menu.is-active .categories li {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+  opacity: 1;
+  -webkit-transition: opacity 1000ms cubic-bezier(0.6, -0.28, 0.735, 0.045);
+  -moz-transition: opacity 1000ms cubic-bezier(0.6, -0.28, 0.735, 0.045);
+  -o-transition: opacity 1000ms cubic-bezier(0.6, -0.28, 0.735, 0.045);
+  transition: opacity 1000ms cubic-bezier(0.6, -0.28, 0.735, 0.045)
+}
+
+.l-menu.is-active .categories li a.is-active {
+  border-color: #414141;
+  -webkit-transition-delay: 600ms;
+  -moz-transition-delay: 600ms;
+  -o-transition-delay: 600ms;
+  transition-delay: 600ms
+}
+
+.l-menu.is-active .categories li:nth-child(1) {
+  -webkit-transition-delay: 0ms;
+  -moz-transition-delay: 0ms;
+  -o-transition-delay: 0ms;
+  transition-delay: 0ms
+}
+
+.l-menu.is-active .categories li:nth-child(2) {
+  -webkit-transition-delay: 100ms;
+  -moz-transition-delay: 100ms;
+  -o-transition-delay: 100ms;
+  transition-delay: 100ms
+}
+
+.l-menu.is-active .categories li:nth-child(3) {
+  -webkit-transition-delay: 200ms;
+  -moz-transition-delay: 200ms;
+  -o-transition-delay: 200ms;
+  transition-delay: 200ms
+}
+
+.l-menu.is-active .categories li:nth-child(4) {
+  -webkit-transition-delay: 300ms;
+  -moz-transition-delay: 300ms;
+  -o-transition-delay: 300ms;
+  transition-delay: 300ms
+}
+
+.l-menu.is-active .categories li:nth-child(5) {
+  -webkit-transition-delay: 400ms;
+  -moz-transition-delay: 400ms;
+  -o-transition-delay: 400ms;
+  transition-delay: 400ms
+}
+
+.l-menu.is-active .categories li:nth-child(6) {
+  -webkit-transition-delay: 500ms;
+  -moz-transition-delay: 500ms;
+  -o-transition-delay: 500ms;
+  transition-delay: 500ms
+}
+
+.l-menu.is-active .categories li:nth-child(7) {
+  -webkit-transition-delay: 600ms;
+  -moz-transition-delay: 600ms;
+  -o-transition-delay: 600ms;
+  transition-delay: 600ms
+}
