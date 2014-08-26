@@ -116,7 +116,10 @@ adminControllers = {
         var id = req.params.id || 0;
 
         api.positionRelations.findByPositionId(id).then(function(result) {
-            data.posReals = result;
+            var sortId = _.property('id');
+            data.posReals = _.sortBy(result, function(value) {
+                return 100000 - value.id;
+            }, Math);
 
             var ids = [];
             result.forEach(function(item) {
