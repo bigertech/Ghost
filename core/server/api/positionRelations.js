@@ -19,6 +19,10 @@ positionRelations = {
         });
     },
 
+    add: function(data, options) {
+        return dataProvider['PositionRelation'].add(data, options);
+    },
+
     edit: function(data, options) {
         return dataProvider['PositionRelation'].forge({id: options.id}).fetch(options).then(function(object) {
             if (object) {

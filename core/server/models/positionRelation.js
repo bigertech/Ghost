@@ -10,6 +10,9 @@ PositionRelation = ghostBookshelf.Model.extend({
     initialize: function () {
     },
 
+    defaults: function () {
+    },
+
     posts: function() {
         return this.belongsTo(require('./post').Post, 'post_id');
     },
@@ -20,6 +23,10 @@ PositionRelation = ghostBookshelf.Model.extend({
 }, {
     edit: function(data, options) {
         return ghostBookshelf.Model.edit.call(this, data, options);
+    },
+
+    add: function(data, options) {
+        return ghostBookshelf.Model.add.call(this, data, options);
     }
 });
 

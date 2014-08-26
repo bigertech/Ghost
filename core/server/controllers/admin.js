@@ -145,7 +145,18 @@ adminControllers = {
     },
 
     'positionAdd': function(req, res) {
-        res.jsonp({name: 'happen'});
+        var data = req.body;
+
+        delete data.id;
+
+        api.positionRelations.add(data).then(function(rela) {
+            if (!rela) {
+                res.jsonp({ status: false });
+                return ;
+            }
+
+            res.jsonp({status: true});
+        });
     },
 
     'positionUpdate': function(req, res) {

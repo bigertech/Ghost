@@ -141,6 +141,7 @@ $(function() {
         $.post(remote, data, function(result) {
             if (result.status) {
                 alert('保存成功！');
+                window.location.reload();
             } else {
                 alert('保存失败！');
             }
