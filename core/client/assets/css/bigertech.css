@@ -1,0 +1,11 @@
+/*add by liuxing 文章描述*/
+.entry-container .entry-title input{
+    float: left;
+    width: 50%;
+}
+#entry-meta_description{
+    font-size: 2em;
+    font-weight: normal;
+    border-left: 5px solid #ccc;
+    padding: 10px 0;
+}
