@@ -12,7 +12,7 @@ var _              = require('lodash'),
     User           = require('./user').User,
     ghostBookshelf = require('./base'),
     xmlrpc         = require('../xmlrpc'),
-    Position       = require('./position').Position,
+    PositionRelation = require('./positionRelation').PositionRelation,
     Post,
     Posts;
 function getPostImg(html){
@@ -175,6 +175,10 @@ Post = ghostBookshelf.Model.extend({
     },
 
     // Relations
+    positions: function() {
+        return this.belongsToMany(require('./position').Position).through(PositionRelation);
+    },
+
     author_id: function () {
         return this.belongsTo('User', 'author_id');
     },
@@ -196,10 +200,6 @@ Post = ghostBookshelf.Model.extend({
 
     tags: function () {
         return this.belongsToMany('Tag');
-    },
-
-    position: function() {
-        return this.belongsTo(Position, 'post_id');
     },
 
     fields: function () {

@@ -19,6 +19,7 @@ models = {
     Refreshtoken: require('./refreshtoken').Refreshtoken,
     PostType: require('./postType').PostType,
     Position: require('./position').Position,
+    PositionRelation: require('./positionRelation').PositionRelation,
 
     init: function () {
         return true;
