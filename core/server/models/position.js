@@ -8,6 +8,12 @@ Position = ghostBookshelf.Model.extend({
     hasTimestamps: false,
     tableName: 'positions',
 
+    initialize: function () {
+    },
+
+    defaults: function () {
+    },
+
     posts: function () {
         return this.belongsToMany(require('./post').Post).through(PositionRelation);
     }
@@ -29,6 +35,18 @@ Position = ghostBookshelf.Model.extend({
 
     findOne: function(data, options) {
         return ghostBookshelf.Model.findOne.call(this, data, options);
+    },
+
+    edit: function(data, options) {
+        return ghostBookshelf.Model.edit.call(this, data, options);
+    },
+
+    add: function(data, options) {
+        return ghostBookshelf.Model.add.call(this, data, options);
+    },
+
+    destroy: function(options) {
+        return ghostBookshelf.Model.destroy.call(this, options);
     }
 });
 

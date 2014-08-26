@@ -12,14 +12,19 @@ positions = {
         return dataProvider.Position.findOne(data, options);
     },
 
-    edit: function edit(id, data) {
-        var options = { id: id};
-        return dataProvider.Position.edit(data, options);
+    edit: function(data, options) {
+        return dataProvider.Position.forge({id: options.id}).fetch(options).then(function(object) {
+            if (object) {
+                return object.save(data, options);
+            }
+        });
     },
 
-    destroy: function destroy(id) {
-        var options = { id: id };
+    add: function(data, options) {
+        return dataProvider.Position.add(data, options);
+    },
 
+    destroy: function destroy(options) {
         return dataProvider.Position.destroy(options);
     }
 };

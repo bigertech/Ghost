@@ -9,7 +9,7 @@ adminControllers = {
     // Route: index
     // Path: /ghost/
     // Method: GET
-    'index': function (req, res) {
+    index: function (req, res) {
         /*jslint unparam:true*/
 
         function renderIndex() {
@@ -42,7 +42,7 @@ adminControllers = {
         }).catch(errors.logError);
     },
 
-    'positionsIndex': function(req, res) {
+    positions: function(req, res) {
         api.positions.findAll().then(function(result) {
             res.render('positions/index', {
                 positions: result.toJSON(),
@@ -51,43 +51,54 @@ adminControllers = {
         });
     },
 
-    'positions': function(req, res) {
-        // var data = {};
-
-        // api.positions.findAll().then(function(positions) {
-        //     data.positions = positions.toJSON();
-
-        //     return api.posts.browse();
-        // }).then(function(posts) {
-        //     data.posts = [];
-        //     posts.posts.forEach(function(post) {
-        //         data.posts.push(_.pick(post, 'id', 'title'))
-        //     });
-
-        //     res.jsonp(data);
-        // });
-
-        // api.positionRelations.findAll({withRelated: ['post']}).then(function(result) {
-        //     res.jsonp(result.toJSON());
-        // });
-
-
-        // var Post = require('../models').Post;
-        // Post.where({id: 2}).fetch({withRelated: ['positions']}).then(function(position) {
-        //     console.log(position.toJSON().positions);
-        // });
-
-        // var Position = require('../models').Position;
-        // Position.forge({id: 2}).fetch({withRelated: ['posts']}).then(function(position) {
-        //     console.log(position.toJSON());
-        // });
-
-        // api.positionRelations.edit({post_id: 3}, {id: 1}).then(function(real) {
-        //     console.log(real);
-        // });
+    positionsJson: function(req, res) {
+        api.positions.findAll().then(function(result) {
+            res.jsonp({ positions: result });
+        });
     },
 
-    'position': function(req, res, next) {
+    positionsAdd: function(req, res) {
+        var data = req.body;
+
+        delete data.id;
+
+        api.positions.add(data).then(function(rela) {
+            if (!rela) {
+                res.jsonp({ status: false });
+                return ;
+            }
+
+            res.jsonp({status: true});
+        });
+    },
+
+    positionsUpdate: function(req, res) {
+        var data = req.body;
+
+        api.positions.edit(data, {id: data.id}).then(function(position) {
+            if (!position) {
+                res.jsonp({ status: false });
+                return ;
+            }
+
+            res.jsonp({status: true});
+        }).otherwise(function(err) {
+            console.log(err);
+        });
+    },
+
+    positionsDelete: function(req, res) {
+        api.positions.destroy({id: req.params.id}).then(function(result) {
+            if (!result) {
+                res.jsonp({ status: false });
+                return ;
+            }
+
+            res.jsonp({status: true});
+        });
+    },
+
+    position: function(req, res, next) {
         if (!req.params.id) {
             return errors.error404(req, res, next);
         }
@@ -147,7 +158,7 @@ adminControllers = {
         });
     },
 
-    'positionAdd': function(req, res) {
+    positionAdd: function(req, res) {
         var data = req.body;
 
         delete data.id;
@@ -162,7 +173,7 @@ adminControllers = {
         });
     },
 
-    'positionUpdate': function(req, res) {
+    positionUpdate: function(req, res) {
         var data = req.body;
 
         api.positionRelations.edit(data, {id: data.id}).then(function(real) {
@@ -175,7 +186,7 @@ adminControllers = {
         });
     },
 
-    'positionDelete': function(req, res) {
+    positionDelete: function(req, res) {
         api.positionRelations.destroy({id: req.params.id}).then(function(result) {
             if (!result) {
                 res.jsonp({ status: false });

@@ -54,7 +54,7 @@
                     </header>
                     <nav class="settings-menu">
                         <ul>
-                            <li class="active"><a href="/ghost/positionsIndex/">添加位置</a></li>
+                            <li><a href="/ghost/positions/">添加位置</a></li>
                             {{#each positions}}
                             <li><a href="/ghost/position/{{id}}">{{name}}</a></li>
                             {{/each}}
@@ -77,12 +77,6 @@
                         <table>
                             <thead>
                                 <td>位置名称</td>
-                                <td>文章标题</td>
-                                <td>URL</td>
-                                <td>图片地址</td>
-                                <td>标题</td>
-                                <td>新窗口</td>
-                                <td>激活</td>
                                 <td>操作</td>
                             </thead>
                             <tbody id="rows">
@@ -97,31 +91,25 @@
 <script src="http://cdn.staticfile.org/jquery/2.1.1-rc2/jquery.min.js"></script>
 <script>
 $(function() {
-    $.get('/ghost/positions/', function(data) {
-        posts = data.posts || [];
+    $.get('/ghost/positionsJson/', function(data) {
         var positions = data.positions || [];
 
         var result = '';
         positions.forEach(function(position) {
-            result += genNewRow(position, posts);
+            result += genNewRow(position);
         });
 
         $('#rows').append(result);
     });
 
     $('#insert-new-row').click(function() {
-        $('#rows').prepend(genNewRow(null, posts, randomString()));
+        $('#rows').prepend(genNewRow(null, randomString()));
     });
 
     $('body').on('click', '.save', function(self) {
         var random = $(this).attr('value').trim();
         var remote = $(this).attr('url').trim();
         var name = $('#name_' + random).val().trim();
-        var post = $('#post_' + random).val().trim();
-        var url = $('#url_' + random).val().trim();
-        var title = $('#title_' + random).val().trim();
-        var target = $('#target_' + random).val().trim();
-        var publish = $('#publish_' + random).val().trim();
         var id = $('#id_' + random).val().trim();
 
         if (name === '') {
@@ -131,16 +119,35 @@ $(function() {
 
         var data = {
             id: id,
-            name: name,
-            post_id: post,
-            url: url,
-            title: title,
-            target: target,
-            publish: publish,
+            name: name
         };
 
         $.post(remote, data, function(result) {
+            if (result.status) {
+                alert('保存成功！');
+                window.location.reload();
+            } else {
+                alert('保存失败！');
+            }
+        });
+    });
 
+    $('body').on('click', '.delete', function() {
+        if (!confirm('确认删除？')) {
+            return false;
+        }
+
+        var random = $(this).attr('value').trim();
+        var id = $('#id_' + random).val().trim();
+        var remote = $(this).attr('url').trim();
+
+        $.get(remote + id, function(result) {
+            if (result.status) {
+                alert('删除成功！');
+                window.location.reload();
+            } else {
+                alert('删除失败！');
+            }
         });
     });
 
@@ -149,63 +156,21 @@ $(function() {
 
         var id = position.id || 0;
         var name = position.name || '';
-        var post_id = position.post_id || 0;
-        var url = position.url || '';
-        var img = position.img || '';
-        var title = position.title || '';
-        var target = position.target || 0;
-        var publish = position.publish || 0;
 
         var random = randomString(8);
 
         var newRow = '<tr>';
         newRow += '<td><input type="text" value="' + name + '" placeholder="请输入位置名称" id="name_' + random + '" /></td>';
 
-        newRow += '<td>' + genPostSelect(posts, post_id, random) + '</td>';
-
-        newRow += '<td><input type="text" style="width:120px;" value="' + url + '" placeholder="URL" id="url_' + random + '"/></td>'
-
-        newRow += '<td><input type="text" style="width:120px;" value="' + img + '" placeholder="图片地址" id="img_' + random + '"/></td>';
-
-        newRow += '<td><input type="text" style="width:120px; value="' + title + '" placeholder="标题" id="title_' + random + '"/></td>'
-
-        if (target) {
-            newRow += '<td><select id="target_' + random + '"><option value="0">No</option><option value="1" selected="selected">Yes</option></select></td>';
-        } else {
-            newRow += '<td><select id="target_' + random + '"><option value="0" selected="selected">No</option><option value="1">Yes</option></select></td>';
-        }
-
-        if (publish) {
-            newRow += '<td><select id="publish_' + random + '"><option value="0">No</option><option value="1" selected="selected">Yes</option></select></td>';
-        } else {
-            newRow += '<td><select id="publish_' + random + '"><option value="0" selected="selected">No</option><option value="1">Yes</option></select></td>';
-        }
-
         if (argPosition === null) {
             newRow += '<td><a href="#" url="/ghost/positions/add/" value="' + random + '" class="save">Save</a></td>';
         } else {
-            newRow += '<td><a href="#" url="/ghost/positions/add/" value="' + random + '" class="save">Save</a> | <a href="">Delete</a></td>';
+            newRow += '<td><a href="#" url="/ghost/positions/update/" value="' + random + '" class="save">Save</a> | <a href="#" url="/ghost/positions/delete/" value="' + random + '" class="delete">Delete</a></td>';
         }
 
         newRow += '<td><input type="hidden" value="' + id + '" id="id_' + random + '"/></td>'
 
         return newRow + '</tr>';
-    }
-
-    function genPostSelect(posts, id, random) {
-        var str = '<select style="width:160px" id="post_' + random + '"><option value="0">请选择一篇文章</option>';
-
-        posts.forEach(function(post) {
-            if (post.id == id) {
-                str += '<option value="' + post.id + '" selected="selected">' + post.title + '</option>';
-            } else {
-                str += '<option value="' + post.id + '">' + post.title + '</option>';
-            }
-        });
-
-        str += '</select>';
-
-        return str;
     }
 
     var alpha_num_chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz'.split('');

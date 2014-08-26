@@ -27,9 +27,15 @@ adminRoutes = function (middleware) {
         res.redirect(subdir + '/ghost/');
     });
 
-    router.get('/ghost/positionsIndex/', admin.positionsIndex);
-
     router.get('/ghost/positions/', admin.positions);
+
+    router.get('/ghost/positionsJson/', admin.positionsJson);
+
+    router.post('/ghost/positions/add/', admin.positionsAdd);
+
+    router.get('/ghost/positions/delete/:id/', admin.positionsDelete);
+
+    router.post('/ghost/positions/update/', admin.positionsUpdate);
 
     router.get('/ghost/position/:id/', admin.position);
 
