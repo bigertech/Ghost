@@ -88,6 +88,19 @@ function postAddDuoshuo(posts, postUuids) {
     return defer.promise;
 }
 //为响应文章增加多说
+function getVideo(post){
+    //判断是否为视频，如果为视频，则直直接取出ID， 删除掉 youkuid 标签
+    if(post.post_type.slug !== 'videos'){
+        return post;
+    }
+    post.isVideo = 1;
+//    var $ = cheerio.load(post.html);
+//    var youku = $("youkuid");
+//    post.videoId = youku.text() ? youku.text() : null;
+//    $("youkuid").remove();
+//    post.html = $.html();
+    return post;
+}
 function formatPageResponseDuoshuo(posts, page) {
     // Delete email from author for frontend output
     // TODO: do this on API level if no context is available
@@ -97,9 +110,7 @@ function formatPageResponseDuoshuo(posts, page) {
         if (post.author) {
             delete post.author.email;
         }
-        if(post.post_type.slug == 'videos'){
-            post.isVideo = 1;
-        }
+        post = getVideo(post);
         postUuids += post.uuid+',';
         return post;
     });
