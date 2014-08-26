@@ -43,30 +43,116 @@ adminControllers = {
     },
 
     'positionsIndex': function(req, res) {
-        res.render('positions/index');
+        api.positions.findAll().then(function(result) {
+            res.render('positions/index', {
+                positions: result.toJSON(),
+                pageTitle: '添加位置'
+            });
+        });
     },
 
     'positions': function(req, res) {
-        var data = {};
+        // var data = {};
 
-        api.positions.findAll().then(function(positions) {
-            data.positions = positions.toJSON();
+        // api.positions.findAll().then(function(positions) {
+        //     data.positions = positions.toJSON();
+
+        //     return api.posts.browse();
+        // }).then(function(posts) {
+        //     data.posts = [];
+        //     posts.posts.forEach(function(post) {
+        //         data.posts.push(_.pick(post, 'id', 'title'))
+        //     });
+
+        //     res.jsonp(data);
+        // });
+
+        // api.positionRelations.findAll({withRelated: ['post']}).then(function(result) {
+        //     res.jsonp(result.toJSON());
+        // });
+
+
+        // var Post = require('../models').Post;
+        // Post.where({id: 2}).fetch({withRelated: ['positions']}).then(function(position) {
+        //     console.log(position.toJSON().positions);
+        // });
+
+        // var Position = require('../models').Position;
+        // Position.forge({id: 2}).fetch({withRelated: ['posts']}).then(function(position) {
+        //     console.log(position.toJSON());
+        // });
+
+    },
+
+    'position': function(req, res, next) {
+        if (!req.params.id) {
+            this.positions(req, res);
+            return ;
+        }
+
+        var id = req.params.id || 0;
+        var data = { activeId: id };
+
+        api.positions.findOne({id: id}).then(function(result) {
+            if (!result) {
+                return when.reject('Not Found.');
+            }
+
+            data.pageTitle = result.toJSON().name;
+            return api.positions.findAll();
+        }).then(function(result) {
+            data.positions = result.toJSON();
+            res.render('positions/position', data);
+        }).catch(function(err) {
+            errors.error500(err, req, res, next);
+        });
+    },
+
+    positionJson: function(req, res) {
+        var data = {};
+        var id = req.params.id || 0;
+
+        api.positionRelations.findByPositionId(id).then(function(result) {
+            data.posReals = result;
+
+            var ids = [];
+            result.forEach(function(item) {
+                ids.push(item.post_id);
+            });
+
+            return api.posts.findByIn(ids);
+        }).then(function(result) {
+            result.forEach(function(post) {
+                data.posReals.forEach(function(item) {
+                    if (item.post_id == post.id) {
+                        item.post_title = post.title || '';
+                    }
+                });
+            });
 
             return api.posts.browse();
-        }).then(function(posts) {
+        }).then(function(result) {
             data.posts = [];
-            posts.posts.forEach(function(post) {
-                data.posts.push(_.pick(post, 'id', 'title'))
+            result.posts.forEach(function(post) {
+                data.posts.push(_.pick(post, 'id', 'title'));
             });
 
             res.jsonp(data);
         });
     },
 
-    'positionsAdd': function(req, res) {
+    'positionAdd': function(req, res) {
         console.log(req.body);
-
         res.jsonp({name: 'happen'});
+    },
+
+    'positionUpdate': function(req, res) {
+        console.log(req.body);
+        res.jsonp({name: 'hhhhh'});
+    },
+
+    'positionDelete': function(req, res) {
+
     }
 };
 

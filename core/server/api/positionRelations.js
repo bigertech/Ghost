@@ -1,22 +1,22 @@
 // # Posts API
-var dataProvider    = require('../models'),
+var _ = require('lodash'),
+    when = require('when'),
+    dataProvider    = require('../models'),
     positionRelations;
 
 // ## API Methods
 positionRelations = {
-    findAll: function findAll(option) {
-        return dataProvider.PositionRelation.findAll(option);
-    },
+    findByPositionId: function findByPositionId(id) {
+        if (!id || !_.isNumber(parseInt(id))) {
+            return when.reject([]);
+        }
 
-    edit: function edit(id, data) {
-        var options = { id: id};
-        return dataProvider.PositionRelation.edit(data, options);
-    },
-
-    destroy: function destroy(id) {
-        var options = { id: id };
-
-        return dataProvider.PositionRelation.destroy(options);
+        return dataProvider['PositionRelation']
+                .where({position_id: id})
+                .fetchAll()
+                .then(function(result) {
+            return when.resolve(result.toJSON());
+        });
     }
 };
 
