@@ -68,7 +68,7 @@
     isRevealed,
     noscroll,
     isAnimating,
-    bgTopScroll = document.getElementById( 'topScroll' );
+    topScroll = document.getElementById( 'topScroll' );
 
   function scrollY() {
     return window.pageYOffset || docElem.scrollTop;
@@ -99,11 +99,11 @@
     isAnimating = true;
 
     if( reveal ) {
-      classie.add( bgTopScroll, 'modify' );
+      classie.add( topScroll, 'modify' );
     } else {
       noscroll = true;
       disable_scroll();
-      classie.remove( bgTopScroll, 'modify' );
+      classie.remove( topScroll, 'modify' );
     }
 
     // simulating the end of the transition:
@@ -125,7 +125,7 @@
 
   if( pageScroll ) {
     isRevealed = true;
-    classie.add( bgTopScroll, 'modify' );
+    classie.add( topScroll, 'modify' );
   }
 
   if(document.body.clientWidth > 980 ) {
