@@ -100,6 +100,7 @@ $(function() {
     var id = $('#active_id').val();
 
     $.get('/ghost/positionJson/' + id, function(data) {
+        // posts全局
         posts = data.posts || [];
         var posReals = data.posReals || [];
 
@@ -118,7 +119,7 @@ $(function() {
     $('body').on('click', '.save', function() {
         var random = $(this).attr('value').trim();
         var remote = $(this).attr('url').trim();
-        var post = $('#post_' + random).val().trim();
+        var post_id = getPostIdBySlug($('#slug_' + random).val().trim());
         var url = $('#url_' + random).val().trim();
         var title = $('#title_' + random).val().trim();
         var img = $('#img_' + random).val().trim();
@@ -126,10 +127,15 @@ $(function() {
         var publish = $('#publish_' + random).val().trim();
         var realId = $('#real_' + random).val().trim();
 
+        if (!post_id) {
+            alert('对应slug的文章不存在！');
+            return false;
+        }
+
         var data = {
             id: realId,
             position_id: id,
-            post_id: post,
+            post_id: post_id,
             url: url,
             title: title,
             img: img,
@@ -172,10 +178,10 @@ $(function() {
 
         var id = position.id || 0;
         var name = position.name || '';
-        var post_id = position.post_id || 0;
         var url = position.url || '';
         var img = position.img || '';
         var title = position.title || '';
+        var slug = position.slug || '';
         var target = position.target || 0;
         var publish = position.publish || 0;
 
@@ -183,7 +189,7 @@ $(function() {
 
         var newRow = '<tr>';
 
-        newRow += '<td>' + genPostSelect(posts, post_id, random) + '</td>';
+        newRow += '<td><input type="text" value="' + slug + '" placeholder="请填入文章的slug" id="slug_' + random + '"/></td>';
 
         newRow += '<td><input type="text" value="' + url + '" placeholder="URL" id="url_' + random + '"/></td>'
 
@@ -214,20 +220,25 @@ $(function() {
         return newRow + '</tr>';
     }
 
-    function genPostSelect(posts, id, random) {
-        var str = '<select style="width:160px" id="post_' + random + '"><option value="0">请选择一篇文章</option>';
+    function getPostBySlug(slug) {
+        if (!posts) {
+            return null;
+        }
 
+        var target = null;
         posts.forEach(function(post) {
-            if (post.id == id) {
-                str += '<option value="' + post.id + '" selected="selected">' + post.title + '</option>';
-            } else {
-                str += '<option value="' + post.id + '">' + post.title + '</option>';
+            if (post.slug.trim() == slug.trim()) {
+                target = post;
             }
         });
 
-        str += '</select>';
+        return target;
+    }
 
-        return str;
+    function getPostIdBySlug(slug) {
+        var post = getPostBySlug(slug);
+
+        return post ? post.id : 0;
     }
 
     var alpha_num_chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz'.split('');

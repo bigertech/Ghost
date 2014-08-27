@@ -143,6 +143,7 @@ adminControllers = {
                 data.posReals.forEach(function(item) {
                     if (item.post_id == post.id) {
                         item.post_title = post.title || '';
+                        item.slug = post.slug;
                     }
                 });
             });
@@ -151,7 +152,7 @@ adminControllers = {
         }).then(function(result) {
             data.posts = [];
             result.posts.forEach(function(post) {
-                data.posts.push(_.pick(post, 'id', 'title'));
+                data.posts.push(_.pick(post, 'id', 'title', 'slug'));
             });
 
             res.jsonp(data);
