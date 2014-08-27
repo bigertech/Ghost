@@ -54,11 +54,23 @@ positions = {
     },
 
     findAll: function findAll(option) {
-        return dataProvider.Position.findAll(option);
+        return dataProvider.Position.findAll(option).then(function(positions) {
+            if (positions) {
+                return positions.toJSON();
+            }
+
+            return null;
+        });
     },
 
     findOne: function findOne(data, options) {
-        return dataProvider.Position.findOne(data, options);
+        return dataProvider.Position.findOne(data, options).then(funciton(position) {
+            if (position) {
+                return position,toJSON();
+            }
+
+            return null;
+        });
     },
 
     edit: function(data, options) {
