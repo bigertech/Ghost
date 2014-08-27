@@ -64,11 +64,11 @@
   }
 
   var docElem = window.document.documentElement,
-    scrollVal,
-    isRevealed,
-    noscroll,
-    isAnimating,
-    bgTopScroll = document.getElementById( 'topScroll' );
+      scrollVal,
+      isRevealed,
+      noscroll,
+      isAnimating,
+      bgTopScroll = document.getElementById( 'topScroll' );
 
   function scrollY() {
     return window.pageYOffset || docElem.scrollTop;
@@ -88,6 +88,7 @@
     }
 
     if( scrollVal <= 0 && isRevealed ) {
+      window.removeEventListener( 'scroll', scrollPage );
       toggle(0);
     }
     else if( scrollVal > 0 && !isRevealed ){
@@ -103,10 +104,10 @@
     } else {
       noscroll = true;
       disable_scroll();
-      classie.remove( bgTopScroll, 'modify' );
+      // classie.remove( bgTopScroll, 'modify' );
     }
 
-    // simulating the end of the transition:
+    //simulating the end of the transition:
     setTimeout( function() {
       isRevealed = !isRevealed;
       isAnimating = false;

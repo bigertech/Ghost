@@ -7,17 +7,20 @@
 .mobile-display {
   display: none;
 }
-
 #toTop {
-  width: 50px;
-  height: 50px;
-  background: url(../images/v_detail.png) no-repeat 0 -100px;
+  background-color: #919191;
   &:hover {
-    background-position: -100px -100px;
+    background-color: #767879;
   }
 }
-
-
+.icon-up {
+  font-size: 50px;
+}
+.archive-template {
+  .topics {
+    display: none;
+  }
+}
 
 
 
@@ -150,17 +153,26 @@
       height: auto;
       width: 100%;
     }
+    &:before {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      content: "";
+      opacity: 0.3;
+      background-color: #fff;
+      z-index: 100;
+    }
   }
   .bg-slogan {
     display: table-cell;
     vertical-align: middle;
     text-align: center;
-    .bigertech {
+    .bg-logo {
       display: block;
       width: 264px;
       height: 38px;
       margin: 0 auto;
-      background: url('../images/bigertech.png') no-repeat;
+      background: url('../images/bigertech-white.png') no-repeat;
       background-size: 100%;
     }
     .bg-description {
@@ -176,6 +188,18 @@
       height: 122px;
       border: 5px solid #fff;
       border-radius: 50%;
+      &:hover {
+        -webkit-transform: rotateZ(360deg);
+           -moz-transform: rotateZ(360deg);
+            -ms-transform: rotateZ(360deg);
+             -o-transform: rotateZ(360deg);
+                transform: rotateZ(360deg);
+        -webkit-transition: -webkit-transform 2s ease-out;
+           -moz-transition: -moz-transform 2s ease-out;
+            -ms-transition: -ms-transform 2s ease-out;
+             -o-transition: -o-transform 2s ease-out;
+                transition: transform 2s ease-out;
+      }
     }
     .author-name {
       font-size: 48px;
@@ -191,7 +215,15 @@
 // 下拉后，bg-header 的变化效果
 .modify {
   .bg-cover {
-    height: 75px;
+    height: 68px;
+  }
+  .bg-logo {
+    display: block;
+    width: 264px;
+    height: 38px;
+    margin: 0 auto;
+    background: url('../images/bigertech-black.png') no-repeat !important;
+    background-size: 100% !important;
   }
   .bg-description {
     font-size: 28px;
@@ -223,8 +255,8 @@
         width: 100%;
         height: 170px;
         &:hover {
-          -webkit-animation:pulse 1s .2s ease both;
-          -moz-animation:pulse 1s .2s ease both;
+          -webkit-animation:pulse 1.6s .3s ease both;
+          -moz-animation:pulse 1.6s .3s ease both;
         }
       }
     }
@@ -306,10 +338,10 @@
         color: #9EABB3;
       }
       .count {
-        color: #ff3f53;
         margin-left: 25px;
-        &::before {
+        &:before {
           margin-right: 5px;
+          color: #ff3f53;
         }
       }
     }
@@ -420,8 +452,22 @@ footer {
     .bg-cover {
       height: 250px;
     }
+    .author-profile {
+      line-height: 1.6em;
+      .author-avatar {
+        width: 50px;
+        height: 50px;
+        border: 2px solid #fff;
+      }
+      .author-name {
+        font-size: 24px;
+      }
+      .author-bio {
+        font-size: 12px;
+      }
+    }
     .bg-slogan {
-      .bigertech {
+      .bg-logo {
         width: 180px;
       }
       .bg-description {
@@ -495,16 +541,16 @@ footer {
 // keyframes
 @-webkit-keyframes pulse {
   0%{-webkit-transform:scale(1)}
-  50%{-webkit-transform:scale(1.1)}
+  50%{-webkit-transform:scale(1.3)}
   100%{-webkit-transform:scale(1)}
 }
 @-moz-keyframes pulse {
   0%{-moz-transform:scale(1)}
-  50%{-moz-transform:scale(1.1)}
+  50%{-moz-transform:scale(1.3)}
   100%{-moz-transform:scale(1)}
 }
 @keyframes pulse {
-  0%{-moz-transform:scale(1)}
-  50%{-moz-transform:scale(1.1)}
-  100%{-moz-transform:scale(1)}
+  0%{transform:scale(1)}
+  50%{transform:scale(1.3)}
+  100%{transform:scale(1)}
 }
