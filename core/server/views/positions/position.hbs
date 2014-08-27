@@ -77,6 +77,7 @@
                         <table>
                             <thead>
                                 <td>文章链接</td>
+                                <td>文章标题</td>
                                 <td>URL</td>
                                 <td>图片地址</td>
                                 <td>标题</td>
@@ -173,6 +174,11 @@ $(function() {
         });
     });
 
+    $('body').on('input propertychange', '.post-slug', function() {
+        var random = $(this).attr('id').substr('slug_'.length);
+        $('#pt_' + random).val(getPostTitleBySlug($(this).val().trim()));
+    });
+
     function genNewRow(argPosition, posts) {
         position = argPosition || {};
 
@@ -189,7 +195,9 @@ $(function() {
 
         var newRow = '<tr>';
 
-        newRow += '<td><input type="text" value="' + slug + '" placeholder="请填入文章的slug" id="slug_' + random + '"/></td>';
+        newRow += '<td><input type="text" value="' + slug + '" placeholder="请填入文章的slug" class="post-slug" id="slug_' + random + '"/></td>';
+
+        newRow += '<td><input type="text" value="' + getPostTitleBySlug(slug) + '" placeholder="slug对应的文章标题" disabled="disabled" id="pt_' + random + '"/></td>'
 
         newRow += '<td><input type="text" value="' + url + '" placeholder="URL" id="url_' + random + '"/></td>'
 
@@ -239,6 +247,12 @@ $(function() {
         var post = getPostBySlug(slug);
 
         return post ? post.id : 0;
+    }
+
+    function getPostTitleBySlug(slug) {
+        var post = getPostBySlug(slug);
+
+        return post ? post.title : '';
     }
 
     var alpha_num_chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz'.split('');
