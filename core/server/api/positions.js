@@ -53,8 +53,8 @@ positions = {
         });
     },
 
-    findAll: function findAll(option) {
-        return dataProvider.Position.findAll(option).then(function(positions) {
+    findAll: function(options) {
+        return dataProvider.Position.findAll(options).then(function(positions) {
             if (positions) {
                 return positions.toJSON();
             }
@@ -64,9 +64,9 @@ positions = {
     },
 
     findOne: function findOne(data, options) {
-        return dataProvider.Position.findOne(data, options).then(funciton(position) {
+        return dataProvider.Position.findOne(data, options).then(function(position) {
             if (position) {
-                return position,toJSON();
+                return position.toJSON();
             }
 
             return null;

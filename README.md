@@ -65,6 +65,76 @@ cutHeight: 裁剪的高度
 活动宣传  | post-active.hbs
 专题      | post-topic.hbs
 
+## 接口部分
+
+接口一律使用`Promise`支持。
+
+### 专题接口 - Positions
+
+```
+
+// 得到指定ID专题下的所有文章
+getPostsByPositionId(postId);
+
+// eg:
+getPostsByPositionId(1).then(function(posts) {
+    if (posts === null) {
+        console.log('ID对应的专题不存在！');
+        return when.reject(new NotFoundError());
+    }
+
+    posts.forEach(function(post) {
+        // ... some code
+    });
+});
+
+// 得到指定Slug专题下的所有文章
+getPostsByPositionId(slug);
+
+// eg:
+getPostsByPositionSlug('news').then(function(posts) {
+    if (posts === null) {
+        console.log('Sulg对应的专题不存在！');
+        return when.reject(new NotFoundError());
+    }
+
+    posts.forEach(function(post) {
+        // ... some code
+    });
+});
+
+// 得到指定Name专题下的所有文章
+getPostsByPositionName(name);
+
+// eg:
+getPostsByPositionName('新闻专题').then(function(posts) {
+    if (posts === null) {
+        console.log('Name对应的专题不存在！');
+        return when.reject(new NotFoundError());
+    }
+
+    posts.forEach(function(post) {
+        // ... some code
+    });
+});
+
+// 得到所有的专题
+findAll(options).then(function(positions) {});
+
+// 得到一个指定的专题
+// { id: id } 或者 { name: 'news' } 等等
+findOne(options).then(function(position) {});
+
+// 更新一个专题信息
+edit(data, options);
+
+// 添加一个专题信息
+add(data, options);
+
+// 删除一个专题信息
+destroy(options);
+```
+
 ## 新增改动
 *  文章类别选择
 *  每篇文章加入 文章图片
