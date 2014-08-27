@@ -103,27 +103,21 @@
   float: right;
 }
 #ds-thread #ds-reset .ds-meta .ds-like-panel {
-  color: #fff;
-}
-#ds-thread #ds-reset .ds-meta .ds-highlight {
-  color: #fff !important;
-}
-#ds-thread #ds-reset .ds-meta:hover .ds-like-panel {
   color: #53ae65;
 }
-#ds-thread #ds-reset .ds-meta:hover .ds-highlight {
+#ds-thread #ds-reset .ds-meta .ds-highlight {
   color: #53ae65 !important;
 }
 #ds-thread #ds-reset a.ds-like-thread-button {
   color: #555;
   padding: 0 !important;
-  width: 90px;
-  height: 45px;
+  width: 41px;
+  height: 41px;
   display: block;
   border: 1px solid #53ae65 !important;
   /* border-bottom-color: #aaa; */
   box-shadow: inset 0 0 0px #fff !important;
-  margin-right: 0px !important;
+  margin-right: 57px !important;
   text-shadow: 0 0 0 !important;
   background-color: #fff !important;
   border-radius: 25px;
@@ -133,8 +127,8 @@
   background: #53ae65 !important;
 }
 #ds-thread #ds-reset a.ds-like-thread-button .ds-icon-heart {
-  top: 9px !important;
-  left: 8px;
+  top: 8px !important;
+  left: 13px;
 }
 #ds-thread #ds-reset a.ds-like-thread-button:hover {
   background: #fff !important;
@@ -163,7 +157,7 @@
 #ds-thread .ds-like-panel {
   position: relative;
   top: -36px;
-  left: 29px;
+  left: 50px;
 }
 /* 更多阅读*/
 .more-post {
@@ -216,12 +210,6 @@
   }
 }
 @media screen and (min-width: 768px) {
-  .modify .navbar .menu a {
-    background: url(../images/bglogogrey.png) no-repeat;
-  }
-  .modify .navbar .search a {
-    background: url(../images/searchgrey.png) no-repeat;
-  }
   .video-banner,
   .post-banner {
     padding: 0;
@@ -268,7 +256,6 @@
     padding: 0;
     width: 100%;
     height: 100%;
-    opacity: 1;
   }
   .bg-img:after {
     opacity: .3;
