@@ -1,10 +1,28 @@
 // # Posts API
 var dataProvider    = require('../models'),
+    posts = require('./posts'),
     positionRelations = require('./positionRelations'),
     positions;
 
 // ## API Methods
 positions = {
+    /**
+     * 按专题id得到文章
+     * @param  {Number} posId
+     * @return          1. 专题不存在，则返回null
+     *                  2. 专题下文章为0，则返回[]
+     *                  3. 文章数组
+     */
+    getPostsByPositionId: function(posId) {
+        return dataProvider.Position.findOne({id: posId}, { withRelated: 'posts' }).then(function(position) {
+            if (position) {
+                return posts.findByIn(position.toJSON().posts);
+            }
+
+            return null;
+        });
+    },
+
     findAll: function findAll(option) {
         return dataProvider.Position.findAll(option);
     },
