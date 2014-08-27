@@ -5,10 +5,8 @@
   <link rel="stylesheet" href="{{asset "css/post.css" }}">
 {{/contentFor}}
 
-<div id="topScroll">
-{{#post}}
+<div id="topScroll">{{#post}}
   <div class="post-banner">
-    {{> "navbar"}}
     <div class="embed-responsive embed-responsive-2by1 bg-img-small">
       <img class="embed-responsive-item" src="{{image}}">
     </div>
@@ -18,57 +16,26 @@
     <div class="post-info">
       <p class="name">{{title}}</p>
       <span class="author">{{author}} • <time class="post-time">{{date published_at timeago="ture"}}</time></span>
+
       <p class="desc">{{post_desc}}</p>
     </div>
-
     <a class="scroll-down" href="#post-container" data-offset="-45">
       <span class="icon-down"></span>
     </a>
   </div>
-</div>
 
-<div class="post-container">
+  <div class="post-container">
 
-  <div class="post">
+    <div class="post">
+        {{content}}
+    </div>
 
-    {{content}}
-
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="请将此处替换成文章在你的站点中的ID" data-title="请替换成文章的标题" data-url="请替换成文章的网址"></div>
+    <!-- 多说评论框 end -->
+    {{> "more_post"}}
   </div>
-
 {{/post}}
-  <!-- 多说评论框 start -->
-  <div class="ds-thread" data-thread-key="请将此处替换成文章在你的站点中的ID" data-title="请替换成文章的标题" data-url="请替换成文章的网址"></div>
-  <!-- 多说评论框 end -->
-  <div class="more-post">
-    <div class="more-left">
-      <p class="p-banner">微软为IOS开发明星新闻聚合器</p>
-      <div class="info">
-        <a href="" target="_blank">
-          <div class="pic">
-            <img src="assets/images/5.jpg" title="author pic">
-          </div>
-        </a>
-        <span class="post-meta">Jason Hou • <time class="post-time">7分钟前</time></span>
-        <img class="img-heart" src="assets/images/un-like.png">
-        <span>888</span>
-      </div>
-    </div>
-    <div class="more-right">
-      <p class="p-banner">微软为IOS开发明星新闻聚合器然后被和谐了</p>
-      <div class="info">
-        <a href="" target="_blank">
-          <div class="pic">
-            <img src="assets/images/5.jpg" title="author pic">
-          </div>
-        </a>
-        <span class="post-meta">Jason Hou • <time class="post-time">7分钟前</time></span>
-        <img class="img-heart" src="assets/images/un-like.png">
-        <span>888</span>
-      </div>
-    </div>
-  </div>
-
-
 </div>
 
 <script src="{{asset "js/classie.js"}}"></script>
@@ -87,6 +54,3 @@
       || document.getElementsByTagName('body')[0]).appendChild(ds);
   })();
 </script>
-
-<script src="{{asset "js/classie.js"}}"></script>
-<script src="{{asset "js/topScroll.js"}}"></script>
