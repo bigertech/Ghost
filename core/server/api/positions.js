@@ -29,7 +29,22 @@ positions = {
      * @return
      */
     getPostsByPositionSlug: function(slug) {
-        return dataProvider.Position.findOne({slug: slug}, { withRelated: 'posts' }).then(function(position) {
+        return dataProvider.Position.findOne({slug: slug ? slug.trim() : ''}, { withRelated: 'posts' }).then(function(position) {
+            if (position) {
+                return posts.findByIn(position.toJSON().posts);
+            }
+
+            return null;
+        });
+    },
+
+    /**
+     * 按专题名称得到文章
+     * @param  {String} name
+     * @return
+     */
+    getPostsByPositionName: function(name) {
+        return dataProvider.Position.findOne({name: name ? name.trim() : ''}, { withRelated: 'posts' }).then(function(position) {
             if (position) {
                 return posts.findByIn(position.toJSON().posts);
             }
