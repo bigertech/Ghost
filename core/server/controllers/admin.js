@@ -45,7 +45,7 @@ adminControllers = {
     positions: function(req, res) {
         api.positions.findAll().then(function(result) {
             res.render('positions/index', {
-                positions: result.toJSON(),
+                positions: result,
                 pageTitle: '添加位置'
             });
         });
@@ -112,10 +112,10 @@ adminControllers = {
                 return when.reject('Not found.');
             }
 
-            data.pageTitle = result.toJSON().name;
+            data.pageTitle = result.name;
             return api.positions.findAll();
         }).then(function(result) {
-            data.positions = result.toJSON();
+            data.positions = result;
             res.render('positions/position', data);
         }).otherwise(function(err) {
             return errors.error404(req, res, next);
