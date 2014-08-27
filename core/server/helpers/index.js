@@ -452,6 +452,14 @@ coreHelpers.video_play_count = function () {
 
     return defer.promise;
 };
+coreHelpers.post_relative = function (options) {
+    var options = (options || {}).hash || {};
+    var data = { id : 4};
+    api.posts.findRelate(data).then(function(posts){
+        console.log(posts);
+    });
+
+};
 //end add
 
 // --- Modified by happen
@@ -1138,6 +1146,7 @@ registerHelpers = function (adminHbs, assetHash) {
     registerThemeHelper('post_desc', coreHelpers.post_desc);
     registerThemeHelper('duoshuo_block', coreHelpers.duoshuo_block);
     registerAsyncThemeHelper('video_play_count', coreHelpers.video_play_count);
+    registerAsyncThemeHelper('post_relative', coreHelpers.post_relative);
 
     //end add
 
