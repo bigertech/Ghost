@@ -688,6 +688,30 @@ frontendControllers = {
                 });
             });
         }).otherwise(handleError(next));
+    },
+
+    topic: function(req, res, next) {
+        var slug = req.params.slug || '';
+        var data = {};
+
+        // 得到指定slug专题下的所有文章
+        api.positions.getPostsByPositionSlug(slug).then(function(posts) {
+            if (!posts) {
+                return when.reject(new errors.NotFoundError('Topic not be found.'));
+            }
+
+            data.posts = posts;
+            return api.positions.findAll();
+        }).then(function(positions) {
+            data.positions = positions;
+            res.render('topic', data);
+        }).otherwise(function (err) {
+            if (err.type === 'NotFoundError') {
+                return next();
+            }
+
+            return handleError(next)(err);
+        });
     }
 };
 

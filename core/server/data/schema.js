@@ -193,6 +193,8 @@ var db = {
         positions: {
             id: {type: 'increments', nullable: false, primary: true},
             name: {type: 'string', maxlength: 255, nullable: false},
+            slug: {type: 'string', maxlength: 255, nullable: false},
+            img: {type: 'text', maxlength: 2000, nullable: true}
         },
         position_relations: {
             id: {type: 'increments', nullable: false, primary: true},
