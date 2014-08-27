@@ -16,6 +16,19 @@
 .icon-up {
   font-size: 50px;
 }
+.home-template {
+  .bg-cover {
+    &:before {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      content: "";
+      opacity: 0.3;
+      background-color: #000;
+      z-index: 100;
+    }
+  }
+}
 .archive-template {
   .topics {
     display: none;
@@ -153,15 +166,6 @@
       height: auto;
       width: 100%;
     }
-    &:before {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      content: "";
-      opacity: 0.3;
-      background-color: #fff;
-      z-index: 100;
-    }
   }
   .bg-slogan {
     display: table-cell;
@@ -213,7 +217,7 @@
 }
 
 // 下拉后，bg-header 的变化效果
-.modify {
+.archive-template, .modify {
   .bg-cover {
     height: 68px;
   }
@@ -474,6 +478,12 @@ footer {
         line-height: 1em;
         font-size: 18px;
       }
+    }
+  }
+
+  .l-menu, .l-search {
+    .text {
+     font-size: 18px;
     }
   }
 

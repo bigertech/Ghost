@@ -59,9 +59,9 @@
     document.body.ontouchmove = touchmove;
   }
 
-  function enable_scroll() {
-    window.onmousewheel = document.onmousewheel = document.onkeydown = document.body.ontouchmove = null;
-  }
+  // function enable_scroll() {
+  //   window.onmousewheel = document.onmousewheel = document.onkeydown = document.body.ontouchmove = null;
+  // }
 
   var docElem = window.document.documentElement,
       scrollVal,
@@ -122,14 +122,14 @@
   var pageScroll = scrollY();
   noscroll = pageScroll === 0;
 
-  disable_scroll();
+  // disable_scroll();
 
   if( pageScroll ) {
     isRevealed = true;
     classie.add( bgTopScroll, 'modify' );
   }
 
-  if(document.body.clientWidth > 980 ) {
+  if(document.body.clientWidth > 768 && document.body.className == 'home-template') {
     window.addEventListener( 'scroll', scrollPage );
   }
 })();

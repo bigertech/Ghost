@@ -121,14 +121,14 @@
   var pageScroll = scrollY();
   noscroll = pageScroll === 0;
 
-  disable_scroll();
+  // disable_scroll();
 
   if( pageScroll ) {
     isRevealed = true;
     classie.add( topScroll, 'modify' );
   }
 
-  if(document.body.clientWidth > 980 ) {
+  if(document.body.clientWidth > 768 ) {
     window.addEventListener( 'scroll', scrollPage );
   }
 })();
