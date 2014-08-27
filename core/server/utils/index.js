@@ -1,7 +1,11 @@
 var unidecode  = require('unidecode'),
+    _          = require('lodash'),
 
     utils,
-    getRandomInt;
+    getRandomInt,
+    Segment = require('segment').Segment;
+    var segment = new Segment();
+    segment.useDefault();
 
 /**
  * Return a random int, used by `utils.uid()`
@@ -64,6 +68,10 @@ utils = {
             .toLowerCase();
 
         return string;
+    },
+    'segement':function doSegment(str){
+        var result = segment.doSegment(str);
+        return _.sortBy(result,'p');
     }
 };
 

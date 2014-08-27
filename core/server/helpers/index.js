@@ -453,10 +453,18 @@ coreHelpers.video_play_count = function () {
     return defer.promise;
 };
 coreHelpers.post_relative = function (options) {
-    var options = (options || {}).hash || {};
-    var data = { id : 4};
-    api.posts.findRelate(data).then(function(posts){
-        console.log(posts);
+    var option = (options || {}).hash || {};
+    var data = {
+        title : this.title,
+        post_type  : this.post_type,
+        limit : parseInt(option.limit)+1
+
+    };
+    var self  = this;
+    return api.posts.findRelate(data).then(function(posts){
+        self.relatePosts = posts.relatePosts;
+        console.log(posts.relatePosts[0].author);
+        return template.execute('relative_post', posts);
     });
 
 };

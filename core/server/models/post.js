@@ -208,7 +208,6 @@ Post = ghostBookshelf.Model.extend({
 
     toJSON: function (options) {
         var attrs = ghostBookshelf.Model.prototype.toJSON.call(this, options);
-
         attrs.author = attrs.author || attrs.author_id;
         delete attrs.author_id;
 
@@ -519,9 +518,12 @@ Post = ghostBookshelf.Model.extend({
         }
 
         // Add related objects
-        options.withRelated = _.union([ 'tags', 'fields' ], options.include);
+        options.withRelated = _.union([ 'tags', 'fields','author_id'], options.include);
 
-        return ghostBookshelf.Model.findOne.call(this, data, options);
+        return ghostBookshelf.Model.findRelate.call(this, data, options);
+
+
+
     },
     //end add
 

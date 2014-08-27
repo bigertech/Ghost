@@ -61,6 +61,7 @@
     "passport-http-bearer": "1.0.1",
     "passport-oauth2-client-password": "0.1.1",
     "rss": "0.2.1",
+    "segment": "0.0.5",
     "semver": "2.2.1",
     "showdown": "https://github.com/ErisDS/showdown/archive/v0.3.2-ghost.tar.gz",
     "sqlite3": "2.2.3",
