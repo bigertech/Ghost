@@ -501,6 +501,29 @@ Post = ghostBookshelf.Model.extend({
 
         return ghostBookshelf.Model.findOne.call(this, data, options);
     },
+    //add by liuxing
+    /**
+     * ### Find Relate
+     * @extends ghostBookshelf.Model.findOne to handle post status
+     * **See:** [ghostBookshelf.Model.findOne](base.js.html#Find%20One)
+     */
+    findRelate: function (data, options) {
+        options = options || {};
+
+        data = _.extend({
+            status: 'published'
+        }, data || {});
+
+        if (data.status === 'all') {
+            delete data.status;
+        }
+
+        // Add related objects
+        options.withRelated = _.union([ 'tags', 'fields' ], options.include);
+
+        return ghostBookshelf.Model.findOne.call(this, data, options);
+    },
+    //end add
 
     /**
      * ### Edit

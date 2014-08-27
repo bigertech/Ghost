@@ -103,6 +103,39 @@ posts = {
 
         });
     },
+    //add by liuxing
+    /**
+     * ### Read
+     * Find a post, by ID or Slug
+     *
+     * @public
+     * @param {{id_or_slug (required), context, status, include, ...}} options
+     * @return {Promise(Post)} Post
+     */
+    findRelate: function read(options) {
+        var attrs = ['id', 'slug', 'status'],
+            data = _.pick(options, attrs);
+        options = _.omit(options, attrs);
+
+        // only published posts if no user is present
+        if (!(options.context && options.context.user)) {
+            data.status = 'published';
+        }
+
+        if (options.include) {
+            options.include = prepareInclude(options.include);
+        }
+
+        return dataProvider.Post.findOne(data, options).then(function (result) {
+            if (result) {
+                return { posts: [ result.toJSON() ]};
+            }
+
+            return when.reject(new errors.NotFoundError('Post not found.'));
+
+        });
+    },
+    //
 
     /**
      * ### Edit
