@@ -1,5 +1,6 @@
 // # Posts API
 var dataProvider    = require('../models'),
+    positionRelations = require('./positionRelations'),
     positions;
 
 // ## API Methods
@@ -25,7 +26,11 @@ positions = {
     },
 
     destroy: function destroy(options) {
-        return dataProvider.Position.destroy(options);
+        return dataProvider.Position.destroy(options).then(function(result) {
+            if (result) {
+                return dataProvider.PositionRelation.where({position_id: options.id}).destroy();
+            }
+        });
     }
 };
 
