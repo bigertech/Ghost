@@ -23,6 +23,21 @@ positions = {
         });
     },
 
+    /**
+     * 按专题id得到文章
+     * @param  {String} slug
+     * @return
+     */
+    getPostsByPositionSlug: function(slug) {
+        return dataProvider.Position.findOne({slug: slug}, { withRelated: 'posts' }).then(function(position) {
+            if (position) {
+                return posts.findByIn(position.toJSON().posts);
+            }
+
+            return null;
+        });
+    },
+
     findAll: function findAll(option) {
         return dataProvider.Position.findAll(option);
     },
