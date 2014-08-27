@@ -18,6 +18,7 @@
     <link rel="apple-touch-icon-precomposed" sizes="76x76" href="/ghost/img/touch-icon-ipad.png?v=aad122cc47">
     <link rel="apple-touch-icon-precomposed" sizes="120x120" href="/ghost/img/small.png?v=aad122cc47">
     <link rel="apple-touch-icon-precomposed" sizes="152x152" href="/ghost/img/medium.png?v=aad122cc47">
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
 
     <meta name="application-name" content="Ghost">
     <meta name="msapplication-TileColor" content="#ffffff">
@@ -95,7 +96,8 @@
     </div>
 
 <input type="hidden" value="{{activeId}}" id="active_id" />
-<script src="http://cdn.staticfile.org/jquery/2.1.1-rc2/jquery.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 <script>
 $(function() {
     var id = $('#active_id').val();
@@ -103,6 +105,7 @@ $(function() {
     $.get('/ghost/positionJson/' + id, function(data) {
         // posts全局
         posts = data.posts || [];
+        allSlug = getAllSlug(posts);
         var posReals = data.posReals || [];
 
         var result = '';
@@ -175,6 +178,15 @@ $(function() {
     });
 
     $('body').on('input propertychange', '.post-slug', function() {
+        $('.post-slug').autocomplete({
+            source: allSlug,
+            max: 10,
+            scroll: false,
+            width: 162
+        });
+    });
+
+    $('body').on('blur', '.post-slug', function() {
         var random = $(this).attr('id').substr('slug_'.length);
         $('#pt_' + random).val(getPostTitleBySlug($(this).val().trim()));
     });
@@ -226,6 +238,16 @@ $(function() {
         newRow += '<td><input type="hidden" value="' + id + '" id="real_' + random + '"/></td>'
 
         return newRow + '</tr>';
+    }
+
+    function getAllSlug(posts) {
+        var slugs = [];
+
+        posts.forEach(function(post) {
+            slugs.push(post.slug);
+        });
+
+        return slugs;
     }
 
     function getPostBySlug(slug) {
