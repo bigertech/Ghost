@@ -33,15 +33,31 @@ function prepareInclude(include) {
  */
 posts = {
 
-    findByIn: function findByIn(ids, options) {
+    findByIn: function findByIn(ids) {
         if (_.isEmpty(ids) || !_.isArray(ids)) {
             return when.resolve([]);
         }
 
+        var posts = null;
         return dataProvider.Post.query(function(qb) {
-            qb.where('id', 'IN', ids);
-        }).fetchAll(options).then(function(result) {
-            return when.resolve(result.toJSON());
+            qb.where({status: 'published'}).where('id', 'IN', ids);
+        }).fetchAll().then(function(result) {
+            posts = result.toJSON();
+
+            return dataProvider.User.findAll();
+        }).then(function(authors) {
+            authors = authors.toJSON();
+            posts.forEach(function(post, key) {
+                authors.forEach(function(author) {
+                    if (author.id == post.author) {
+                        posts[key].author = _.pick(author,
+                            'id', 'uuid', 'slug', 'email', 'image'
+                        );
+                    }
+                });
+            });
+
+            return when.resolve(posts);
         });
     },
 

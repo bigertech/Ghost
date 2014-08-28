@@ -1,0 +1,93 @@
+@post-width: 696px;
+@video-max-width: 804px;
+
+@post-padding-sm: 20px;
+@post-padding-md: 38px;
+
+/***导航***/
+.post-template {
+  .navbar {
+    position: relative;
+    .icon-bglogo,
+    .icon-search {
+      color: #585a66;
+    }
+    .icon-search {
+      margin-right: 0px;
+    }
+    .icon-bglogo {
+      margin-left: 0;
+    }
+  }
+}
+
+.pv-banner,
+.pv-container {
+  margin: 0 auto;
+  padding: 0 @post-padding-sm;
+}
+
+#post-container {
+  max-width: @post-width;
+}
+
+#video-container {
+  max-width: @video-max-width;
+}
+
+.pv-banner {
+  &:before {
+    position: relative;
+    top: 70px;
+    display: block;
+    content: "";
+    border-top: 1px #d8d8d8 solid;
+  }
+}
+
+@media screen and (min-width: 568px) {
+  .pv-banner,
+  .pv-container {
+    padding: 0 @post-padding-md;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .post-template {
+    .navbar {
+      max-width: none;
+      position: absolute;
+      .icon-search {
+        margin-right: 20px;
+      }
+      .icon-bglogo {
+        margin-left: 20px;
+      }
+    }
+  }
+  #post-banner .navbar {
+    .icon-bglogo,
+    .icon-search {
+      color: #fff;
+    }
+  }
+  .modify #post-banner {
+    .navbar {
+      .icon-bglogo,
+      .icon-search {
+        color: #585a66;
+      }
+    }
+  }
+  .pv-banner {
+    padding: 0;
+    max-width: none;
+    min-height: 560px;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    &:before {
+      border: 0;
+    }
+  }
+}

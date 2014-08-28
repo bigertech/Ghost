@@ -131,10 +131,10 @@ $(function() {
         var publish = $('#publish_' + random).val().trim();
         var realId = $('#real_' + random).val().trim();
 
-        if (!post_id) {
-            alert('对应slug的文章不存在！');
-            return false;
-        }
+        // if (!post_id) {
+        //     alert('对应slug的文章不存在！');
+        //     return false;
+        // }
 
         var data = {
             id: realId,
@@ -223,15 +223,19 @@ $(function() {
             newRow += '<td><select id="target_' + random + '"><option value="0" selected="selected">No</option><option value="1">Yes</option></select></td>';
         }
 
-        if (publish) {
-            newRow += '<td><select id="publish_' + random + '"><option value="0">No</option><option value="1" selected="selected">Yes</option></select></td>';
-        } else {
-            newRow += '<td><select id="publish_' + random + '"><option value="0" selected="selected">No</option><option value="1">Yes</option></select></td>';
-        }
+        var yesPublish = '<td><select id="publish_' + random + '"><option value="0">No</option><option value="1" selected="selected">Yes</option></select></td>';
 
         if (argPosition === null) {
+            newRow += yesPublish;
+
             newRow += '<td><a href="#" url="/ghost/position/add/" value="' + random + '" class="save">Save</a></td>';
         } else {
+            if (publish) {
+                newRow += yesPublish;
+            } else {
+                newRow += '<td><select id="publish_' + random + '"><option value="0" selected="selected">No</option><option value="1">Yes</option></select></td>';
+            }
+
             newRow += '<td><a href="#" url="/ghost/position/update/" value="' + random + '" class="save">Save</a> | <a href="#" url="/ghost/position/delete/" value="' + random + '" class="delete">Delete</a></td>';
         }
 
