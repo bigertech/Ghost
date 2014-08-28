@@ -131,6 +131,11 @@ posts = {
                 var data = _.filter(result.toJSON(),function(post){ //排除掉自己
                    return post.title !== options.title;
                 });
+                var size = data.length - options.limit;
+
+                if( size > -1 ){  //返回指定数量的数据
+                    data.pop();
+                }
                 return {relatePosts:data};
             }
             return when.reject(new errors.NotFoundError('Post not found.'));

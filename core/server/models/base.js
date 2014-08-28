@@ -251,6 +251,7 @@ ghostBookshelf.Model = ghostBookshelf.Model.extend({
         // We pass include to forge so that toJSON has access
         return this.forge(data, {include: options.include}).fetch(options);
     },
+
     findRelate: function (data, options) {
         //data = this.filterData(data);
         //options = this.filterOptions(options, 'findOne');
@@ -259,14 +260,13 @@ ghostBookshelf.Model = ghostBookshelf.Model.extend({
         var titleSegment = util.segement(options.title);  //分词
         //delete options.title;
         options.include = ['author_id'];
-        console.log(options);
-        console.log(data);
 
         var postCollection = ghostBookshelf.Collection.forge(data,{model: this});
 
         postCollection
             .query('where','title','!=', options.title)
-            .query('where','title','LIKE','%'+titleSegment[0].w+'%');
+            .query('where','title','LIKE','%'+titleSegment[0].w+'%')
+            .query('where','html','LIKE','%'+titleSegment[0].w+'%');
         if(titleSegment.length > 1){
             for(var i = titleSegment.length -1; i > 0;i--){
                 postCollection
