@@ -35,8 +35,10 @@ var downsize        = require('downsize'),
     //add by liuxing
     typeLinks       = [],
     request         = require('request'),
-    youkuUrl        = 'https://openapi.youku.com/v2/videos/show_basic.json'
-    deleteTag       = ['youkuid'];
+    youkuUrl        = 'https://openapi.youku.com/v2/videos/show_basic.json';
+    deleteTag       = ['youkuid'],
+    defaultBgImg = '/assets/images/def-bg.png';
+
 
 //初始化所有的 文章类型 和对应的url
 api.postType.browse().then(function(result){
@@ -72,7 +74,7 @@ coreHelpers.date = function (context, options) {
     // ensure that context is undefined, not null, as that can cause errors
     context = context === null ? undefined : context;
 
-    var f = options.hash.format || 'MMM Do, YYYY',
+    var f = options.hash.format || 'MMM DD YYYY HH:mm ',
         timeago = options.hash.timeago,
         date;
 
@@ -453,10 +455,15 @@ coreHelpers.video_play_count = function () {
     return defer.promise;
 };
 coreHelpers.post_relative = function (options) {
-    var options = (options || {}).hash || {};
-    var data = { id : 4};
-    api.posts.findRelate(data).then(function(posts){
-        console.log(posts);
+    var option = (options || {}).hash || {};
+    var data = {
+        title : this.title,
+        post_type  : this.post_type,
+        limit : parseInt(option.limit)+1
+
+    };
+    return api.posts.findRelate(data).then(function(posts){
+        return template.execute('relative_post', posts);
     });
 
 };
@@ -465,6 +472,9 @@ coreHelpers.post_relative = function (options) {
 // --- Modified by happen
 // --- If current runing env is production, load the image from cdn.
 coreHelpers.image = function () {
+    if(!this.image){
+        this.image = defaultBgImg;
+    }
 
     if (config.cdn.isProduction) {
         this.image = getCdnImageUrl(this.image);

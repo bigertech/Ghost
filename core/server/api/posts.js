@@ -6,6 +6,7 @@ var when            = require('when'),
     canThis         = require('../permissions').canThis,
     errors          = require('../errors'),
     utils           = require('./utils'),
+    _               = require('lodash'),
 
     docName         = 'posts',
     allowedIncludes = ['created_by', 'updated_by', 'published_by', 'author', 'tags', 'fields','post_type'],
@@ -113,9 +114,9 @@ posts = {
      * @return {Promise(Post)} Post
      */
     findRelate: function read(options) {
-        var attrs = ['id', 'slug', 'status'],
+        var attrs = ['id', 'slug', 'status','post_type'],
             data = _.pick(options, attrs);
-        options = _.omit(options, attrs);
+            options = _.omit(options, attrs);
 
         // only published posts if no user is present
         if (!(options.context && options.context.user)) {
@@ -125,14 +126,19 @@ posts = {
         if (options.include) {
             options.include = prepareInclude(options.include);
         }
-
-        return dataProvider.Post.findOne(data, options).then(function (result) {
+        return dataProvider.Post.findRelate(data, options).then(function (result) {
             if (result) {
-                return { posts: [ result.toJSON() ]};
+                var data = _.filter(result.toJSON(),function(post){ //排除掉自己
+                   return post.title !== options.title;
+                });
+                var size = data.length - options.limit;
+
+                if( size > -1 ){  //返回指定数量的数据
+                    data.pop();
+                }
+                return {relatePosts:data};
             }
-
             return when.reject(new errors.NotFoundError('Post not found.'));
-
         });
     },
     //

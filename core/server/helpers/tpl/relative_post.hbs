@@ -1,0 +1,20 @@
+{{! 相关文章推荐  post_relative limit="2"  }}
+<div class="more-post">
+	{{#each relatePosts}}
+    <div class="more-left">
+        <p class="p-banner">{{title}}</p>
+        <div class="info">
+            <a href="" target="_blank">
+                <div class="pic">
+                    <img src="{{image}}" title="author pic">
+                </div>
+            </a>
+	        {{#author}}
+            <span class="post-meta">{{name}} • <time class="post-time">{{date format="MMM DD YYYY HH:mm:ss"  timeago="1"}}</time></span>
+	        {{/author}}
+            <span class="img-heart icon-heart"></span>
+            <span class="post-count">{{post_star}}</span>
+        </div>
+    </div>
+{{/each}}
+</div>

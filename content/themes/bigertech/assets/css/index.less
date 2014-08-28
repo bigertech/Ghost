@@ -16,9 +16,36 @@
 .icon-up {
   font-size: 50px;
 }
+.home-template, .archive-template, .category-template {
+  .bg-cover {
+    &:before {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      content: "";
+      opacity: 0.3;
+      background-color: #000;
+      z-index: 1;
+    }
+  }
+}
 .archive-template {
   .topics {
     display: none;
+  }
+}
+.author-template {
+  .bg-cover {
+    &:before {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 101%;
+      top: 0;
+      left: 0;
+      background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
+    }
   }
 }
 
@@ -138,6 +165,11 @@
   display: table;
   width: 100%;
   height: 380px;
+  /* transition-property: height;
+  -webkit-transition-duration: 0.5s;
+  transition-duration: 0.5s;
+  -webkit-transition-timing-function: cubic-bezier(0.7,0,0.3,1);
+  transition-timing-function: cubic-bezier(0.7,0,0.3,1); */
   .bg-cover {
     position: absolute;
     z-index: -999;
@@ -152,15 +184,6 @@
     img {
       height: auto;
       width: 100%;
-    }
-    &:before {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      content: "";
-      opacity: 0.3;
-      background-color: #fff;
-      z-index: 100;
     }
   }
   .bg-slogan {
@@ -213,9 +236,13 @@
 }
 
 // 下拉后，bg-header 的变化效果
-.modify {
+.archive-template, .modify {
   .bg-cover {
     height: 68px;
+  }
+  .bg-slogan {
+    display: block;
+    margin-top: 128px;
   }
   .bg-logo {
     display: block;
@@ -229,6 +256,10 @@
     font-size: 28px;
     color: #000 !important;
   }
+}
+
+.modify.bg-header {
+  height: 68px;
 }
 
 
@@ -451,6 +482,9 @@ footer {
     margin-bottom: 20px;
     .bg-cover {
       height: 250px;
+      img {
+        height : 250px;
+      }
     }
     .author-profile {
       line-height: 1.6em;
@@ -474,6 +508,12 @@ footer {
         line-height: 1em;
         font-size: 18px;
       }
+    }
+  }
+
+  .l-menu, .l-search {
+    .text {
+     font-size: 18px;
     }
   }
 

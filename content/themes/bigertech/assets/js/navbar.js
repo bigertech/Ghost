@@ -61,6 +61,8 @@ var Menu = {
   }
 }, Search = {
   settings: {
+      // searchForm: $("#searchform"),
+      textBox: $(".textbox"),
       searchBtn: $(".js-searchBtn"),
       search: $(".js-search"),
       closeBtn: $(".js-closeBtn"),
@@ -76,6 +78,10 @@ var Menu = {
     var e = this.settings;
     e.searchBtn.click(function () {
         Search.toggle()
+    });
+    // 处理搜索框阻止冒泡
+    e.textBox.click(function () {
+      return false;
     });
     e.bg.click(function () {
         Search.close()
@@ -118,7 +124,7 @@ var Menu = {
           e.search.removeClass("is-active");
           setTimeout(t, 1200)
       }
-  }
+  },
 };
 
 $(document).ready(function () {

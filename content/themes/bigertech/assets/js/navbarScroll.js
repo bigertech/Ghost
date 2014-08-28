@@ -59,16 +59,16 @@
     document.body.ontouchmove = touchmove;
   }
 
-  function enable_scroll() {
-    window.onmousewheel = document.onmousewheel = document.onkeydown = document.body.ontouchmove = null;
-  }
+  // function enable_scroll() {
+  //   window.onmousewheel = document.onmousewheel = document.onkeydown = document.body.ontouchmove = null;
+  // }
 
   var docElem = window.document.documentElement,
       scrollVal,
       isRevealed,
       noscroll,
       isAnimating,
-      bgTopScroll = document.getElementById( 'topScroll' );
+      navbarScroll = document.getElementById( 'navbarScroll' );
 
   function scrollY() {
     return window.pageYOffset || docElem.scrollTop;
@@ -100,11 +100,15 @@
     isAnimating = true;
 
     if( reveal ) {
-      classie.add( bgTopScroll, 'modify' );
+      classie.add( navbarScroll, 'modify' );
+      // if (window.scrollTo(100,500)) {
+      //   alert('haha');
+      // }
+
     } else {
-      noscroll = true;
-      disable_scroll();
-      // classie.remove( bgTopScroll, 'modify' );
+      // noscroll = true;
+      // disable_scroll();
+      // classie.remove( navbarScroll, 'modify' );
     }
 
     //simulating the end of the transition:
@@ -120,16 +124,16 @@
 
   // refreshing the page...
   var pageScroll = scrollY();
-  noscroll = pageScroll === 0;
+  noscroll = pageScroll === 15;
 
-  disable_scroll();
+  // disable_scroll();
 
   if( pageScroll ) {
     isRevealed = true;
     classie.add( bgTopScroll, 'modify' );
   }
 
-  if(document.body.clientWidth > 980 ) {
+  if(document.body.clientWidth > 768 && document.body.className == 'home-template') {
     window.addEventListener( 'scroll', scrollPage );
   }
 })();
