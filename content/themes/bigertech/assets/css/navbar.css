@@ -133,7 +133,7 @@
 
 .l-search #searchform input[type="text"] {
   padding-left: 5px;
-  width: 330px;
+  width: 340px;
   font-size: 36px;
   color: #333;
   line-height: 1.5em;
@@ -251,7 +251,8 @@
 }
 
 .l-menu .container .categories li a .text {
-  position: relative
+  position: relative;
+  width: 100%;
 }
 
 .l-menu .container .categories li a .text:after {
@@ -396,3 +397,25 @@
   -o-transition-delay: 600ms;
   transition-delay: 600ms
 }
+
+@media screen and (max-width: 768px) {
+  .l-menu .text {
+    font-size: 18px;
+  }
+  .l-search #searchform input[type="text"] {
+    width: 230px;
+    font-size: 24px;
+  }
+}
+
+/* .l-search #searchform input[type="text"] {
+  padding-left: 5px;
+  width: 340px;
+  font-size: 36px;
+  color: #333;
+  line-height: 1.5em;
+  border: none;
+  border-left: 6px solid #333;
+  background-color: transparent;
+  z-index: 9999;
+} */
