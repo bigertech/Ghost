@@ -61,6 +61,8 @@ var Menu = {
   }
 }, Search = {
   settings: {
+      searchForm: $("#searchform"),
+      textBox: $(".textbox"),
       searchBtn: $(".js-searchBtn"),
       search: $(".js-search"),
       closeBtn: $(".js-closeBtn"),
@@ -77,6 +79,14 @@ var Menu = {
     e.searchBtn.click(function () {
         Search.toggle()
     });
+    // 处理搜索框阻止冒泡以及增加相应的回车事件和点击事件
+    e.searchForm.click(function () {
+      return false;
+    });
+    e.textBox.onkeydown(function (this, event) {
+        Search.enter()
+    });
+
     e.bg.click(function () {
         Search.close()
     });
@@ -89,6 +99,13 @@ var Menu = {
     $(window).keydown(function (e) {
         e.which === 27 && Search.close()
     })
+  },
+  enter: function(obj, evt) {
+    evt = (evt) ? evt : ((window.event) ? window.event : "");
+    keyCode = evt.keyCode ? evt.keyCode : (evt.which ? evt.which : evt.charCode);
+    if (keyCode == 13) {
+        alert('ee');
+    }
   },
   toggle: function () {
       var e = this.settings;
