@@ -1,10 +1,5 @@
-@post-width: 696px;
-
 @art-name-font-sm: 34px;
 @art-name-font-md: 44px;
-
-@post-padding-sm: 20px;
-@post-padding-md: 38px;
 
 @more-post-padding-sm: 30px;
 @more-post-padding-md: 50px;
@@ -123,7 +118,6 @@
       .ds-highlight {
         color: @thread-main-color !important;
       }
-
     }
     a.ds-like-thread-button {
       color: #555;
@@ -165,7 +159,7 @@
     }
     a.ds-rounded:hover {
       .ds-icon-heart {
-        background: url("../images/heartnormal.png") !important;
+        background: url("../images/heartnormal.png") no-repeat no-repeat !important;
       }
     }
     .ds-icon-heart {
@@ -177,11 +171,18 @@
         display: none !important;
       }
     }
+    .ds-comments {
+      border: 0!important;
+    }
   }
   .ds-like-panel {
     position: relative;
-    top: -36px;
+    top: -34px;
     left: 50px;
+  }
+  .ds-like-tooltip {
+    left: inherit !important;
+    right: 100px;
   }
 }
 
@@ -223,7 +224,8 @@
   }
 }
 
-/* 更多阅读结束 */
+
+/* 更多阅读 */
 
 @media screen and (min-width: 568px) {
   .post-info {
@@ -351,9 +353,7 @@
     visibility: visible;
   }
 
-  #ds-thread .ds-like-tooltip {
-    left: 318px !important;
-  }
+
 
   /* 更多阅读开始 */
   @pic-size: 22px;
