@@ -482,6 +482,27 @@ coreHelpers.image = function () {
     return  new hbs.handlebars.SafeString(this.image);
 };
 
+coreHelpers.image_sm = function() {
+    if (!this.image) {
+        this.image = defaultBgImg;
+    }
+
+    // 得到裁剪过后的图片
+    if (config.images.dir) {
+        var image = this.image;
+        var pos = image.indexOf('images/') + 'images/'.length;
+        var imgPath = image.substr(0, pos);
+        var imgName = image.substr(pos);
+
+        this.image = imgPath + config.images.dir + '/' + imgName;
+    }
+
+    if (config.cdn.isProduction) {
+        this.image = getCdnImageUrl(this.image);
+    }
+    return  new hbs.handlebars.SafeString(this.image);
+};
+
 function getCdnImageUrl(image) {
     var pos = image.indexOf('images/');
     if (pos !== -1) {
@@ -1151,6 +1172,7 @@ registerHelpers = function (adminHbs, assetHash) {
     registerThemeHelper('uuid', coreHelpers.uuid);
     registerThemeHelper('slug', coreHelpers.slug);
     registerThemeHelper('image', coreHelpers.image);
+    registerThemeHelper('image_sm', coreHelpers.image_sm);
     registerThemeHelper('type_class', coreHelpers.type_class);
     registerThemeHelper('post_star', coreHelpers.post_star);
     registerThemeHelper('post_desc', coreHelpers.post_desc);
