@@ -6,12 +6,14 @@
   <link rel="stylesheet" href="{{asset "css/index.css" }}">
   <link rel="stylesheet" href="{{asset "css/navbar.css" }}">
   <link rel="stylesheet" href="{{asset "css/post.css" }}">
-  <link rel="stylesheet" href="{{asset "css/video.css"}}"
+  <link rel="stylesheet" href="{{asset "css/video.css"}}">
+  <link rel="stylesheet" href="{{asset "css/com-video-post.css"}}">
 {{/contentFor}}
 
 
-<div class="video-banner">
+<div class="pv-banner">
 {{#post}}
+    {{> "navbar"}}
   <div class="video-bg-img">
     <img src="{{image}}">
   </div>
@@ -29,10 +31,9 @@
 </div>
 
 
-<div class="video-container">
+<div id="video-container" class="pv-container">
     {{> "comment"}}
     {{> "more_video"}}
-
 </div>
 
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
