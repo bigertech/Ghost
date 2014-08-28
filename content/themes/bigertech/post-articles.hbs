@@ -3,11 +3,13 @@
   <link rel="stylesheet" href="{{asset "css/index.css" }}">
   <link rel="stylesheet" href="{{asset "css/navbar.css" }}">
   <link rel="stylesheet" href="{{asset "css/post.css" }}">
+  <link rel="stylesheet" href="{{asset "css/com-video-post.css"}}">
 {{/contentFor}}
 
 <div id="topScroll">
-  {{#post}}
-  <div class="post-banner">
+    {{#post}}
+  <div id="post-banner" class="pv-banner">
+      {{> "navbar"}}
     <div class="embed-responsive embed-responsive-2by1 bg-img-small">
       <img class="embed-responsive-item" src="{{image}}">
     </div>
@@ -17,7 +19,6 @@
     <div class="post-info">
       <p class="name">{{title}}</p>
       <span class="author">{{author}} • <time class="post-time">{{date published_at timeago="ture"}}</time></span>
-
       <p class="desc">{{post_desc}}</p>
     </div>
     <a class="scroll-down" href="#post-container" data-offset="-45">
@@ -25,7 +26,7 @@
     </a>
   </div>
 
-  <div class="post-container">
+  <div id="post-container" class="pv-container">
 
     <div class="post">
         {{content}}
