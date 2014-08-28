@@ -1,12 +1,18 @@
 
 // BASIC
 //----------------------------------------------------------
-.container {
-  width: 730px;
+.content-wrapper {
+  width: 100%;
+  margin-top: 380px;
+  background-color: #fff;
+  .container {
+    width: 730px;
+  }
 }
 .mobile-display {
   display: none;
 }
+
 #toTop {
   background-color: #919191;
   &:hover {
@@ -16,36 +22,44 @@
 .icon-up {
   font-size: 50px;
 }
-.home-template, .archive-template, .category-template {
-  .bg-cover {
-    &:before {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      content: "";
-      opacity: 0.3;
-      background-color: #000;
-      z-index: 1;
-    }
-  }
-}
+
 .archive-template {
   .topics {
     display: none;
   }
 }
-.author-template {
-  .bg-cover {
-    &:before {
-      content: "";
-      position: absolute;
-      width: 100%;
-      height: 101%;
-      top: 0;
-      left: 0;
-      background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
-      background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
-    }
+
+// 作者界面的主图白色渐变
+/* .author-template {
+  .bg-linear {
+    display: table;
+    width: 100%;
+    height: 100%;
+    background-image: -ms-linear-gradient(top,rgba(255, 255, 255, 0) 0,rgba(255, 255, 255, 1) 100%);
+    background-image: -moz-linear-gradient(top,rgba(255, 255, 255, 0) 0,rgba(255, 255, 255, 1) 100%);
+    background-image: -o-linear-gradient(top,rgba(255, 255, 255, 0) 0,rgba(255, 255, 255, 1) 100%);
+    background-image: -webkit-gradient(linear,left top,right bottom,color-stop(0,rgba(255, 255, 255, 1)),color-stop(1,#00a3ef));
+    background-image: -webkit-linear-gradient(top,rgba(255, 255, 255, 0) 0,rgba(255, 255, 255, 1) 100%);
+    background-image: linear-gradient(top,rgba(255, 255, 255, 0) 0,rgba(255, 255, 255, 1) 100%);
+    background-repeat: repeat-x;
+  background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
+  }
+} */
+
+//主页、文章或视频页面的主图黑色渐变
+.home-template, .archive-template, .category-template, .author-template {
+  .bg-linear {
+    display: table;
+    width: 100%;
+    height: 100%;
+    background-image: -ms-linear-gradient(top,rgba(0,0,0,.1) 0,rgba(0,0,0,.6) 100%);
+    background-image: -moz-linear-gradient(top,rgba(0,0,0,.1) 0,rgba(0,0,0,.6) 100%);
+    background-image: -o-linear-gradient(top,rgba(0,0,0,.1) 0,rgba(0,0,0,.6) 100%);
+    background-image: -webkit-gradient(linear,left top,right bottom,color-stop(0,rgba(0,0,0,.6)),color-stop(1,#00a3ef));
+    background-image: -webkit-linear-gradient(top,rgba(255,255,255,.1) 0,rgba(0,0,0,.6) 100%);
+    background-image: linear-gradient(top,rgba(0,0,0,.1) 0,rgba(0,0,0,.6) 100%);
+    background-repeat: repeat-x;
   }
 }
 
@@ -137,8 +151,9 @@
 // NAVBAR
 //----------------------------------------------------------
 .navbar {
-  position: absolute;
+  position: fixed !important;
   top: 0;
+  left: 0;
   width: 100%;
   .icon-bglogo, .icon-search {
     display: inline-block;
@@ -162,28 +177,20 @@
 // HEADER
 //----------------------------------------------------------
 .bg-header {
-  display: table;
+  position: fixed !important;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 380px;
-  /* transition-property: height;
-  -webkit-transition-duration: 0.5s;
-  transition-duration: 0.5s;
-  -webkit-transition-timing-function: cubic-bezier(0.7,0,0.3,1);
-  transition-timing-function: cubic-bezier(0.7,0,0.3,1); */
+  overflow: hidden;
+  z-index: -1;
   .bg-cover {
     position: absolute;
-    z-index: -999;
     width: 100%;
-    height: 380px;
-    overflow: hidden;
-    transition-property: height;
-    -webkit-transition-duration: 0.5s;
-    transition-duration: 0.5s;
-    -webkit-transition-timing-function: cubic-bezier(0.7,0,0.3,1);
-    transition-timing-function: cubic-bezier(0.7,0,0.3,1);
+    z-index: -1;
     img {
-      height: auto;
       width: 100%;
+      height: auto;
     }
   }
   .bg-slogan {
@@ -202,6 +209,7 @@
       color: #fff;
     }
   }
+  // 作者界面简介
   .author-profile {
     display: table-cell;
     vertical-align: middle;
@@ -233,33 +241,6 @@
       color: #585a66;
     }
   }
-}
-
-// 下拉后，bg-header 的变化效果
-.archive-template, .modify {
-  .bg-cover {
-    height: 68px;
-  }
-  .bg-slogan {
-    display: block;
-    margin-top: 128px;
-  }
-  .bg-logo {
-    display: block;
-    width: 264px;
-    height: 38px;
-    margin: 0 auto;
-    background: url('../images/bigertech-black.png') no-repeat !important;
-    background-size: 100% !important;
-  }
-  .bg-description {
-    font-size: 28px;
-    color: #000 !important;
-  }
-}
-
-.modify.bg-header {
-  height: 68px;
 }
 
 
@@ -473,8 +454,17 @@ footer {
   .mobile-display {
     display: block;
   }
-  .container {
-    width: 100%;
+  .content-wrapper {
+    margin-top: 250px;
+    .container {
+      width: 100%;
+    }
+  }
+
+  .l-menu, .l-search {
+    .text {
+     font-size: 18px;
+    }
   }
 
   .bg-header {
@@ -484,6 +474,15 @@ footer {
       height: 250px;
       img {
         height : 250px;
+      }
+    }
+    .bg-slogan {
+      .bg-logo {
+        width: 180px;
+      }
+      .bg-description {
+        line-height: 1em;
+        font-size: 18px;
       }
     }
     .author-profile {
@@ -499,21 +498,6 @@ footer {
       .author-bio {
         font-size: 12px;
       }
-    }
-    .bg-slogan {
-      .bg-logo {
-        width: 180px;
-      }
-      .bg-description {
-        line-height: 1em;
-        font-size: 18px;
-      }
-    }
-  }
-
-  .l-menu, .l-search {
-    .text {
-     font-size: 18px;
     }
   }
 

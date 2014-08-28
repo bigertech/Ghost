@@ -132,7 +132,7 @@
   display: none !important;
 }
 #ds-thread #ds-reset a.ds-rounded:hover .ds-icon-heart {
-  background: url("../images/heartnormal.png") !important;
+  background: url("../images/heartnormal.png") no-repeat no-repeat !important;
 }
 #ds-thread #ds-reset .ds-icon-heart {
   background: url("../images/hearthover.png");
@@ -143,10 +143,17 @@
 #ds-thread #ds-reset .ds-replybox .ds-avatar {
   display: none !important;
 }
+#ds-thread #ds-reset .ds-comments {
+  border: 0!important;
+}
 #ds-thread .ds-like-panel {
   position: relative;
-  top: -36px;
+  top: -34px;
   left: 50px;
+}
+#ds-thread .ds-like-tooltip {
+  left: inherit !important;
+  right: 100px;
 }
 /* 更多阅读*/
 .more-post {
@@ -182,7 +189,7 @@
   padding-left: 20px;
   color: #ff3f53;
 }
-/* 更多阅读结束 */
+/* 更多阅读 */
 @media screen and (min-width: 568px) {
   .post-info .name {
     font-size: 34px;
@@ -298,9 +305,6 @@
   }
   .modify .post {
     visibility: visible;
-  }
-  #ds-thread .ds-like-tooltip {
-    left: 318px !important;
   }
   /* 更多阅读开始 */
   .more-post {
