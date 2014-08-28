@@ -39,7 +39,7 @@ posts = {
         }
 
         return dataProvider.Post.query(function(qb) {
-            qb.where('id', 'IN', ids);
+            qb.where({status: 'published'}).where('id', 'IN', ids);
         }).fetchAll(options).then(function(result) {
             return when.resolve(result.toJSON());
         });

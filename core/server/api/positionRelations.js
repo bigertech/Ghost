@@ -6,15 +6,22 @@ var _ = require('lodash'),
 
 // ## API Methods
 positionRelations = {
-    findByPositionId: function findByPositionId(id) {
+    findByPositionId: function findByPositionId(id, options) {
+        options = options || {};
         if (!id || !_.isNumber(parseInt(id))) {
             return when.reject([]);
         }
 
-        return dataProvider['PositionRelation']
-                .where({position_id: id})
-                .fetchAll()
-                .then(function(result) {
+        var qb = dataProvider['PositionRelation'].where({position_id: id});
+        if (options.publish !== undefined) {
+            qb.where({publish : options.publish});
+        }
+
+        if (options.target !== undefined) {
+            qb.where({target : options.target});
+        }
+
+        return qb.fetchAll().then(function(result) {
             return when.resolve(result.toJSON());
         });
     },

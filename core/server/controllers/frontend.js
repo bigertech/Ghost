@@ -695,16 +695,12 @@ frontendControllers = {
         var data = {};
 
         // 得到指定slug专题下的所有文章
-        api.positions.getPostsByPositionSlug(slug).then(function(posts) {
-            if (!posts) {
+        api.positions.getRelationsByPositionSlug(slug, { target: 1, publish: 1 }).then(function(relation) {
+            if (!relation) {
                 return when.reject(new errors.NotFoundError('Topic not be found.'));
             }
 
-            data.posts = posts;
-            return api.positions.findAll();
-        }).then(function(positions) {
-            data.positions = positions;
-            res.render('topic', data);
+            res.jsonp(relation);
         }).otherwise(function (err) {
             if (err.type === 'NotFoundError') {
                 return next();
