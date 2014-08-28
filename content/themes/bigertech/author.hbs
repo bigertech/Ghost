@@ -9,19 +9,25 @@
 
 {{#author}}
 <div class="bg-header">
-  <div class="bg-cover">
-    <img class="lazy" data-original="{{@blog.cover}}">
+
+  <div class="bg-cover"><img class="lazy" data-original="{{@blog.cover}}"></div>
+  <div class="bg-linear">
+    <section class="author-profile">
+      {{#if image}}
+        <img class="author-avatar" src="{{image}}" alt="{{name}} avatar" />
+      {{/if}}
+      <h1 class="author-name">{{name}}</h1>
+      <h2 class="author-bio">{{bio}}</h2>
+    </section>
   </div>
-  <section class="author-profile">
-    {{#if image}}
-      <img class="author-avatar" src="{{image}}" alt="{{name}} avatar" />
-    {{/if}}
-    <h1 class="author-name">{{name}}</h1>
-    <h2 class="author-bio">{{bio}}</h2>
-  </section>
+
 </div>
 {{/author}}
 
-{{> "loop"}}
+<div class="content-wrapper">
 
-{{pagination}}
+  {{> "loop"}}
+
+  {{pagination}}
+
+</div>

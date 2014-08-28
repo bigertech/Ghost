@@ -25,7 +25,11 @@
         {{/if}}
       </div>
       <p class="post-description desktop-display">
-        {{post_desc}}
+        {{#if post_desc}}
+          {{post_desc}}
+        {{else}}
+          {{excerpt words="30"}}
+        {{/if}}
       </p>
     </li>
   {{/foreach}}
