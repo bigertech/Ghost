@@ -31,18 +31,23 @@
   }
 }
 
-// 作者界面的主图白色渐变
+// 作者界面的主图白色渐变、图标变灰
 .author-template {
+  .icon-bglogo, .icon-search {
+    &:before {
+      color: #585a66;
+    }
+  }
   .bg-linear {
     display: table;
     width: 100%;
     height: 100%;
-    background-image: -ms-linear-gradient(top,rgba(255, 255, 255, 0) 0,rgba(255, 255, 255, 1) 100%);
-    background-image: -moz-linear-gradient(top,rgba(255, 255, 255, 0) 0,rgba(255, 255, 255, 1) 100%);
-    background-image: -o-linear-gradient(top,rgba(255, 255, 255, 0) 0,rgba(255, 255, 255, 1) 100%);
+    background-image: -ms-linear-gradient(top,rgba(255, 255, 255, 0.2) 0,rgba(255, 255, 255, 1) 100%);
+    background-image: -moz-linear-gradient(top,rgba(255, 255, 255, 0.2) 0,rgba(255, 255, 255, 1) 100%);
+    background-image: -o-linear-gradient(top,rgba(255, 255, 255, 0.2) 0,rgba(255, 255, 255, 1) 100%);
     background-image: -webkit-gradient(linear,left top,right bottom,color-stop(0,rgba(255, 255, 255, 1)),color-stop(1,#fff));
-    background-image: -webkit-linear-gradient(top,rgba(255, 255, 255, 0) 0,rgba(255, 255, 255, 1) 100%);
-    background-image: linear-gradient(top,rgba(255, 255, 255, 0) 0,90%, rgba(255, 255, 255, 1) 100%, 100%, rgba(255, 255, 255, 1) 100%);
+    background-image: -webkit-linear-gradient(top,rgba(255, 255, 255, 0.2) 0,rgba(255, 255, 255, 1) 100%);
+    background-image: linear-gradient(top,rgba(255, 255, 255, 0.2) 0,90%, rgba(255, 255, 255, 1) 100%, 100%, rgba(255, 255, 255, 1) 100%);
     background-repeat: repeat-x;
   }
 }
@@ -63,6 +68,12 @@
   }
 }
 
+// 文章、视频、作者页面不出现视差滚动
+.archive-template, .category-template, .author-template {
+  .bg-header, .navbar {
+    position: absolute;
+  }
+}
 
 
 // FONTFACE
@@ -151,7 +162,7 @@
 // NAVBAR
 //----------------------------------------------------------
 .navbar {
-  position: fixed !important;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -177,7 +188,7 @@
 // HEADER
 //----------------------------------------------------------
 .bg-header {
-  position: fixed !important;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -263,6 +274,11 @@
       width: 312px;
       height: 170px;
       overflow: hidden;
+      &:hover {
+        .topic-title {
+          text-decoration: underline;
+        }
+      }
       .topic-img {
         width: 100%;
         height: 170px;
@@ -356,6 +372,9 @@
           color: #ff3f53;
         }
       }
+      .dot {
+        padding-right: 3px;
+      }
     }
     .post-description {
       max-height: 50px;
@@ -375,7 +394,7 @@
 .pagination {
   height: 44px;
   margin-top: 49px;
-  margin-bottom: 75px;
+  padding-bottom: 75px;
   text-align: center;
   .page {
     width:36px;
@@ -571,4 +590,42 @@
   0%{transform:scale(1)}
   50%{transform:scale(1.3)}
   100%{transform:scale(1)}
+}
+
+.home-template .bg-logo {
+  -webkit-animation: fade-in-down 0.6s;
+  animation: fade-in-down 0.6s;
+  -webkit-animation-delay: 0.2s;
+  animation-delay: 0.2s;
+}
+.home-template .bg-description {
+  -webkit-animation: fade-in-down 0.9s;
+  animation: fade-in-down 0.9s;
+  -webkit-animation-delay: 0.1s;
+  animation-delay: 0.1s;
+}
+
+@-webkit-keyframes fade-in-down {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(-10px);
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+}
+@keyframes fade-in-down {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(-10px);
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
 }
