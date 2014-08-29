@@ -475,7 +475,9 @@ coreHelpers.index_topic = function (options) {
         if (!relation) {
             //return when.reject(new errors.NotFoundError('Topic not be found.'));
         }
-        relation[0].siteUrl = relation[0].url;
+        if(relation[0]){
+            relation[0].siteUrl = relation[0].url;
+        }
         return template.execute('topic', {topic:relation[0]});
     })
 };
