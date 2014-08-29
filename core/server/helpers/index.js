@@ -475,10 +475,12 @@ coreHelpers.index_topic = function (options) {
         if (!relation) {
             //return when.reject(new errors.NotFoundError('Topic not be found.'));
         }
-        if(relation[0]){
+        var data = {};
+        if(relation && relation[0]){
             relation[0].siteUrl = relation[0].url;
+            data = relation[0];
         }
-        return template.execute('topic', {topic:relation[0]});
+        return template.execute('topic', {topic:data});
     })
 };
 
