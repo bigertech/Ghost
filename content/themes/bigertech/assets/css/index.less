@@ -13,6 +13,7 @@
   display: none;
 }
 
+// 回到顶部
 #toTop {
   background-color: #919191;
   &:hover {
@@ -23,6 +24,7 @@
   font-size: 50px;
 }
 
+// 换页后，专题不显示
 .archive-template {
   .topics {
     display: none;
@@ -40,7 +42,7 @@
     background-image: -o-linear-gradient(top,rgba(255, 255, 255, 0) 0,rgba(255, 255, 255, 1) 100%);
     background-image: -webkit-gradient(linear,left top,right bottom,color-stop(0,rgba(255, 255, 255, 1)),color-stop(1,#fff));
     background-image: -webkit-linear-gradient(top,rgba(255, 255, 255, 0) 0,rgba(255, 255, 255, 1) 100%);
-    background-image: linear-gradient(top,rgba(255, 255, 255, 0) 0,rgba(255, 255, 255, 1) 100%);
+    background-image: linear-gradient(top,rgba(255, 255, 255, 0) 0,90%, rgba(255, 255, 255, 1) 100%, 100%, rgba(255, 255, 255, 1) 100%);
     background-repeat: repeat-x;
   }
 }
@@ -410,7 +412,7 @@
 
 // FOOTER
 //----------------------------------------------------------
-footer {
+#footer {
   width: 100%;
   height: auto;
   text-align: center;
