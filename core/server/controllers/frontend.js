@@ -695,7 +695,7 @@ frontendControllers = {
         var data = {};
 
         // 得到指定slug专题下的所有文章
-        api.positions.getRelationsByPositionSlug(slug, { target: 1, publish: 1 }).then(function(relation) {
+        api.positions.getRelationsByPositionSlug(slug, {publish: 1 }).then(function(relation) {
             if (!relation) {
                 return when.reject(new errors.NotFoundError('Topic not be found.'));
             }

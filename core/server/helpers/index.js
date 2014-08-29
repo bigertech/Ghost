@@ -467,6 +467,19 @@ coreHelpers.post_relative = function (options) {
     });
 
 };
+
+coreHelpers.index_topic = function (options) {
+    var option = (options || {}).hash || {};
+    // 得到指定slug专题下的所有文章
+    return api.positions.getRelationsByPositionSlug(option.data, {publish: 1 }).then(function(relation) {
+        if (!relation) {
+            //return when.reject(new errors.NotFoundError('Topic not be found.'));
+        }
+        relation[0].siteUrl = relation[0].url;
+        return template.execute('topic', {topic:relation[0]});
+    })
+};
+
 //end add
 
 // --- Modified by happen
@@ -536,6 +549,12 @@ function getCdnImageUrl(image) {
 coreHelpers.excerpt = function (options) {
     var truncateOptions = (options || {}).hash || {},
         excerpt;
+    //如果是视频  则删除屌  youkuid 标签
+    if(this.isVideo){
+        var $ = cheerio.load(this.html);
+        $(deleteTag[0]).remove();
+        this.html = $.html();
+    }
 
     truncateOptions = _.pick(truncateOptions, ['words', 'characters']);
     _.keys(truncateOptions).map(function (key) {
@@ -1168,6 +1187,9 @@ registerHelpers = function (adminHbs, assetHash) {
     //add by liuxing
 
     registerAsyncThemeHelper('url', coreHelpers.url);
+    registerAsyncThemeHelper('video_play_count', coreHelpers.video_play_count);
+    registerAsyncThemeHelper('post_relative', coreHelpers.post_relative);
+    registerAsyncThemeHelper('index_topic', coreHelpers.index_topic);
 
     registerThemeHelper('uuid', coreHelpers.uuid);
     registerThemeHelper('slug', coreHelpers.slug);
@@ -1177,8 +1199,7 @@ registerHelpers = function (adminHbs, assetHash) {
     registerThemeHelper('post_star', coreHelpers.post_star);
     registerThemeHelper('post_desc', coreHelpers.post_desc);
     registerThemeHelper('duoshuo_block', coreHelpers.duoshuo_block);
-    registerAsyncThemeHelper('video_play_count', coreHelpers.video_play_count);
-    registerAsyncThemeHelper('post_relative', coreHelpers.post_relative);
+
 
     //end add
 

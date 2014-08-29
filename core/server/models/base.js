@@ -16,7 +16,7 @@ var bookshelf  = require('bookshelf'),
     schema     = require('../data/schema'),
     validation = require('../data/validation'),
     errors     = require('../errors'),
-    util             = require('../utils/'),
+    util       = require('../utils/'),
 
     ghostBookshelf;
 
