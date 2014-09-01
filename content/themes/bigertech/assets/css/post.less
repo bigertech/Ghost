@@ -134,7 +134,7 @@
   }
   .ds-like-tooltip {
     left: inherit !important;
-    right: 100px;
+    right: 0;
   }
 }
 
@@ -142,7 +142,6 @@
 //更多阅读
 .more-post {
   margin-bottom: 63px;
-  padding-bottom: 50px;
   border-top: 1px solid #d8d8d8;
   border-bottom: 1px solid #d8d8d8;
   .post-item {
@@ -150,10 +149,10 @@
     margin-left: auto;
     margin-right: auto;
     padding-top: 28px;
-    padding-bottom: 20px;
+    padding-bottom: 28px;
     padding-left: 26px;
     .post-title {
-      font-size: 24px;
+      font-size: 18px;
       color: #585a66;
     }
     .post-meta {
@@ -329,16 +328,6 @@
     padding: 0 @post-padding-md;
   }
 
-
-  //更多阅读
-  .more-post {
-    .post-item {
-      .post-title {
-        font-size: 18px;
-      }
-    }
-  }
-
   //文章
   .post-info {
     .name {
@@ -399,6 +388,7 @@
   .more-post {
     width: 730px;
     padding-top: 50px;
+    padding-bottom: 50px;
     .post-item {
       position: relative;
       padding: 0;
@@ -425,7 +415,7 @@
         font-weight: 400;
       }
       .post-meta {
-        margin-top: 11px;
+        margin-top: 8px;
         font-size: 14px;
         img {
           display: none;
@@ -509,6 +499,7 @@
       pointer-events: none;
       background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
       background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
+      filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr=transparent,endColorStr='#ffffff',gradientType='0');
     }
   }
   .modify .bg-img {
@@ -611,7 +602,7 @@
     &:after {
       position: absolute;
       width: 100%;
-      height: 101%;
+      height: 100%;
       top: 0;
       left: 0;
       opacity: 1;
@@ -656,12 +647,14 @@
   border-radius: @radius;
 }
 
-.bg-linear-gradient (@direction,@begin-color,@end-color) {
-  background-image: -ms-linear-gradient(@direction,@begin-color,@end-color);
-  background-image: -moz-linear-gradient(@direction,@begin-color,@end-color);
-  background-image: -o-linear-gradient(@direction,@begin-color,@end-color);
-  background-image: linear-gradient(@direction,@begin-color,@end-color);
-}
+/*.bg-linear-gradient (@direction,@begin-color,@end-color) {
+  background: -ms-linear-gradient(@direction,@begin-color,@end-color);
+  background: -moz-linear-gradient(@direction,@begin-color,@end-color);
+  background: -o-linear-gradient(@direction,@begin-color,@end-color);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=@begin-color, endColorstr=@end-color,GradientType=0 );
+}*/
+
+:root .bg-linear-gradient{filter:none;}
 
 /* embed responsive begin  */
 .embed-responsive {

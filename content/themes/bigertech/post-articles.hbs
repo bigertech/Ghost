@@ -10,10 +10,10 @@
   <div id="post-banner" class="pv-banner">
       {{> "navbar"}}
     <div class="embed-responsive embed-responsive-2by1 bg-img-small">
-      <img class="embed-responsive-item" src="{{image}}"/>
+      <img class="embed-responsive-item lazy" data-original="{{image}}"/>
     </div>
     <div class="bg-img">
-      <img src="{{image}}"/>
+      <img class="lazy" data-original="{{image}}"/>
     </div>
     <div class="post-info">
       <p class="name">{{title}}</p>

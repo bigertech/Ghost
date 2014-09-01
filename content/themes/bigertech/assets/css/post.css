@@ -103,11 +103,10 @@
 }
 #ds-thread .ds-like-tooltip {
   left: inherit !important;
-  right: 100px;
+  right: 0;
 }
 .more-post {
   margin-bottom: 63px;
-  padding-bottom: 50px;
   border-top: 1px solid #d8d8d8;
   border-bottom: 1px solid #d8d8d8;
 }
@@ -116,11 +115,11 @@
   margin-left: auto;
   margin-right: auto;
   padding-top: 28px;
-  padding-bottom: 20px;
+  padding-bottom: 28px;
   padding-left: 26px;
 }
 .more-post .post-item .post-title {
-  font-size: 24px;
+  font-size: 18px;
   color: #585a66;
 }
 .more-post .post-item .post-meta {
@@ -281,9 +280,6 @@
   .pv-container {
     padding: 0 38px;
   }
-  .more-post .post-item .post-title {
-    font-size: 18px;
-  }
   .post-info .name {
     font-size: 34px;
   }
@@ -324,6 +320,7 @@
   .more-post {
     width: 730px;
     padding-top: 50px;
+    padding-bottom: 50px;
   }
   .more-post .post-item {
     position: relative;
@@ -352,7 +349,7 @@
     font-weight: 400;
   }
   .more-post .post-item .post-meta {
-    margin-top: 11px;
+    margin-top: 8px;
     font-size: 14px;
   }
   .more-post .post-item .post-meta img {
@@ -430,6 +427,7 @@
     pointer-events: none;
     background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0) 0%, #ffffff 100%);
     background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, #ffffff 100%);
+    filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr=transparent, endColorStr='#ffffff', gradientType='0');
   }
   .modify .bg-img {
     background-color: #fff;
@@ -527,7 +525,7 @@
   .video-bg-img:after {
     position: absolute;
     width: 100%;
-    height: 101%;
+    height: 100%;
     top: 0;
     left: 0;
     opacity: 1;
@@ -561,6 +559,15 @@
   #video-main {
     padding: 0;
   }
+}
+/*.bg-linear-gradient (@direction,@begin-color,@end-color) {
+  background: -ms-linear-gradient(@direction,@begin-color,@end-color);
+  background: -moz-linear-gradient(@direction,@begin-color,@end-color);
+  background: -o-linear-gradient(@direction,@begin-color,@end-color);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=@begin-color, endColorstr=@end-color,GradientType=0 );
+}*/
+:root .bg-linear-gradient {
+  filter: none;
 }
 /* embed responsive begin  */
 .embed-responsive {

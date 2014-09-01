@@ -13,7 +13,7 @@
     {{#post}}
     {{> "navbar"}}
   <div class="video-bg-img">
-    <img src="{{image}}"/>
+    <img class="lazy" data-original="{{image}}"/>
   </div>
   <div class="video">
     <div class="video-info">
@@ -30,7 +30,8 @@
 </div>
 
 <div id="video-container" class="pv-container">
-    {{> "comment"}}
+    {{duoshuo_block}}
+
 </div>
 
 
