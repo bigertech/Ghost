@@ -6,54 +6,60 @@
   <link rel="stylesheet" href="{{asset "css/index.css" }}">
   <link rel="stylesheet" href="{{asset "css/navbar.css" }}">
   <link rel="stylesheet" href="{{asset "css/post.css" }}">
-  <link rel="stylesheet" href="{{asset "css/video.css"}}">
-  <link rel="stylesheet" href="{{asset "css/com-video-post.css"}}">
 {{/contentFor}}
 
 
 <div class="pv-banner">
-{{#post}}
+    {{#post}}
     {{> "navbar"}}
   <div class="video-bg-img">
-    <img src="{{image}}">
+    <img src="{{image}}"/>
   </div>
   <div class="video">
     <div class="video-info">
       <p class="name">{{title}}</p>
       <span class="author">{{author}} •  <time>{{date published_at timeago="ture"}}</time></span>
     </div>
-    <div class="video-display">
-      <div id="youkuplayer" class="embed-responsive embed-responsive-youku ">
-      </div>
+    <div id="youkuplayer" class="embed-responsive embed-responsive-youku ">
+    </div>
+    <div class="video-desc">
+        {{content}}
     </div>
   </div>
 {{/post}}
 </div>
 
-
 <div id="video-container" class="pv-container">
     {{> "comment"}}
-    {{> "more_video"}}
 </div>
 
-<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-  var duoshuoQuery = {short_name: "bigertech"};
-  (function () {
-    var ds = document.createElement('script');
-    ds.type = 'text/javascript';
-    ds.async = true;
-    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-    ds.charset = 'UTF-8';
-    (document.getElementsByTagName('head')[0]
-      || document.getElementsByTagName('body')[0]).appendChild(ds);
-  })();
-</script>
 
-<script type="text/javascript" src="http://player.youku.com/jsapi">
-  player = new YKU.Player('youkuplayer', {
-    styleid: '1',
-    client_id: '2cf898d1c36ea115',
-    vid: 'XNzMxMjI0MDA0'
-  });
-</script>
+
+{{#contentFor "pageScripts"}}
+
+  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name: "bigertech"};
+    (function () {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';
+      ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    var youkuid = $('youkuid').text();
+  </script>
+
+  <script type="text/javascript" src="http://player.youku.com/jsapi">
+
+
+    player = new YKU.Player('youkuplayer', {
+      styleid: '1',
+      client_id: '2cf898d1c36ea115',
+      vid: youkuid
+    });
+  </script>
+
+{{/contentFor}}

@@ -2,8 +2,7 @@
 {{#contentFor "pageStyles"}}
   <link rel="stylesheet" href="{{asset "css/index.css" }}">
   <link rel="stylesheet" href="{{asset "css/navbar.css" }}">
-  <link rel="stylesheet" href="{{asset "css/post.css" }}">
-  <link rel="stylesheet" href="{{asset "css/com-video-post.css"}}">
+  <link rel="stylesheet" href="{{asset "css/post.css" }}"
 {{/contentFor}}
 
 <div id="topScroll">
@@ -11,10 +10,10 @@
   <div id="post-banner" class="pv-banner">
       {{> "navbar"}}
     <div class="embed-responsive embed-responsive-2by1 bg-img-small">
-      <img class="embed-responsive-item" src="{{image}}">
+      <img class="embed-responsive-item" src="{{image}}"/>
     </div>
     <div class="bg-img">
-      <img src="{{image}}">
+      <img src="{{image}}"/>
     </div>
     <div class="post-info">
       <p class="name">{{title}}</p>
@@ -31,15 +30,17 @@
     <div class="post">
         {{content}}
     </div>
-
+  </div>
+  <div class="readmore pv-container">
     <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="请将此处替换成文章在你的站点中的ID" data-title="请替换成文章的标题" data-url="请替换成文章的网址"></div>
+    {{duoshuo_block}}
     <!-- 多说评论框 end -->
-    {{> "more_post"}}
+    {{post_relative limit="2"}}
   </div>
   {{/post}}
 </div>
 
+{{#contentFor "pageScripts"}}
 <script src="{{asset "js/classie.js"}}"></script>
 <script src="{{asset "js/topScroll.js"}}"></script>
 
@@ -56,3 +57,4 @@
       || document.getElementsByTagName('body')[0]).appendChild(ds);
   })();
 </script>
+{{/contentFor}}
