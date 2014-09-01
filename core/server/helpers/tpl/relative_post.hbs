@@ -1,20 +1,27 @@
 {{! 相关文章推荐  post_relative limit="2"  }}
-<div class="more-post">
-	{{#each relatePosts}}
-    <div class="more-left">
-        <p class="p-banner">{{title}}</p>
-        <div class="info">
-            <a href="" target="_blank">
-                <div class="pic">
-                    <img src="{{image}}" title="author pic">
-                </div>
-            </a>
-	        {{#author}}
-            <span class="post-meta">{{name}}  {{/author}}• <time class="post-time">{{date format="MMM DD YYYY HH:mm:ss"  timeago="1"}}</time></span>
 
-            <span class="img-heart icon-heart"></span>
-            <span class="post-count">{{post_star}}</span>
+<div class="more-post">
+    {{#foreach relatePosts}}
+      <li class="post-item">
+          {{#if isVideo}}
+            <div class="isVideo icon-play desktop-display"></div>
+          {{/if}}
+        <a href="{{url}}" target="_blank">
+          <img class="post-image left desktop-display lazy" data-original="{{image}}" />
+          <h2 class="post-title">{{title}}</h2>
+        </a>
+        <div class="post-meta">
+            {{#if author.image}}<img class="avatar lazy" data-original="{{author.image}}" alt="Author image" />{{/if}}
+            {{author}}
+          <time class="publish-time" datetime="{{date published_at timeago="ture"}}">
+            <span class="dot desktop-display">•</span>{{date published_at timeago="ture"}}
+          </time>
+            {{#if isVideo}}
+              <span class="count icon-view">{{video_play_count}}</span>
+            {{else}}
+              <span class="count icon-heart">{{post_star}}</span>
+            {{/if}}
         </div>
-    </div>
-{{/each}}
+      </li>
+    {{/foreach}}
 </div>
