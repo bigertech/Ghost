@@ -216,6 +216,7 @@
 .post h6,
 .post strong {
   color: #585a66;
+  font-weight: bold;
 }
 .post blockquote {
   margin: 0 0 0 7px;
@@ -244,6 +245,14 @@
 }
 .post a {
   color: #53ae65;
+}
+.post ol,
+.post ul {
+  list-style: disc;
+  padding-left: 40px;
+}
+.post ol {
+  list-style-type: decimal;
 }
 .post .full-img {
   width: auto;
