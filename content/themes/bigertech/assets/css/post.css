@@ -248,11 +248,16 @@
 }
 .post ol,
 .post ul {
-  list-style: disc;
   padding-left: 40px;
+}
+.post ul {
+  list-style: disc;
 }
 .post ol {
   list-style-type: decimal;
+}
+.post em {
+  font-style: italic;
 }
 .post .full-img {
   width: auto;
@@ -280,6 +285,9 @@
 }
 .video-desc {
   padding-top: 30px;
+}
+.video-desc img {
+  display: none;
 }
 .video-desc youkuid {
   display: none;
