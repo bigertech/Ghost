@@ -1,0 +1,84 @@
+//
+// Utility classes
+// --------------------------------------------------
+
+// Reset
+// -------------------------
+*,
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+// Floats
+// -------------------------
+
+.clearfix {
+  .clearfix();
+}
+
+.center-block {
+  .center-block();
+}
+
+.right {
+  float: right !important;
+}
+
+.left {
+  float: left !important;
+}
+
+
+// Toggling content
+// -------------------------
+
+.hide {
+  display: none !important;
+}
+.show {
+  display: block !important;
+}
+.invisible {
+  visibility: hidden;
+}
+
+
+// Responsive embedded objects
+// -------------------------
+
+.video-wrapper {
+  height: 0;
+  padding-bottom: 56.25%; // ratio 16:9
+  position: relative;
+  & iframe,
+  & object,
+  & embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+// Responsive display or hide
+// -------------------------
+
+.desktop-display {
+  display: block;
+}
+.mobile-display {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .desktop-display {
+    display: none;
+  }
+  .mobile-display {
+    display: block;
+  }
+}
