@@ -1,6 +1,9 @@
 
 // BASIC
 //----------------------------------------------------------
+.ie {
+  color: #000;
+}
 .content-wrapper {
   width: 100%;
   margin-top: 380px;
@@ -32,7 +35,7 @@
 }
 
 // 作者界面的主图白色渐变、图标变灰
-.author-template {
+.author-template, .archive-template.author-template {
   .navbar {
     .icon-bglogo, .icon-search, .icon-tag, .icon-menu {
       &:before {
@@ -217,8 +220,15 @@
       width: 264px;
       height: 38px;
       margin: 0 auto;
+      cursor: pointer;
       background: url('../images/bigertech-white.png') no-repeat;
       background-size: 100%;
+      // 解决 IE 兼容
+      filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
+              enabled=Enabled,
+              sizingMethod=Size ,
+              src='../images/bigertech-white.png');
+
     }
     .bg-description {
       color: #fff;
@@ -365,6 +375,9 @@
         height: 24px;
         margin-right: 12px;
         border-radius: 50%;
+
+        // 解决 IE 兼容
+
       }
       a[href*="author"], .publish-time, .count {
         color: #9EABB3;

@@ -37,5 +37,12 @@
   <script src="{{asset "js/navbar.js"}}"></script>
   {{{block "pageScripts"}}}
   {{> "baidu_analysis"}}
+
+  <!--[if lte IE 9]>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-placeholder/2.0.8/jquery.placeholder.min.js"></script>
+    <script charset="utf-8">
+      $('input, textarea').placeholder();
+    </script>
+  <![endif]-->
 </body>
 </html>

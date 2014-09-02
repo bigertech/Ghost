@@ -128,7 +128,10 @@
     classie.add( topScroll, 'modify' );
   }
 
-  if(document.body.clientWidth > 768 ) {
-    window.addEventListener( 'scroll', scrollPage );
+  if(navigator.userAgent.indexOf("MSIE 9.0") > 0) {
+    if(document.body.clientWidth > 768 ) {
+      window.addEventListener( 'scroll', scrollPage );
+    }
   }
+  
 })();
