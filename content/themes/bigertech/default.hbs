@@ -10,8 +10,8 @@
   <meta name="description" content="{{meta_description}}" />
   <meta name="keywords" content="笔戈科技,魅族，手机，评测，科技，博客,{{meta_title}}">
 
-  <link rel="shortcut icon" href="{{asset "favicon.ico"}}">
-  <link rel="stylesheet" type="text/css" href="{{asset "css/main.min.css"}}" />
+  <link rel="shortcut icon" href="{{asset "dist/images/favicon.ico"}}">
+  <link rel="stylesheet" type="text/css" href="{{asset "dist/css/bigertech.min.css"}}" />
 
   {{{block "pageStyles"}}}
 
@@ -27,15 +27,16 @@
 
   {{> "footer"}}
 
-  <script src="{{asset "js/jquery.min.js"}}"></script>
-  <script src="{{asset "js/jquery.lazyload.min.js"}}"></script>
+  <script src="http://cdnjscn.b0.upaiyun.com/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="http://cdnjscn.b0.upaiyun.com/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
   <script charset="utf-8">
     $("img.lazy").lazyload();
   </script>
-  <script src="{{asset "js/index.js"}}"></script>
-  <script src="{{asset "js/returnTop.js"}}"></script>
-  <script src="{{asset "js/navbar.js"}}"></script>
+
+  <script src="{{asset "dist/js/bigertech.min.js"}}"></script>
+
   {{{block "pageScripts"}}}
+
   {{> "baidu_analysis"}}
 
   <!--[if lte IE 9]>

@@ -14,6 +14,8 @@ results
 npm-debug.log
 node_modules
 
+assets/less/*.css
+
 .idea/*
 *.iml
 projectFilesBackup
