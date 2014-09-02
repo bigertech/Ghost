@@ -20,7 +20,7 @@ var paths = {
 	less: defaultPath + 'less/main.less',
 	less_dist: destPath + 'css/',
 
-	scripts: defaultPath + 'js/*',
+	scripts: defaultPath + 'js/*.js',
 	scripts_dist: destPath + 'js/',
 
 	images: defaultPath + 'images/*',

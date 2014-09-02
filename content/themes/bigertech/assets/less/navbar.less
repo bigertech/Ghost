@@ -101,13 +101,16 @@
   -ms-backface-visibility: hidden;
   -o-backface-visibility: hidden;
   backface-visibility: hidden;
-  position: absolute;
+  /*   position: absolute;
   top: 50%;
   left: 50%;
   margin: -220px 0 0 -200px;
   padding: 0;
   width: 400px;
-  height: 400px
+  height: 400px; */
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
 }
 
 .l-search #searchform {
@@ -137,11 +140,12 @@
   height: 50px;
   font-size: 36px;
   color: #333;
-  color: #000\9;
+  color: #000\0;
   line-height: 1.2em;
   border: none;
   border-left: 6px solid #333;
   background-color: transparent;
+  background-color: #fff\0;
 }
 
 ::-webkit-input-placeholder { /* WebKit browsers */
@@ -246,7 +250,7 @@
 }
 
 .l-menu .container .categories li a {
-  display: block;
+  display: inline-block;
   padding: 0.2em;
   color: #333
 }
@@ -270,6 +274,7 @@
   background-color: #333;
   content: ""
 }
+
 
 .l-menu .container .categories li a:hover .text:after {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
@@ -406,5 +411,13 @@
   .l-search #searchform .textbox {
     width: 230px;
     font-size: 24px;
+  }
+
+  .l-menu .container .categories li a:hover .text:after {
+    /* filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+    opacity: 1;
+    width: 100% */
+    opacity: 0;
+    width: 0%;
   }
 }
