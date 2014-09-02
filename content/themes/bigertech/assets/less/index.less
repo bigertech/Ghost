@@ -214,18 +214,10 @@
     text-align: center;
     .bg-logo {
       display: block;
-      width: 264px;
-      height: 38px;
+      width: 100% \9;
+      max-width: 100%;
+      height: auto;
       margin: 0 auto;
-      cursor: pointer;
-      background: url('../images/bigertech-white.png') no-repeat;
-      background-size: 100%;
-      // 解决 IE 兼容
-      filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(
-              enabled=Enabled,
-              sizingMethod=Size ,
-              src='../images/bigertech-white.png');
-
     }
     .bg-description {
       color: #fff;
@@ -499,6 +491,7 @@
     .bg-slogan {
       .bg-logo {
         width: 180px;
+        margin-bottom: 5px;
       }
       .bg-description {
         line-height: 1em;
