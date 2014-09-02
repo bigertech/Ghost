@@ -2,39 +2,33 @@
 
 {{! The comment above "< default" means - insert everything in this file into
     the {body} of the default.hbs template, which contains our header/footer. }}
-{{#contentFor "pageStyles"}}
-  <link rel="stylesheet" href="{{asset "css/index.css" }}">
-  <link rel="stylesheet" href="{{asset "css/navbar.css" }}">
-  <link rel="stylesheet" href="{{asset "css/post.css" }}">
-{{/contentFor}}
-
-
-<div class="pv-banner">
-    {{#post}}
-    {{> "navbar"}}
-  <div class="video-bg-img">
-    <img class="lazy" data-original="{{image}}"/>
+{{#post}}
+  <div class="pv-banner">
+      {{> "navbar"}}
+    <div class="video-bg-img">
+      <img class="lazy" src="{{img}}"/>
+    </div>
+    <div class="video">
+      <div class="video-info">
+        <p class="name">{{title}}</p>
+        <span class="author">{{author}} •  <time>{{date published_at timeago="ture"}}</time></span>
+      </div>
+      <div class="embed-responsive embed-responsive-youku ">
+        <div id="youkuplayer" class="embed-responsive-item">
+        </div>
+      </div>
+      <div class="video-desc">
+          {{content}}
+      </div>
+    </div>
   </div>
-  <div class="video">
-    <div class="video-info">
-      <p class="name">{{title}}</p>
-      <span class="author">{{author}} •  <time>{{date published_at timeago="ture"}}</time></span>
-    </div>
-    <div id="youkuplayer" class="embed-responsive embed-responsive-youku ">
-    </div>
-    <div class="video-desc">
-        {{content}}
-    </div>
+
+  <div id="video-container" class="pv-container">
+
+      {{duoshuo_block}}
+      {{post_relative limit="2"}}
   </div>
 {{/post}}
-</div>
-
-<div id="video-container" class="pv-container">
-    {{duoshuo_block}}
-
-</div>
-
-
 
 {{#contentFor "pageScripts"}}
 
@@ -54,7 +48,6 @@
   </script>
 
   <script type="text/javascript" src="http://player.youku.com/jsapi">
-
 
     player = new YKU.Player('youkuplayer', {
       styleid: '1',

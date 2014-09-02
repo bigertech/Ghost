@@ -1,60 +1,54 @@
 {{!< default}}
-{{#contentFor "pageStyles"}}
-  <link rel="stylesheet" href="{{asset "css/index.css" }}">
-  <link rel="stylesheet" href="{{asset "css/navbar.css" }}">
-  <link rel="stylesheet" href="{{asset "css/post.css" }}"
-{{/contentFor}}
-
 <div id="topScroll">
-  {{#post}}
-  <div id="post-banner" class="pv-banner">
-      {{> "navbar"}}
-    <div class="embed-responsive embed-responsive-2by1 bg-img-small">
-      <img class="embed-responsive-item lazy" data-original="{{image}}"/>
-    </div>
-    <div class="bg-img">
-      <img class="lazy" data-original="{{image}}"/>
-    </div>
-    <div class="post-info">
-      <p class="name">{{title}}</p>
-      <span class="author">{{author}} • <time class="post-time">{{date published_at timeago="ture"}}</time></span>
-      <p class="desc">{{post_desc}}</p>
-    </div>
-    <a class="scroll-down" href="#post-container" data-offset="-45">
-      <span class="icon-down"></span>
-    </a>
-  </div>
+{{#post}}
+    <div id="post-banner" class="pv-banner">
+        {{> "navbar"}}
+      <div class="embed-responsive embed-responsive-2by1 bg-img-small">
+        <img class="embed-responsive-item lazy" data-original="{{image}}"/>
+      </div>
+      <div class="bg-img">
+        <img class="lazy" data-original="{{image}}"/>
+      </div>
+      <div class="post-info">
+        <p class="name">{{title}}</p>
+        <span class="author">{{author}} • <time class="post-time">{{date published_at timeago="ture"}}</time></span>
 
-  <div id="post-container" class="pv-container">
+        <p class="desc">{{post_desc}}</p>
+      </div>
 
-    <div class="post">
-        {{content}}
+      <a class="scroll-down" href="#post-container" data-offset="-45">
+        <span class="icon-down"></span>
+      </a>
     </div>
-  </div>
-  <div class="readmore pv-container">
-    <!-- 多说评论框 start -->
-    {{duoshuo_block}}
-    <!-- 多说评论框 end -->
-    {{post_relative limit="2"}}
-  </div>
-  {{/post}}
-</div>
+    <div id="post-container" class="pv-container">
+      <div class="post">
+          {{content}}
+      </div>
+    </div>
+    <div class="readmore pv-container">
+      <!-- 多说评论框 start -->
+        {{duoshuo_block}}
+      <!-- 多说评论框 end -->
+        {{post_relative limit="2"}}
+    </div>
+{{/post}}
+
 
 {{#contentFor "pageScripts"}}
-<script src="{{asset "js/vendor/classie.js"}}"></script>
-<script src="{{asset "js/vendor/topScroll.js"}}"></script>
+    <script src="{{asset "js/classie.js"}}"></script>
+    <script src="{{asset "js/topScroll.js"}}"></script>
 
-<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-  var duoshuoQuery = {short_name: "bigertech"};
-  (function () {
-    var ds = document.createElement('script');
-    ds.type = 'text/javascript';
-    ds.async = true;
-    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-    ds.charset = 'UTF-8';
-    (document.getElementsByTagName('head')[0]
-      || document.getElementsByTagName('body')[0]).appendChild(ds);
-  })();
-</script>
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+      var duoshuoQuery = {short_name: "bigertech"};
+      (function () {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';
+        ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0]
+          || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+    </script>
 {{/contentFor}}
