@@ -16,7 +16,9 @@
   .navbar {
     position: relative !important;
     .icon-bglogo,
-    .icon-search {
+    .icon-search,
+    .icon-menu,
+    .icon-tag {
       color: #585a66;
     }
     .icon-search {
@@ -39,7 +41,7 @@
 }
 
 #video-container,
-.readmore{
+.readmore {
   max-width: @video-max-width;
 }
 
@@ -56,7 +58,7 @@
 //多说
 @thread-main-color: #53AE65;
 #ds-thread {
-  margin-top: 64px;
+  margin-top: 144px;
   margin-bottom: 64px;
   #ds-reset {
     .ds-meta {
@@ -124,7 +126,7 @@
       }
     }
     .ds-comments {
-      border: 0!important;
+      border: 0 !important;
     }
   }
   .ds-like-panel {
@@ -137,7 +139,6 @@
     right: 0;
   }
 }
-
 
 //更多阅读
 .more-post {
@@ -193,10 +194,8 @@
   }
 }
 
-
 //文章
 //-----------------------------------------------------
-
 .bg-img-small {
   position: relative;
   margin-top: 100px;
@@ -226,24 +225,12 @@
 
 /* 向下图标 */
 .scroll-down {
-  display: block;
-  position: absolute;
-  z-index: 100;
-  bottom: 45px;
-  left: 50%;
-  margin-left: -16px;
-  width: 34px;
-  height: 34px;
-  font-size: 34px;
-  text-align: center;
-  text-decoration: none !important;
-  color: rgba(255, 255, 255, 0.7);
+  display: none;
 }
 
 .modify .scroll-down {
   z-index: -100;
 }
-
 
 /* 文章主体 */
 @con-font-color: rgb(88, 90, 102);
@@ -253,13 +240,13 @@
   color: @con-font-color;
   line-height: 1.667;
   clear: both;
-  h1,h2,h3,h4,h5,h6,strong {
+  h1, h2, h3, h4, h5, h6, strong {
     color: #585a66;
     font-weight: bold;
   }
   blockquote {
     margin: 0 0 0 7px;
-    padding-left: 23px;
+    padding-left: 18px;
     color: @con-font-color;
     border-left: #d9d9d9 2px solid;
     -webkit-box-sizing: border-box;
@@ -268,7 +255,7 @@
   }
   img {
     max-width: 100%;
-    display: inherit ;
+    display: inherit;
     margin: 32px auto;
   }
   p img[alt="bg"] {
@@ -285,7 +272,7 @@
   a {
     color: #53ae65;
   }
-  ol,ul {
+  ol, ul {
     padding-left: 40px;
   }
   ul {
@@ -297,6 +284,9 @@
   em {
     font-style: italic;
   }
+  hr {
+    color: #d9d9d9;
+  }
   .full-img {
     width: auto;
     width: calc(100% + 32px);
@@ -306,12 +296,12 @@
   }
 }
 
-
 //视频
 //-----------------------------------------------------
 .video-bg-img {
   display: none;
 }
+
 .video-info {
   position: relative;
   margin-top: 100px;
@@ -326,8 +316,8 @@
     font-size: 20px;
   }
 }
+
 .video-desc {
-  padding-top: 30px;
   img {
     display: none;
   }
@@ -335,7 +325,6 @@
     display: none;
   }
 }
-
 
 @media screen and (min-width: 568px) {
   //导航
@@ -366,7 +355,7 @@
   .post-template {
     .navbar {
       max-width: none;
-      position: absolute;
+      position: absolute !important;
       .icon-search {
         margin-right: 20px;
       }
@@ -375,31 +364,54 @@
       }
     }
   }
+
   #post-banner .navbar {
     .icon-bglogo,
-    .icon-search {
+    .icon-search,
+    .icon-menu,
+    .icon-tag{
       color: #fff;
     }
   }
+
   .modify #post-banner {
     .navbar {
       .icon-bglogo,
+      .icon-menu,
+      .icon-tag,
       .icon-search {
         color: #585a66;
       }
     }
   }
+
   .pv-banner {
     padding: 0;
     max-width: none;
     min-height: 560px;
     width: 100%;
-    height: 100%;
     overflow: hidden;
     &:before {
       border: 0;
     }
   }
+
+  /* 向下图标 */
+  .scroll-down {
+    display: block;
+    position: absolute;
+    z-index: 100;
+    bottom: 45px;
+    left: 50%;
+    margin-left: -16px;
+    width: 34px;
+    height: 34px;
+    font-size: 34px;
+    text-align: center;
+    text-decoration: none !important;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
   //更多阅读
   .more-post {
     width: 730px;
@@ -464,12 +476,22 @@
     }
   }
 
-
   //文章
   //-----------------------------------------------------
+  html, body, #topScroll, #post-banner {
+    height: 100%;
+  }
+
+  #post-banner {
+    position: relative !important;
+    height: 100%;
+    display: table;
+  }
+
   #topScroll .bg-img-small {
     display: none;
   }
+
   .bg-img {
     display: block;
     position: absolute;
@@ -499,6 +521,7 @@
       padding: 0;
       width: 100%;
       height: 100%;
+      *z-index: 10;
     }
     &:after {
       -webkit-transition-property: opacity;
@@ -515,9 +538,10 @@
       pointer-events: none;
       background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
       background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
-      filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr=transparent,endColorStr='#ffffff',gradientType='0');
+      filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr='#FF0000', endColorStr='#F9F900', gradientType='0')
     }
   }
+
   .modify .bg-img {
     background-color: #fff;
     opacity: .5;
@@ -527,19 +551,16 @@
       opacity: 0;
     }
     &:after {
-      opacity: 1;
-      content: "";
+      opacity: 1 !important;
     }
   }
+
   .post-info {
-    position: absolute;
+    display: table-cell;
     max-width: 900px;
-    top: 35%;
-    left: 50%;
     color: #fff;
     text-align: center;
-    -webkit-transform: translateX(-50%) translateY(-50%);
-    transform: translateX(-50%) translateY(-50%);
+    vertical-align: middle;
     .name {
       font-size: 48px;
     }
@@ -550,6 +571,7 @@
       color: #fff;
     }
   }
+
   .modify .post-info {
     color: #585a66;
     a {
@@ -565,13 +587,10 @@
       font-size: 24px;
     }
   }
-  .post {
-    visibility: hidden;
-  }
-  .modify .post {
-    visibility: visible;
-  }
 
+  .modify #post-container {
+    margin: -80px auto;
+  }
 
   //视频
   //-----------------------------------------------------
@@ -579,6 +598,7 @@
     height: 100%;
     min-height: none;
   }
+
   .video {
     max-width: 728px;
     margin: 0 auto;
@@ -614,19 +634,21 @@
       width: 100%;
       height: 100%;
       opacity: 1;
+      z-index: 100\9\0;
     }
     &:after {
       position: absolute;
       width: 100%;
-      height: 100%;
+      height: 101%;
       top: 0;
       left: 0;
       opacity: 1;
-      content:"";
-      background: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
-      background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
+      content: "";
+      background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
     }
   }
+
   .modify .video-bg-img {
     background-color: #fff;
     opacity: .5;
@@ -637,18 +659,15 @@
     }
     &:after {
       opacity: 1;
-      content:"";
+      content: "";
     }
   }
+
   .video-info {
     position: relative;
     color: #585a66;
-    margin-top: 180px;
+    margin-top: 165px;
     text-align: left;
-  }
-  #youkuplayer{
-    margin-top: 0;
-    visibility: visible;
   }
 
   #video-main {
@@ -670,7 +689,9 @@
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=@begin-color, endColorstr=@end-color,GradientType=0 );
 }*/
 
-:root .bg-linear-gradient{filter:none;}
+:root .bg-linear-gradient {
+  filter: none;
+}
 
 /* embed responsive begin  */
 .embed-responsive {
