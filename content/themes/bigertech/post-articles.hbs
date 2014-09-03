@@ -20,35 +20,38 @@
         <span class="icon-down"></span>
       </a>
     </div>
+
     <div id="post-container" class="pv-container">
       <div class="post">
           {{content}}
       </div>
     </div>
-    <div class="readmore pv-container">
-      <!-- 多说评论框 start -->
-        {{duoshuo_block}}
-      <!-- 多说评论框 end -->
-        {{post_relative limit="2"}}
-    </div>
+  </div>
+  <div class="readmore pv-container">
+    <!-- 多说评论框 start -->
+      {{duoshuo_block}}
+    <!-- 多说评论框 end -->
+      {{post_relative limit="2"}}
+  </div>
 {{/post}}
 
 
-{{#contentFor "pageScripts"}}
-    <script src="{{asset "js/classie.js"}}"></script>
-    <script src="{{asset "js/topScroll.js"}}"></script>
 
-    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-    <script type="text/javascript">
-      var duoshuoQuery = {short_name: "bigertech"};
-      (function () {
-        var ds = document.createElement('script');
-        ds.type = 'text/javascript';
-        ds.async = true;
-        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-        ds.charset = 'UTF-8';
-        (document.getElementsByTagName('head')[0]
-          || document.getElementsByTagName('body')[0]).appendChild(ds);
-      })();
-    </script>
+{{#contentFor "pageScripts"}}
+  <script src="{{asset "js/vendor/classie.js"}}"></script>
+  <script src="{{asset "js/vendor/topScroll.js"}}"></script>
+
+  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name: "bigertech"};
+    (function () {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';
+      ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
 {{/contentFor}}

@@ -128,10 +128,19 @@
     classie.add( topScroll, 'modify' );
   }
 
-  if(navigator.userAgent.indexOf("MSIE 9.0") > 0) {
+  /*if(navigator.userAgent.indexOf("MSIE 9.0") > 0) {
     if(document.body.clientWidth > 768 ) {
       window.addEventListener( 'scroll', scrollPage );
     }
+  }*/
+
+  if(document.body.clientWidth > 768 ) {
+    if(window.addEventListener){
+      window.addEventListener('scroll',scrollPage,false);
+    }else if(window.attachEvent){
+      window.attachEvent('onscroll',scrollPage);
+    }else{
+      window['onscroll']=scrollPage;
+    }
   }
-  
 })();

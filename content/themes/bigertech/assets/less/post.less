@@ -17,8 +17,7 @@
     position: relative !important;
     .icon-bglogo,
     .icon-search,
-    .icon-menu,
-    .icon-tag {
+    .icon-menu {
       color: #585a66;
     }
     .icon-search {
@@ -368,8 +367,7 @@
   #post-banner .navbar {
     .icon-bglogo,
     .icon-search,
-    .icon-menu,
-    .icon-tag{
+    .icon-menu {
       color: #fff;
     }
   }
@@ -378,7 +376,6 @@
     .navbar {
       .icon-bglogo,
       .icon-menu,
-      .icon-tag,
       .icon-search {
         color: #585a66;
       }
@@ -388,7 +385,7 @@
   .pv-banner {
     padding: 0;
     max-width: none;
-    min-height: 560px;
+    min-height: 670px;
     width: 100%;
     overflow: hidden;
     &:before {
@@ -457,6 +454,9 @@
         .count {
           display: none;
         }
+        .dot {
+          padding-right: 5px;
+        }
       }
 
     }
@@ -478,12 +478,16 @@
 
   //文章
   //-----------------------------------------------------
-  html, body, #topScroll, #post-banner {
-    height: 100%;
+  #topScroll {
+    &:after {
+      content: "";
+      height: 0;
+      display: block;
+      visibility: hidden;
+      clear: both;
+    }
   }
-
   #post-banner {
-    position: relative !important;
     height: 100%;
     display: table;
   }
@@ -581,8 +585,8 @@
       display: block;
       margin: 0 auto;
       padding-top: 20px;
-      max-width: 620px;
-      width: 620px;
+      max-width: 680px;
+      width: 680px;
       text-align: left;
       font-size: 24px;
     }
@@ -590,6 +594,13 @@
 
   .modify #post-container {
     margin: -80px auto;
+  }
+
+  .post {
+    visibility: hidden;
+  }
+  .modify .post {
+    visibility: visible;
   }
 
   //视频
