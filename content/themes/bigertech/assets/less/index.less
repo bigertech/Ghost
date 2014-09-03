@@ -232,6 +232,11 @@
       width: 122px;
       height: 122px;
       border: 5px solid #fff;
+      border-top-left-radius: 999px;     // 解决部分浏览器不支持百分比和缩写
+      border-top-right-radius: 999px;    // 解决部分浏览器不支持百分比和缩写
+      border-bottom-right-radius: 999px; // 解决部分浏览器不支持百分比和缩写
+      border-bottom-left-radius: 999px;  // 解决部分浏览器不支持百分比和缩写
+      border-radius: 999px; // 解决部分浏览器不支持百分比
       border-radius: 50%;
       &:hover {
         -webkit-transform: rotateZ(360deg);
@@ -363,10 +368,12 @@
         width: 24px;
         height: 24px;
         margin-right: 12px;
+        border-top-left-radius: 999px;     // 解决部分浏览器不支持百分比和缩写
+        border-top-right-radius: 999px;    // 解决部分浏览器不支持百分比和缩写
+        border-bottom-right-radius: 999px; // 解决部分浏览器不支持百分比和缩写
+        border-bottom-left-radius: 999px;  // 解决部分浏览器不支持百分比和缩写
+        border-radius: 999px; // 解决部分浏览器不支持百分比
         border-radius: 50%;
-
-        // 解决 IE 兼容
-
       }
       a[href*="author"], .publish-time, .count {
         color: #9EABB3;
@@ -462,6 +469,8 @@
     display: none;
     position: absolute;
     z-index: 10;
+    width: 258px;
+    height: 258px;
   }
   .footer-info {
     padding-bottom: 40px;
