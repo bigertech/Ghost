@@ -21,15 +21,16 @@
         {{#if isVideo}}
           <span class="count icon-view">{{video_play_count}}</span>
         {{else}}
-          <span class="count icon-heart">{{post_star}}</span>
+          <span class="count icon-unheart">{{post_star}}</span>
         {{/if}}
       </div>
+
       <p class="post-description desktop-display">
-        {{#if post_desc}}
-          {{post_desc}}
-        {{else}}
-          {{excerpt words="30"}}
-        {{/if}}
+      {{#if post_desc}}
+        {{post_desc}}
+      {{else}}
+        {{excerpt words="30"}}
+      {{/if}}
       </p>
     </li>
   {{/foreach}}

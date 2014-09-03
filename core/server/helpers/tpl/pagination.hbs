@@ -1,9 +1,11 @@
 <nav class="pagination" role="navigation">
     {{#if prev}}
-        <a class="newer-posts" href="{{page_url prev post_type}}">&larr; 上一页</a>
+      <a class="newer-posts prev-page" href="{{page_url prev post_type}}">上一页</a>
+      <a class="icon-prev-page" href="{{page_url prev post_type}}"></a>
     {{/if}}
 	{{{pageArray}}}
     {{#if next}}
-        <a class="older-posts" href="{{page_url next post_type}}">下一页 &rarr;</a>
+      <a class="older-posts next-page" href="{{page_url next post_type}}">下一页</a>
+      <a class="icon-next-page" href="{{page_url next post_type}}"></a>
     {{/if}}
 </nav>

@@ -436,6 +436,9 @@
   .current {
     background-color: #eee;
   }
+  .icon-prev-page, .icon-next-page {
+    display: none;
+  }
 }
 
 
@@ -457,6 +460,9 @@
     .icon-weibo, .icon-wechat, .icon-youku, .icon-rss {
       font-size: 38px;
       color: #a1a1a1;
+      &:hover {
+        color: #fff;
+      }
     }
   }
   .icon-bglogo {
@@ -561,26 +567,25 @@
   }
 
   .pagination {
-    width: 112px;
+    width: 113px;
     margin: 0 auto;
     padding-top: 24px;
     padding-bottom: 24px;
-    .page-num, .current, .omit {
+    .page-num, .current, .omit, .prev-page, .next-page {
       display: none;
     }
-    .newer-posts, .older-posts {
+    .icon-prev-page, .icon-next-page {
       display: inline-block;
-      width: 44px;
-      height: 44px;
       margin: 0 auto;
-      text-indent: -9999px;
+      &:before {
+        font-size: 44px;
+        font-weight: bold;
+        color: #53ae65;
+        text-indent: 0px !important;
+      }
     }
-    .newer-posts {
+    .icon-prev-page {
       margin-right: 18px;
-      background: url('../images/left-normal.png') no-repeat;
-    }
-    .older-posts {
-      background: url('../images/right-normal.png') no-repeat;
     }
   }
 }
