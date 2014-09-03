@@ -1,4 +1,5 @@
 {{!< default}}
+
 <div id="topScroll">
 {{#post}}
     <div id="post-banner" class="pv-banner">
@@ -26,20 +27,21 @@
           {{content}}
       </div>
     </div>
-  </div>
-  <div class="readmore pv-container">
-    <!-- 多说评论框 start -->
-      {{duoshuo_block}}
-    <!-- 多说评论框 end -->
-      {{post_relative limit="2"}}
-  </div>
+</div>
+<div class="readmore pv-container">
+  <!-- 多说评论框 start -->
+  {{duoshuo_block}}
+  <!-- 多说评论框 end -->
+  <p class="mores">更多阅读</p>
+  {{post_relative limit="2"}}
+</div>
 {{/post}}
 
 
 
 {{#contentFor "pageScripts"}}
-  <script src="{{asset "js/vendor/classie.js"}}"></script>
-  <script src="{{asset "js/vendor/topScroll.js"}}"></script>
+  <script src="{{asset "js/classie.js"}}"></script>
+  <script src="{{asset "js/topScroll.js"}}"></script>
 
   <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
   <script type="text/javascript">

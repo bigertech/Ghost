@@ -2,32 +2,33 @@
 
 {{! The comment above "< default" means - insert everything in this file into
     the {body} of the default.hbs template, which contains our header/footer. }}
+
 {{#post}}
   <div class="pv-banner">
-      {{> "navbar"}}
-    <div class="video-bg-img">
-      <img class="lazy" data-original="{{img}}"/>
+  {{> "navbar"}}
+  <div class="video-bg-img">
+    <img class="lazy" src="/assets/images/7.jpg"/>
+  </div>
+  <div class="video">
+    <div class="video-info">
+      <p class="name">{{title}}</p>
+      <span class="author">{{author}} •  <time>{{date published_at timeago="ture"}}</time></span>
     </div>
-    <div class="video">
-      <div class="video-info">
-        <p class="name">{{title}}</p>
-        <span class="author">{{author}} •  <time>{{date published_at timeago="ture"}}</time></span>
-      </div>
-      <div class="embed-responsive embed-responsive-youku ">
-        <div id="youkuplayer" class="embed-responsive-item">
-        </div>
-      </div>
-      <div class="video-desc">
-          {{content}}
+    <div class="embed-responsive embed-responsive-youku ">
+      <div id="youkuplayer" class="embed-responsive-item">
       </div>
     </div>
+    <div class="video-desc">
+        {{content}}
+    </div>
   </div>
+</div>
 
-  <div id="video-container" class="pv-container">
-
-      {{duoshuo_block}}
-      {{post_relative limit="2"}}
-  </div>
+<div id="video-container" class="pv-container">
+  {{duoshuo_block}}
+  <p class="mores">更多阅读</p>
+  {{post_relative limit="2"}}
+</div>
 {{/post}}
 
 {{#contentFor "pageScripts"}}
@@ -44,6 +45,9 @@
       (document.getElementsByTagName('head')[0]
         || document.getElementsByTagName('body')[0]).appendChild(ds);
     })();
+   /*//span标签传youkuid
+    var str = $('.video-desc').html();
+    var yuokuid = str.substring(str.indexOf("<span>")+6,str.indexOf("</span>"));*/
     var youkuid = $('youkuid').text();
   </script>
 
