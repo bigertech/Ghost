@@ -57,30 +57,22 @@
 //多说
 @thread-main-color: #53AE65;
 #ds-thread {
-  margin-top: 144px;
+  margin-top: 64px;
   margin-bottom: 64px;
   #ds-reset {
     .ds-meta {
       margin-bottom: 64px;
       height: 45px;
       float: right;
-      .ds-like-panel {
-        color: @thread-main-color;
-      }
-      .ds-highlight {
-        color: @thread-main-color !important;
-      }
     }
     a.ds-like-thread-button {
-      color: #555;
       padding: 0 !important;
       width: 41px;
       height: 41px;
-      display: block;
+      display: inline-block;
       border: 1px solid @thread-main-color !important;
       /* border-bottom-color: #aaa; */
       box-shadow: inset 0 0 0px #fff !important;
-      margin-right: 57px !important;
       text-shadow: 0 0 0 !important;
       border-radius: 25px;
       background-color: #fff !important;
@@ -130,8 +122,11 @@
   }
   .ds-like-panel {
     position: relative;
-    top: -34px;
-    left: 50px;
+    top: 9px;
+    color: @thread-main-color;
+    .ds-highlight {
+      color: @thread-main-color !important;
+    }
   }
   .ds-like-tooltip {
     left: inherit !important;
@@ -179,6 +174,10 @@
         margin-left: 15px;
         color: #ff3f53;
       }
+      .dot {
+        padding-right: 5px;
+        display: inline-block;
+      }
     }
   }
   li:first-child {
@@ -207,7 +206,7 @@
 
 .post-info {
   width: 100%;
-  margin-top: 54px;
+  margin-top: 17px;
   color: #585b65;
   text-align: left;
   .name {
@@ -409,6 +408,10 @@
     color: rgba(255, 255, 255, 0.7);
   }
 
+  #ds-thread {
+    margin-top: 144px;
+  }
+
   //更多阅读
   .more-post {
     width: 730px;
@@ -454,9 +457,6 @@
         .count {
           display: none;
         }
-        .dot {
-          padding-right: 5px;
-        }
       }
 
     }
@@ -478,6 +478,11 @@
 
   //文章
   //-----------------------------------------------------
+
+  #topScroll {
+    height: 100%;
+  }
+
   #topScroll {
     &:after {
       content: "";
@@ -560,6 +565,7 @@
   }
 
   .post-info {
+    margin-top: 54px;
     display: table-cell;
     max-width: 900px;
     color: #fff;
