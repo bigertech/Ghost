@@ -58,7 +58,7 @@
 @thread-main-color: #53AE65;
 #ds-thread {
   margin-top: 64px;
-  margin-bottom: 64px;
+  margin-bottom: 50px;
   #ds-reset {
     .ds-replybox {
       padding: 0 !important;
@@ -99,6 +99,9 @@
       background: url("../dist/images/unheart.png") no-repeat !important;
       background-position: none !important;
     }
+    .ds-comments {
+      border: 0 !important;
+    }
   }
 }
 
@@ -108,10 +111,9 @@
   font-size: 20px;
   color: #585a66;
   padding-bottom: 50px;
-  padding-top: 50px;
 }
 .more-post {
-  margin-bottom: 63px;
+  margin-bottom: 100px;
   border-top: 1px solid #d8d8d8;
   border-bottom: 1px solid #d8d8d8;
   .post-item {
@@ -149,7 +151,7 @@
         margin-left: 15px;
         color: #ff3f53;
       }
-      .icon-heart:before,
+      .icon-unheart:before,
       .icon-view:before {
         padding-right: 5px;
       }
@@ -399,10 +401,6 @@
     text-align: center;
     text-decoration: none !important;
     color: rgba(255, 255, 255, 0.7);
-  }
-
-  #ds-thread {
-    margin-top: 144px;
   }
 
   //更多阅读
