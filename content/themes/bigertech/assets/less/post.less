@@ -60,9 +60,6 @@
   margin-top: 64px;
   margin-bottom: 64px;
   #ds-reset {
-    .ds-meta {
-      float: right;
-    }
     .ds-replybox {
       padding: 0 !important;
       .ds-avatar {
@@ -70,6 +67,7 @@
       }
     }
     a.ds-like-thread-button {
+      margin-right: 5px !important;
       padding: 0 !important;
       display: inline-block;
       border: 0px solid @thread-main-color !important;
@@ -84,7 +82,7 @@
     }
     a.ds-thread-liked {
       .ds-icon-heart {
-        background: url("../images/heart.png") !important;
+        background: url("../dist/images/heart.png") no-repeat !important;
       }
       .ds-thread-like-text {
         display: none;
@@ -96,12 +94,10 @@
       }
     }
     .ds-icon-heart {
-      background: url("../images/heartnormal.png") !important;
+      width: 11px !important;
+      height: 11px !important;
+      background: url("../dist/images/unheart.png") no-repeat !important;
       background-position: none !important;
-    }
-    .ds-like-tooltip {
-      left: inherit !important;
-      right: 0;
     }
   }
 }
