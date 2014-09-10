@@ -16,7 +16,7 @@
     position: relative !important;
     .icon-bglogo,
     .icon-search,
-    .icon-menu {
+    .icon-video-navi {
       color: #585a66;
     }
     .icon-search {
@@ -46,7 +46,7 @@
 .pv-banner {
   &:before {
     position: relative;
-    top: 70px;
+    top: 58px;
     display: block;
     content: "";
     border-top: 1px #d8d8d8 solid;
@@ -81,6 +81,7 @@
     }
     a.ds-thread-liked {
       .ds-icon-heart {
+        top: 0px;
         background: url("../images/heart.png") no-repeat !important;
       }
       .ds-thread-like-text {
@@ -93,8 +94,8 @@
       }
     }
     .ds-icon-heart {
-      width: 11px !important;
-      height: 11px !important;
+      width: 16px !important;
+      height: 14px !important;
       background: url("../images/unheart.png") no-repeat !important;
     }
     .ds-comments {
@@ -177,7 +178,7 @@
 //-----------------------------------------------------
 .bg-img-small {
   position: relative;
-  margin-top: 32px;
+  margin-top: 17px;
   padding-top: 35px;
 }
 
@@ -214,6 +215,7 @@
 .post {
   margin: 0;
   color: @article-font-color;
+  -webkit-font-smoothing: antialiased;
   line-height: 1.667;
   clear: both;
   h1, h2, h3, h4, h5, h6, strong {
@@ -360,7 +362,7 @@
   #post-banner .navbar {
     .icon-bglogo,
     .icon-search,
-    .icon-menu {
+    .icon-video-navi {
       color: #fff;
     }
   }
@@ -368,7 +370,7 @@
   .modify #post-banner {
     .navbar {
       .icon-bglogo,
-      .icon-menu,
+      .icon-video-navi,
       .icon-search {
         color: #585a66;
       }
