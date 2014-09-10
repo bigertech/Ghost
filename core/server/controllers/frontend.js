@@ -94,11 +94,6 @@ function getVideo(post){
         return post;
     }
     post.isVideo = 1;
-//    var $ = cheerio.load(post.html);
-//    var youku = $("youkuid");
-//    post.videoId = youku.text() ? youku.text() : null;
-//    $("youkuid").remove();
-//    post.html = $.html();
     return post;
 }
 function formatPageResponseDuoshuo(posts, page) {
@@ -139,12 +134,25 @@ function formatPageResponse(posts, page) {
     };
 }
 
+function getVideoId(post) {
+    var $ = cheerio.load(post.html);
+    var youku = $("youkuid");
+    post.videoId = youku.text() ? youku.text() : null;
+    $("youkuid").remove();
+    post.html = $.html();
+    return post;
+}
 function formatResponse(post) {
     // Delete email from author for frontend output
     // TODO: do this on API level if no context is available
     if (post.author) {
         delete post.author.email;
     }
+    //add by liuxing add video id
+    if(post.post_type == 1){
+        post = getVideoId(post);
+    }
+    console.log(post);
     return {post: post};
 }
 
