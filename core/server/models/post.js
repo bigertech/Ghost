@@ -299,6 +299,10 @@ Post = ghostBookshelf.Model.extend({
         if(options.post_type > -1) {
             post_type = options.post_type;
         }
+        var pos = {
+            publish : 1
+        };
+
         //end by liuxing
 
         var postCollection = Posts.forge(),
@@ -342,6 +346,7 @@ Post = ghostBookshelf.Model.extend({
             // make sure that status is valid
             options.status = _.indexOf(['published', 'draft'], options.status) !== -1 ? options.status : 'published';
             options.where.status = options.status;
+
         }
 
         // If there are where conditionals specified, add those
@@ -376,7 +381,20 @@ Post = ghostBookshelf.Model.extend({
             // Omitting the `page`, `limit`, `where` just to be sure
             // aren't used for other purposes.
             .then(function () {
-                // If we have a tag instance we need to modify our query.
+                return PositionRelation.findAll(pos).then(function (posts) {
+                    var pr = posts.toJSON();
+                    var topicId = _.pluck(pr, 'post_id');
+                    topicId = _.filter(topicId, function (num) {
+                        return num > 0;
+                    });
+                    return topicId;
+                })
+            }).then(function(topicIds){   //排除专题文章
+                    if (options.status !== 'all') {
+                        postCollection.query('where', 'id', 'not in', topicIds);
+                    }
+
+                    // If we have a tag instance we need to modify our query.
                 // We need to ensure we only select posts that contain
                 // the tag given in the query param.
                 if (tagInstance) {

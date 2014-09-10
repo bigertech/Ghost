@@ -15,6 +15,7 @@
       <span class="author">{{author}} •  <time>{{date published_at timeago="ture"}}</time></span>
     </div>
     <div class="embed-responsive embed-responsive-youku ">
+		    <input type="hidden" id="videoId" value="{{videoId}}">
       <div id="youkuplayer" class="embed-responsive-item">
       </div>
     </div>
@@ -45,18 +46,13 @@
       (document.getElementsByTagName('head')[0]
         || document.getElementsByTagName('body')[0]).appendChild(ds);
     })();
-   /*//span标签传youkuid
-    var str = $('.video-desc').html();
-    var yuokuid = str.substring(str.indexOf("<span>")+6,str.indexOf("</span>"));*/
-    var youkuid = $('youkuid').text();
   </script>
 
   <script type="text/javascript" src="http://player.youku.com/jsapi">
-
     player = new YKU.Player('youkuplayer', {
       styleid: '1',
       client_id: '2cf898d1c36ea115',
-      vid: youkuid
+      vid: document.getElementById('videoId').value
     });
   </script>
 
