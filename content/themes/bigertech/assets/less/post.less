@@ -2,11 +2,10 @@
 @art-name-font-md: 44px;
 @img-heart-padding-sm: 20px;
 @img-heart-padding-md: 40px;
-@post-width: 696px;
 @video-max-width: 804px;
 @post-padding-sm: 20px;
 @post-padding-md: 38px;
-@post-max-width: 756px;
+@post-max-width: 696px;
 @video-max-width: 806px;
 
 //相同部分
@@ -80,7 +79,6 @@
         display: none;
       }
     }
-
     a.ds-thread-liked {
       .ds-icon-heart {
         background: url("../images/heart.png") no-repeat !important;
@@ -101,6 +99,9 @@
     }
     .ds-comments {
       border: 0 !important;
+    }
+    .ds-like-tooltip {
+      display: none;
     }
   }
 }
@@ -195,9 +196,6 @@
   }
   .author {
     font-size: 20px;
-  }
-  .desc {
-    display: none;
   }
 }
 
@@ -581,15 +579,6 @@
     color: #585a66;
     a {
       color: #585a66;
-    }
-    .desc {
-      display: block;
-      margin: 0 auto;
-      padding-top: 20px;
-      max-width: 680px;
-      width: 680px;
-      text-align: left;
-      font-size: 24px;
     }
   }
 
