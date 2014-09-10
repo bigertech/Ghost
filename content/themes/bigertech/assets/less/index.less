@@ -24,29 +24,8 @@
   font-size: 50px;
 }
 
-// 作者界面的主图白色渐变、图标变灰
-.author-template, .archive-template.author-template {
-  .navbar, .bg-header {
-    position: absolute;
-  }
-  .icon-bglogo, .icon-search, .icon-tag, .icon-menu {
-    &:before {
-      color: #585a66;
-    }
-  }
-  .bg-linear {
-    background-image: -ms-linear-gradient(top,rgba(255, 255, 255, 0.2) 0,rgba(255, 255, 255, 1) 100%);
-    background-image: -moz-linear-gradient(top,rgba(255, 255, 255, 0.2) 0,rgba(255, 255, 255, 1) 100%);
-    background-image: -o-linear-gradient(top,rgba(255, 255, 255, 0.2) 0,rgba(255, 255, 255, 1) 100%);
-    background-image: -webkit-gradient(linear,left top,right bottom,color-stop(0,rgba(255, 255, 255, 1)),color-stop(1,#fff));
-    background-image: -webkit-linear-gradient(top,rgba(255, 255, 255, 0.2) 0,rgba(255, 255, 255, 1) 100%);
-    background-image: linear-gradient(top,rgba(255, 255, 255, 0.2) 0,90%, rgba(255, 255, 255, 1) 100%, 100%, rgba(255, 255, 255, 1) 100%);
-    background-repeat: repeat-x;
-  }
-}
-
 //主页、文章或视频页面的主图黑色渐变
-.home-template, .archive-template, .category-template {
+.home-template, .archive-template, .category-template, .author-template {
   .bg-linear {
     background-image: -ms-linear-gradient(top,rgba(0,0,0,.1) 0,rgba(0,0,0,.4) 100%);
     background-image: -moz-linear-gradient(top,rgba(0,0,0,.1) 0,rgba(0,0,0,.4) 100%);
@@ -58,33 +37,23 @@
   }
 }
 
-// 文章、视频页面不出现视差滚动，导航条固定。
+// 滚动后，导航条固定。
 .archive-template, .category-template {
   .navbar {
-    background-color: #333;
+    background-color: rgba(255,255,255,0.97);
+    -webkit-box-shadow: 0 0 1px rgba(0,0,0,0.15);
+    -moz-box-shadow: 0 0 1px rgba(0,0,0,0.15);
+    box-shadow: 0 0 1px rgba(0,0,0,0.15);
     z-index: 9999;
-    opacity: 0.9;
+    .icon-bglogo, .icon-search, .icon-menu, .icon-tag {
+      color: #585a66;
+    }
   }
-  .bg-header {
+  .bg-header, .topics {
     display: none;
   }
   .content-wrapper {
     margin-top: 100px;
-  }
-}
-
-.archive-template.author-template {
-  .icon-bglogo, .icon-search, .icon-tag, .icon-menu {
-    &:before {
-      color: #fff;
-    }
-  }
-}
-
-// 换页后，专题不显示
-.archive-template {
-  .topics {
-    display: none;
   }
 }
 
@@ -184,30 +153,37 @@
   position: fixed;
   top: 0;
   left: 0;
-  height: 68px;
+  height: 58px;
   width: 100%;
-  -webkit-transition: all 0.3s ease-in-out;
-     -moz-transition: all 0.3s ease-in-out;
-          transition: all 0.3s ease-in-out;
+  -webkit-transition: all 0.6s ease-in-out;
+     -moz-transition: all 0.6s ease-in-out;
+          transition: all 0.6s ease-in-out;
   .icon-bglogo, .icon-search, .icon-menu, .icon-tag {
     display: inline-block;
-    margin-top: 20px;
-    font-size: 28px;
+    margin-top: 15px;
+    margin-bottom: 15px;
     color: #fff;
     cursor: pointer;
   }
   .icon-bglogo {
-    margin-left: 20px;
+    margin-left: 15px;
+    font-size: 28px;
   }
   .icon-search, .icon-menu, .icon-tag {
-    margin-right: 20px;
+    margin-right: 15px;
+    font-size: 26px;
   }
 }
 
-.home-template .navbar-pinned {
-  background-color: #333;
-  z-index: 9999;
-  opacity: 0.9;
+.navbar-pinned {
+  background-color: rgba(255,255,255,0.97);
+  -webkit-box-shadow: 0 0 1px rgba(0,0,0,0.15);
+  -moz-box-shadow: 0 0 1px rgba(0,0,0,0.15);
+  box-shadow: 0 0 1px rgba(0,0,0,0.15);
+  z-index: 89;
+  .icon-bglogo, .icon-search, .icon-menu, .icon-tag {
+    color: #585a66;
+  }
 }
 
 
@@ -217,7 +193,7 @@
 // HEADER
 //----------------------------------------------------------
 .bg-header {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
@@ -268,18 +244,6 @@
       border-bottom-left-radius: 999px;  // 解决部分浏览器不支持百分比和缩写
       border-radius: 999px; // 解决部分浏览器不支持百分比
       border-radius: 50%;
-      &:hover {
-        -webkit-transform: rotateZ(360deg);
-           -moz-transform: rotateZ(360deg);
-            -ms-transform: rotateZ(360deg);
-             -o-transform: rotateZ(360deg);
-                transform: rotateZ(360deg);
-        -webkit-transition: -webkit-transform 2s ease-out;
-           -moz-transition: -moz-transform 2s ease-out;
-            -ms-transition: -ms-transform 2s ease-out;
-             -o-transition: -o-transform 2s ease-out;
-                transition: transform 2s ease-out;
-      }
     }
     .author-name {
       font-size: 48px;
@@ -527,28 +491,35 @@
 
 @media screen and (max-width: 768px) {
 
-  .archive-template, .category-template {
-    .navbar {
-      position: absolute;
-      background-color: #fff;
-      border-bottom: 1px solid #d8d8d8;
-      .icon-bglogo, .icon-search, .icon-tag, .icon-menu {
-        &:before {
-          color: #585a66;
-        }
-      }
-    }
-    .content-wrapper {
-      margin-top: 70px;
-    }
+  .navbar {
+    position: absolute;
   }
 
-  .content-wrapper {
+  .home-template .content-wrapper, .author-template .content-wrapper {
     margin-top: 250px;
     .container {
       width: 100%;
     }
   }
+
+  .archive-template, .category-template {
+    .navbar {
+      background-color: rgba(255,255,255,0.97);
+      -webkit-box-shadow: 0 0 1px rgba(0,0,0,0.15);
+         -moz-box-shadow: 0 0 1px rgba(0,0,0,0.15);
+              box-shadow: 0 0 1px rgba(0,0,0,0.15);
+      .icon-bglogo, .icon-search, .icon-tag, .icon-menu {
+        color: #585a66;
+      }
+    }
+    .content-wrapper {
+      margin-top: 70px;
+      .container {
+        width: 100%;
+      }
+    }
+  }
+
 
   .bg-header {
     height: 250px;
@@ -647,6 +618,10 @@
 }
 
 
+
+
+
+
 // keyframes for bg-logo
 .home-template .bg-logo {
   -webkit-animation: fade-in-down 0.6s;
@@ -686,12 +661,12 @@
   }
 }
 
+
+
 // keyframes for navbar-pinned
 .navbar-pinned {
-  -webkit-animation: fade-in-down-navbar 0.9s;
-  animation: fade-in-down-navbar 0.9s;
-  -webkit-animation-delay: 0.1s;
-  animation-delay: 0.1s;
+  -webkit-animation: fade-in-down-navbar 0.6s;
+  animation: fade-in-down-navbar 0.6s;
 }
 
 @-webkit-keyframes fade-in-down-navbar {
@@ -701,7 +676,7 @@
     transform: translateY(-10px);
   }
   100% {
-    opacity: 1;
+    opacity: 0.97;
     -webkit-transform: translateY(0);
     transform: translateY(0);
   }
@@ -709,12 +684,12 @@
 
 @keyframes fade-in-down-navbar {
   0% {
-    opacity: 0.9;
+    opacity: 0;
     -webkit-transform: translateY(-10px);
     transform: translateY(-10px);
   }
   100% {
-    opacity: 0.9;
+    opacity: 0.97;
     -webkit-transform: translateY(0);
     transform: translateY(0);
   }

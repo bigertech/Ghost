@@ -40,9 +40,19 @@ var animatedHeader = (function() {
 		return window.pageYOffset || docElem.scrollTop;
 	}
 
-	if (document.body.clientWidth > 768 ) {
-		if ( document.querySelector( '.home-template' ) ) {
+	if ( document.querySelector( '.home-template' ) ) {
+		if (document.body.clientWidth > 768 ) {
 			init();
+		}
+	}
+
+	if ( document.querySelector( '.author-template' ) ) {
+		if ( document.querySelector( '.archive-template' ) ) {
+			return false;
+		} else {
+			if (document.body.clientWidth > 768 ) {
+				init();
+			}
 		}
 	}
 
