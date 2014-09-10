@@ -177,10 +177,10 @@
 
 .navbar-pinned {
   background-color: rgba(255,255,255,0.97);
-  -webkit-box-shadow: 0 0 1px rgba(0,0,0,0.15);
-  -moz-box-shadow: 0 0 1px rgba(0,0,0,0.15);
-  box-shadow: 0 0 1px rgba(0,0,0,0.15);
   z-index: 89;
+  -webkit-box-shadow: 0 0 1px rgba(0,0,0,0.15);
+     -moz-box-shadow: 0 0 1px rgba(0,0,0,0.15);
+          box-shadow: 0 0 1px rgba(0,0,0,0.15);
   .icon-bglogo, .icon-search, .icon-menu, .icon-tag {
     color: #585a66;
   }
@@ -246,12 +246,12 @@
       border-radius: 50%;
     }
     .author-name {
-      font-size: 48px;
-      color: #585a66;
+      font-size: 36px;
+      color: #fff;
     }
     .author-bio {
       font-size: 18px;
-      color: #585a66;
+      color: #fff;
     }
   }
 }
@@ -625,39 +625,39 @@
 // keyframes for bg-logo
 .home-template .bg-logo {
   -webkit-animation: fade-in-down 0.6s;
-  animation: fade-in-down 0.6s;
+          animation: fade-in-down 0.6s;
   -webkit-animation-delay: 0.2s;
-  animation-delay: 0.2s;
+          animation-delay: 0.2s;
 }
 .home-template .bg-description {
   -webkit-animation: fade-in-down 0.9s;
-  animation: fade-in-down 0.9s;
+          animation: fade-in-down 0.9s;
   -webkit-animation-delay: 0.1s;
-  animation-delay: 0.1s;
+          animation-delay: 0.1s;
 }
 
 @-webkit-keyframes fade-in-down {
   0% {
     opacity: 0;
     -webkit-transform: translateY(-10px);
-    transform: translateY(-10px);
+            transform: translateY(-10px);
   }
   100% {
     opacity: 1;
     -webkit-transform: translateY(0);
-    transform: translateY(0);
+            transform: translateY(0);
   }
 }
 @keyframes fade-in-down {
   0% {
     opacity: 0;
     -webkit-transform: translateY(-10px);
-    transform: translateY(-10px);
+            transform: translateY(-10px);
   }
   100% {
     opacity: 1;
     -webkit-transform: translateY(0);
-    transform: translateY(0);
+            transform: translateY(0);
   }
 }
 
@@ -666,19 +666,19 @@
 // keyframes for navbar-pinned
 .navbar-pinned {
   -webkit-animation: fade-in-down-navbar 0.6s;
-  animation: fade-in-down-navbar 0.6s;
+          animation: fade-in-down-navbar 0.6s;
 }
 
 @-webkit-keyframes fade-in-down-navbar {
   0% {
     opacity: 0;
     -webkit-transform: translateY(-10px);
-    transform: translateY(-10px);
+            transform: translateY(-10px);
   }
   100% {
     opacity: 0.97;
     -webkit-transform: translateY(0);
-    transform: translateY(0);
+            transform: translateY(0);
   }
 }
 
@@ -686,11 +686,11 @@
   0% {
     opacity: 0;
     -webkit-transform: translateY(-10px);
-    transform: translateY(-10px);
+            transform: translateY(-10px);
   }
   100% {
     opacity: 0.97;
     -webkit-transform: translateY(0);
-    transform: translateY(0);
+            transform: translateY(0);
   }
 }
