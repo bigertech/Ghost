@@ -1,4 +1,4 @@
-@art-name-font-sm: 34px;
+@art-name-font-sm: 24px;
 @art-name-font-md: 44px;
 @img-heart-padding-sm: 20px;
 @img-heart-padding-md: 40px;
@@ -36,6 +36,14 @@
 
 #post-container {
   max-width: @post-max-width;
+}
+
+.pv-container {
+  max-width: 696px;
+}
+.readmore.center-block {
+  max-width: 730px;
+  width: 90%;
 }
 
 #video-container,
@@ -189,14 +197,17 @@
 .post-info {
   width: 100%;
   margin-top: 17px;
-  color: #585b65;
+  color: #000;
   text-align: left;
   .name {
     font-size: @art-name-font-sm;
     font-weight: bold;
   }
   .author {
-    font-size: 20px;
+    font-size: 16px;
+    a {
+      color: #000;
+    }
   }
 }
 
@@ -241,7 +252,7 @@
   }
   p {
     margin: 16px 0;
-    font-size: 18px;
+    font-size: 16px;
     word-break: normal;
   }
   strong {
@@ -293,13 +304,13 @@
   margin-top: 32px;
   margin-bottom: 30px;
   width: 100%;
-  color: #585b65;
+  color: #000;
   .name {
     font-size: @art-name-font-sm;
     font-weight: bold;
   }
   .author {
-    font-size: 20px;
+    font-size: 16px;
   }
 }
 
@@ -475,6 +486,7 @@
   //-----------------------------------------------------
 
   #topScroll {
+    width: 100%;
     height: 100%;
   }
 
@@ -571,9 +583,9 @@
     }
     .author {
       font-size: 18px;
-    }
-    a {
-      color: #fff;
+      a {
+        color: #fff;
+      }
     }
   }
 
@@ -586,6 +598,9 @@
 
   .post {
     visibility: hidden;
+    p {
+      font-size: 18px;
+    }
   }
   .modify .post {
     visibility: visible;
