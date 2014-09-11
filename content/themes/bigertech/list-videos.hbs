@@ -2,7 +2,15 @@
 
 {{> "navbar"}}
 
-{{> "header"}}
+<div class="bg-header">
+  <div class="bg-cover"><img class="lazy" data-original="{{asset "dist/images/video.jpg" }}" /></div>
+  <div class="bg-linear">
+    <div class="bg-slogan">
+      <img class="bg-logo" src="{{asset "dist/images/bigertech-white.png" }}" alt="bigertech" />
+      <h2 class="bg-description">视频</h2>
+    </div>
+  </div>
+</div>
 
 <div class="content-wrapper">
 
@@ -10,3 +18,8 @@
   {{pagination}}
 
 </div>
+
+{{#contentFor "pageScripts"}}
+  <script src="{{asset "js/vendor/classie.js"}}"></script>
+  <script src="{{asset "js/vendor/animatedHeader.js"}}"></script>
+{{/contentFor}}

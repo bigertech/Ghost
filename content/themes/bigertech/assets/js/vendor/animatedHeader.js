@@ -46,6 +46,16 @@ var animatedHeader = (function() {
 		}
 	}
 
+	if ( document.querySelector( '.category-template' ) ) {
+		if ( document.querySelector( '.archive-template' ) ) {
+			return false;
+		} else {
+			if (document.body.clientWidth > 768 ) {
+				init();
+			}
+		}
+	}
+
 	if ( document.querySelector( '.author-template' ) ) {
 		if ( document.querySelector( '.archive-template' ) ) {
 			return false;

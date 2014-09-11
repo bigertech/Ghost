@@ -26,7 +26,7 @@
 }
 
 //主页、文章或视频页面的主图黑色渐变
-.home-template, .archive-template, .category-template, .author-template {
+.home-template, .category-template, .author-template {
   .bg-linear {
     background-image: -ms-linear-gradient(top,rgba(0,0,0,.1) 0,rgba(0,0,0,.4) 100%);
     background-image: -moz-linear-gradient(top,rgba(0,0,0,.1) 0,rgba(0,0,0,.4) 100%);
@@ -39,7 +39,7 @@
 }
 
 // 滚动后，导航条固定。
-.archive-template, .category-template {
+.archive-template {
   .navbar {
     background-color: rgba(255,255,255,0.97);
     -webkit-box-shadow: 0 0 1px rgba(0,0,0,0.15);
@@ -209,7 +209,7 @@
     width: 100%;
     z-index: -1;
     img {
-      width: 100%;
+      min-width: 100%;
       height: auto;
     }
   }
@@ -499,14 +499,16 @@
     position: absolute;
   }
 
-  .home-template .content-wrapper, .author-template .content-wrapper {
+  .home-template .content-wrapper,
+  .author-template .content-wrapper,
+  .category-template .content-wrapper {
     margin-top: 250px;
     .container {
       width: 100%;
     }
   }
 
-  .archive-template, .category-template {
+  .archive-template {
     .navbar {
       background-color: rgba(255,255,255,0.97);
       -webkit-box-shadow: 0 0 1px rgba(0,0,0,0.15);
