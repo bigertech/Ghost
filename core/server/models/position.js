@@ -36,6 +36,9 @@ Position = ghostBookshelf.Model.extend({
     findOne: function(data, options) {
         return ghostBookshelf.Model.findOne.call(this, data, options);
     },
+    findAll: function(data, options) {
+        return ghostBookshelf.Model.findAll.call(this, data, options);
+    },
 
     edit: function(data, options) {
         return ghostBookshelf.Model.edit.call(this, data, options);
