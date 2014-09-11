@@ -68,7 +68,7 @@
     isRevealed,
     noscroll,
     isAnimating,
-    topScroll = document.getElementById( 'topScroll' );
+      modify = document.getElementById( 'post-template' );
 
   function scrollY() {
     return window.pageYOffset || docElem.scrollTop;
@@ -99,11 +99,11 @@
     isAnimating = true;
 
     if( reveal ) {
-      classie.add( topScroll, 'modify' );
+      classie.add( modify, 'modify' );
     } else {
       noscroll = true;
       disable_scroll();
-      classie.remove( topScroll, 'modify' );
+      classie.remove( modify, 'modify' );
     }
 
     // simulating the end of the transition:
@@ -125,7 +125,7 @@
 
   if( pageScroll ) {
     isRevealed = true;
-    classie.add( topScroll, 'modify' );
+    classie.add( modify, 'modify' );
   }
 
   /*if(navigator.userAgent.indexOf("MSIE 9.0") > 0) {

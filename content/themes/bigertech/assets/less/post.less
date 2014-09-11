@@ -112,6 +112,9 @@
     .ds-like-tooltip {
       display: none;
     }
+    .ds-highlight {
+      color: #333 !important;
+    }
   }
 }
 
@@ -284,6 +287,9 @@
     border-radius: 2px;
     padding: 1px 3px;
   }
+  iframe {
+    margin: 0 auto;
+  }
   .full-img {
     width: auto;
     width: calc(100% + 32px);
@@ -391,7 +397,6 @@
   .pv-banner {
     padding: 0;
     max-width: none;
-    min-height: 670px;
     width: 100%;
     overflow: hidden;
     &:before {
@@ -485,6 +490,10 @@
   //文章
   //-----------------------------------------------------
 
+  html,body {
+    height: 100%;
+  }
+
   #topScroll {
     width: 100%;
     height: 100%;
@@ -500,7 +509,7 @@
     }
   }
   #post-banner {
-    height: 560px;
+    height: 100%;
     display: table;
   }
 
@@ -570,6 +579,10 @@
     &:after {
       opacity: 1 !important;
     }
+  }
+
+  #post-main {
+    margin-top: -100px;
   }
 
   .post-info {

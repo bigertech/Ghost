@@ -1,5 +1,7 @@
 {{!< default}}
-
+{{#contentFor "pageStyles"}}
+  <link rel="stylesheet" type="text/css" href="/assets/less/post.css">
+{{/contentFor}}
 <div id="topScroll">
     {{#post}}
   <div id="post-banner" class="pv-banner">
@@ -21,20 +23,14 @@
       <span class="icon-down"></span>
     </a>
   </div>
-
+</div>
+<div id="post-main">
   <div id="post-container" class="pv-container">
     <div class="post">
         {{content}}
+        {{duoshuo_block}}
     </div>
   </div>
-
-
-  <div class="pv-container">
-    <!-- 多说评论框 start -->
-      {{duoshuo_block}}
-    <!-- 多说评论框 end -->
-  </div>
-
   <div class="readmore center-block">
     <p class="mores">更多阅读</p>
     {{post_relative limit="2"}}
