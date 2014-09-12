@@ -66,11 +66,11 @@
 //----------------------------------------------------------
 @font-face {
 	font-family: 'icomoon';
-	src:url('../../fonts/icomoon.eot?ppibvj');
-	src:url('../../fonts/icomoon.eot?#iefixppibvj') format('embedded-opentype'),
-		url('../../fonts/icomoon.woff?ppibvj') format('woff'),
-		url('../../fonts/icomoon.ttf?ppibvj') format('truetype'),
-		url('../../fonts/icomoon.svg?ppibvj#icomoon') format('svg');
+	src:url('../fonts/icomoon.eot?ppibvj');
+	src:url('../fonts/icomoon.eot?#iefixppibvj') format('embedded-opentype'),
+		url('../fonts/icomoon.woff?ppibvj') format('woff'),
+		url('../fonts/icomoon.ttf?ppibvj') format('truetype'),
+		url('../fonts/icomoon.svg?ppibvj#icomoon') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -181,6 +181,8 @@
 
 .navbar-pinned {
   background-color: rgba(255,255,255,0.97);
+  -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+      filter:alpha(opacity=30);
   z-index: 89;
   -webkit-box-shadow: 0 0 1px rgba(0,0,0,0.15);
      -moz-box-shadow: 0 0 1px rgba(0,0,0,0.15);
@@ -225,7 +227,7 @@
     .bg-logo {
       display: block;
       max-width: 100%;
-      width: 100%\9;
+      max-width: 100%\9;
       height: auto;
       margin: 0 auto;
     }

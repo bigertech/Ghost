@@ -28,12 +28,10 @@
   {{> "footer"}}
 
   <script src="http://cdnjscn.b0.upaiyun.com/libs/jquery/1.11.1/jquery.min.js"></script>
-  <script src="http://cdnjscn.b0.upaiyun.com/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+  <script src="{{asset "dist/js/bigertech.min.js"}}"></script>
   <script charset="utf-8">
     $("img.lazy").lazyload();
   </script>
-
-  <script src="{{asset "dist/js/bigertech.min.js"}}"></script>
 
   {{{block "pageScripts"}}}
 

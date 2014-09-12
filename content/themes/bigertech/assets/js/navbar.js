@@ -102,6 +102,7 @@ var Menu = {
   open: function () {
       function t() {
           e.search.addClass("is-active");
+          e.textBox.focus();
           e.isAnimating = !1
       }
       var e = this.settings;
@@ -110,6 +111,7 @@ var Menu = {
           e.search.css("display", "block");
           setTimeout(t, 100)
       }
+
   },
   close: function () {
       function t() {
