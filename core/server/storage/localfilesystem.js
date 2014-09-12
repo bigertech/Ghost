@@ -85,7 +85,7 @@ localFileStore = _.extend(baseStore, {
             }
 
             var img = images(targetFilename);
-            var size = img.size();
+            var size = img.size(config.images.targetWidth);
             var srcWidth = size.width;
             var srcHeight = size.height;
             var targetWidth = config.images.targetWidth || srcWidth;

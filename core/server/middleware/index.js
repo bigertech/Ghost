@@ -253,7 +253,7 @@ setupMiddleware = function (server) {
 
     // Favicon
     expressServer.use(subdir, favicon(corePath + '/shared/favicon.ico'));
-
+    console.log(path.join(config.paths.contentPath, '/themes/bigertech/static'));
     // Static assets
     expressServer.use(subdir + '/shared', express['static'](path.join(corePath, '/shared'), {maxAge: utils.ONE_HOUR_MS}));
     expressServer.use(subdir + '/content/images', storage.get_storage().serve());

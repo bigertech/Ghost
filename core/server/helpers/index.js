@@ -324,24 +324,20 @@ coreHelpers.content = function (options) {
             downsize(this.html, truncateOptions)
         );
     }
-
-
-    // --- Modified by happen
-    // --- If current runing env is production, load the image from cdn.
-    if (config.cdn.isProduction) {
-        var $ = cheerio.load(this.html);
-
-        $('img').each(function(index, elem) {
-            var src = $(this).attr('src');
-            if (src.indexOf(config.paths.contentPath)) {
-                $(this).attr('src', getCdnImageUrl(src));
-            }
-        });
-
-        this.html = $.html();
-    }
-    // --- end
-
+    //正文图片延迟加载
+    var $ = cheerio.load(this.html);
+    var imgs = $("img");
+    imgs.each(function(i,e){
+        $(e).addClass("lazy");
+        var src = $(this).attr('src');
+        if(config.cdn.isProduction && src.indexOf(config.paths.contentPath)){
+            $(this).attr('data-original', getCdnImageUrl(src));
+        } else{
+            $(e).attr("data-original",$(e).attr("src"));
+        }
+        $(e).removeAttr("src");
+    });
+    this.html = $.html();
     return new hbs.handlebars.SafeString(this.html);
 };
 
@@ -503,15 +499,11 @@ coreHelpers.image_sm = function() {
     if (!this.image) {
         this.image = defaultBgImg;
     }
-
     // 得到裁剪过后的图片
     if (config.images.dir) {
-        var image = this.image;
-        var pos = image.indexOf('images/') + 'images/'.length;
-        var imgPath = image.substr(0, pos);
-        var imgName = image.substr(pos);
-
-        this.image = imgPath + config.images.dir + '/' + imgName;
+        var image_url = this.image;
+        var last_slug = image_url.lastIndexOf('\/');
+        this.image = image_url.substr(0,last_slug)+'/'+config.images.dir+'/'+image_url.substr(last_slug,image_url.length);
     }
 
     if (config.cdn.isProduction) {

@@ -152,7 +152,6 @@ function formatResponse(post) {
     if(post.post_type == 1){
         post = getVideoId(post);
     }
-    console.log(post);
     return {post: post};
 }
 
