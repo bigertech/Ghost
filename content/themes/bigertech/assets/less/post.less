@@ -67,6 +67,10 @@
   margin-top: 64px;
   margin-bottom: 50px;
   #ds-reset {
+    .ds-meta {
+      margin: 0 auto !important;
+      width: 85px !important;
+    }
     .ds-replybox {
       padding: 0 !important;
       .ds-avatar {
@@ -102,18 +106,28 @@
       }
     }
     .ds-icon-heart {
-      width: 16px !important;
-      height: 14px !important;
+      top: -8px !important;
+      width: 85px !important;
+      height: 43px !important;
       background: url("../images/unheart.png") no-repeat !important;
     }
     .ds-comments {
       border: 0 !important;
     }
+    .ds-comments-info {
+      margin-top: 30px !important;
+    }
     .ds-like-tooltip {
       display: none;
     }
+    .ds-like-panel {
+      position: absolute;
+      left: 16px;
+      top: 50px;
+      color: #9f9f9f;
+    }
     .ds-highlight {
-      color: #333 !important;
+      color: #9f9f9f !important;
     }
   }
 }
@@ -240,10 +254,13 @@
     margin: 0 0 0 7px;
     padding-left: 18px;
     color: @article-font-color;
-    border-left: #d9d9d9 2px solid;
+    border-left: #53ae65 2px solid;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
+    p {
+      color: #666;
+    }
   }
   img {
     max-width: 100%;
@@ -256,6 +273,8 @@
   p {
     margin: 16px 0;
     font-size: 16px;
+    text-align: justify;
+    text-justify: inter-ideograph;
     word-break: normal;
   }
   strong {
