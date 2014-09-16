@@ -366,10 +366,13 @@
     }
     .post-title {
       max-height: 1.2em;
-      overflow: hidden;
       line-height: 1.2em;
       font-size: 24px;
       font-weight: 400;
+      overflow: hidden;
+      white-space:nowrap;
+      -o-text-overflow:ellipsis;
+         text-overflow:ellipsis;
     }
     .post-meta {
       margin-top: 5px;
@@ -406,7 +409,13 @@
       font-size: 14px;
       line-height: 1.7em;
       color: #4e4e4e;
-    	overflow: hidden;
+      /* text-align: justify;
+      text-justify: inter-ideograph; */
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+         text-overflow:ellipsis;
     }
   }
 }
