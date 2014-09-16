@@ -35,12 +35,9 @@
 }
 
 #post-container {
-  max-width: @post-max-width;
+  width: 100%;
 }
 
-.pv-container {
-  max-width: 696px;
-}
 .readmore.center-block {
   max-width: 730px;
   width: 90%;
@@ -174,10 +171,11 @@
       }
       .count {
         margin-left: 15px;
-        color: #ff3f53;
+        color: #9eabb3;
       }
       .icon-unheart:before,
       .icon-view:before {
+        color: #ff3f53;
         padding-right: 5px;
       }
       .dot {
@@ -200,9 +198,13 @@
 //文章
 //-----------------------------------------------------
 .bg-img-small {
-  position: relative;
-  margin-top: 17px;
-  padding-top: 35px;
+  /* position: relative; */
+  margin-top: 30px;
+  /* padding-top: 35px; */
+  img {
+    width: 100%;
+    height: auto;
+  }
 }
 
 .bg-img {
@@ -376,7 +378,7 @@
   }
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 1024px) {
   //共同部分
   //-----------------------------------------------------
   //导航
@@ -476,9 +478,6 @@
           display: inline-block;
         }
         .avatar {
-          display: none;
-        }
-        .count {
           display: none;
         }
         .dot {
@@ -603,6 +602,10 @@
 
   #post-main {
     margin-top: -100px;
+  }
+
+  #post-container {
+    width: @post-max-width;
   }
 
   .post-info {
