@@ -13,8 +13,8 @@
             {{gh-activating-list-item route="editor.new" title="新建文章" classNames="editor js-close-sidebar"}}
             {{#unless session.user.isAuthor}}
                 {{gh-activating-list-item route="settings" title="设置" classNames="settings js-close-sidebar"}}
+                <li class="js-close-sidebar"><a href="/ghost/positions/">位置管理</a></li>
             {{/unless}}
-            <li class="js-close-sidebar"><a href="/ghost/positions/">位置管理</a></li>
 
             <li id="usermenu" class="usermenu subnav">
                 {{#gh-popover-button popoverName="user-menu" classNames="dropdown"}}

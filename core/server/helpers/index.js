@@ -291,7 +291,20 @@ coreHelpers.tags = function (options) {
 
     return new hbs.handlebars.SafeString(output);
 };
-
+//add by liuxing 修改格式
+function addblank(inText)
+{
+    return inText.replace(/([\u4E00-\u9FA3])([A-Za-z0-9\(\[\{@#])/g,'$1 $2')
+        .replace(/([A-Za-z0-9\.,!@#%?\)\]\}])([\u4E00-\u9FA3])/g,'$1 $2')
+        .replace(/([〔〕（）。，！？《》—“”「」]) +/g,'$1')
+        .replace(/ +([〔〕（）。，！？《》—“”「」])/g,'$1')
+        .replace(/ +/g,' ')
+        .replace(/“/g,"「")
+        .replace(/”/g,"」")
+        .replace(/‘/g,"『")
+        .replace(/’/g,"』");
+}
+//end add
 // ### Content Helper
 //
 // *Usage example:*
@@ -337,7 +350,8 @@ coreHelpers.content = function (options) {
         }
         $(e).removeAttr("src");
     });
-    this.html = $.html();
+    this.html = addblank($.html());  //加空格和 「」
+
     return new hbs.handlebars.SafeString(this.html);
 };
 
@@ -503,7 +517,7 @@ coreHelpers.image_sm = function() {
     if (config.images.dir) {
         var image_url = this.image;
         var last_slug = image_url.lastIndexOf('\/');
-        this.image = image_url.substr(0,last_slug)+'/'+config.images.dir+'/'+image_url.substr(last_slug,image_url.length);
+        this.image = image_url.substr(0,last_slug)+'/'+config.images.dir+image_url.substr(last_slug,image_url.length);
     }
 
     if (config.cdn.isProduction) {
