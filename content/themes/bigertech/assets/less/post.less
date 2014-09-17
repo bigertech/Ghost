@@ -68,6 +68,12 @@
 border-bottom: 1px solid #ebebeb;
 }
 
+#ds-thread #ds-reset .ds-post-self:hover  {
+  .ds-post-reply,
+  .ds-post-likes {
+    display: inline-block;
+  }
+}
 #ds-thread {
   margin-top: 64px;
   margin-bottom: 50px;
@@ -131,6 +137,13 @@ border-bottom: 1px solid #ebebeb;
     }
     .ds-highlight {
       color: #9f9f9f !important;
+    }
+    .ds-comment-actions{
+      .ds-post-reply,
+      .ds-post-likes,
+      .ds-post-repost{
+        display: none;
+      }
     }
   }
 }
