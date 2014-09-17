@@ -54,12 +54,20 @@
     top: 58px;
     display: block;
     content: "";
-    border-top: 1px #d8d8d8 solid;
+    border-top: 1px #ebebeb solid;
   }
 }
 
 //多说
 @thread-main-color: #53AE65;
+
+#ds-thread #ds-reset li.ds-post {
+  border-top: 1px solid #ebebeb !important;
+}
+#ds-thread #ds-reset .ds-comments, #ds-thread #ds-reset .ds-paginator {
+border-bottom: 1px solid #ebebeb;
+}
+
 #ds-thread {
   margin-top: 64px;
   margin-bottom: 50px;
@@ -136,8 +144,8 @@
 }
 .more-post {
   margin-bottom: 50px;
-  border-top: 1px solid #d8d8d8;
-  border-bottom: 1px solid #d8d8d8;
+  border-top: 1px solid #ebebeb ;
+  border-bottom: 1px solid #ebebeb;
   .post-item {
     display: block;
     margin-left: auto;
@@ -184,7 +192,7 @@
     }
   }
   li:first-child {
-    border-bottom: 1px solid #d8d8d8;
+    border-bottom: 1px solid #ebebeb;
   }
   &:after {
     content: "";
@@ -383,7 +391,7 @@
   }
 }
 
-@media screen and (min-width: 1024px) {
+@media screen and (min-width: 1025px) {
   //共同部分
   //-----------------------------------------------------
   //导航
@@ -496,7 +504,7 @@
       float: left;
       padding-right: 50px;
       border-bottom: 0;
-      border-right: 1px solid #d8d8d8;
+      border-right: 1px solid #ebebeb;
     }
     li:last-child {
       float: right;
