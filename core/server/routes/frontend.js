@@ -33,6 +33,10 @@ frontendRoutes = function () {
     // Topic
     router.get('/topic/:slug/', frontend.topic);
 
+    // ChangWeiBo
+    router.get('/changweiboPage/:slug', frontend.changweiboPage);
+    router.get('/changweibo/:slug', frontend.changweibo);
+
     // Default
     router.get('/page/:page/', frontend.homepage);
     router.get('/', frontend.homepage);
