@@ -62,10 +62,10 @@
 @thread-main-color: #53AE65;
 
 #ds-thread #ds-reset li.ds-post {
-  border-top: 1px solid #ebebeb !important;
+  border-top: 1px solid #eee !important;
 }
 #ds-thread #ds-reset .ds-comments, #ds-thread #ds-reset .ds-paginator {
-border-bottom: 1px solid #ebebeb;
+border-bottom: 1px solid #eee !important;
 }
 
 #ds-thread {
@@ -76,12 +76,6 @@ border-bottom: 1px solid #ebebeb;
       margin: 0 auto;
       margin-bottom: 30px;
       width: 85px !important;
-    }
-    .ds-replybox {
-      padding: 0 !important;
-      .ds-avatar {
-        display: none !important;
-      }
     }
     a.ds-like-thread-button {
       margin-right: 5px !important;
@@ -147,6 +141,9 @@ border-bottom: 1px solid #ebebeb;
     }
     .ds-comment-body p {
       font-size: 16px !important;
+    }
+    .ds-textarea-wrapper textarea {
+      height: 16px !important;
     }
   }
 }
