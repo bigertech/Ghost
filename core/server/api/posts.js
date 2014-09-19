@@ -89,6 +89,10 @@ posts = {
         return dataProvider.Post.findPage(options);
     },
 
+    findAll: function(options) {
+        return dataProvider.Post.fetchAll(options);
+    },
+
     /**
      * ### Read
      * Find a post, by ID or Slug

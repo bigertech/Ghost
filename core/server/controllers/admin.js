@@ -148,10 +148,10 @@ adminControllers = {
                 });
             });
 
-            return api.posts.browse();
+            return api.posts.findAll();
         }).then(function(result) {
             data.posts = [];
-            result.posts.forEach(function(post) {
+            result.toJSON().forEach(function(post) {
                 data.posts.push(_.pick(post, 'id', 'title', 'slug'));
             });
 
