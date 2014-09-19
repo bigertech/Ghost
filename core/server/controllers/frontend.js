@@ -10,6 +10,8 @@ var moment      = require('moment'),
     url         = require('url'),
     when        = require('when'),
     cheerio     = require('cheerio'),
+    ue          = require('url-extract')(),
+    fs          = require('fs'),
 
     api         = require('../api'),
     config      = require('../config'),
@@ -695,6 +697,55 @@ frontendControllers = {
                 });
             });
         }).otherwise(handleError(next));
+    },
+
+    changweiboPage: function(req, res, next) {
+        api.settings.read('permalinks').then(function (response) {
+            var postLookup = _.pick({ slug: req.params.slug }, 'slug');
+            postLookup.include = 'author,tags,fields';
+
+            return api.posts.read(postLookup);
+        }).then(function (result) {
+            var post = result.posts[0];
+
+            res.render('changweiboPage', formatResponse(post));
+        }).otherwise(function (err) {
+            if (err.type === 'NotFoundError') {
+                return next();
+            }
+
+            return handleError(next)(err);
+        });
+    },
+
+    changweibo: function(req, res, next) {
+        var slug = req.params.slug;
+        var url = config.changweibo.url + '/changweiboPage/' + slug + '/';
+        var savePath = config.paths.imagesPath + '/' + config.changweibo.dir + '/' + slug + '.png';
+
+        api.posts.read({slug: slug}).then(function(result) {
+            var relPath = '/' + config.paths.imagesRelPath + '/' + config.changweibo.dir + '/' + slug + '.png';
+
+            if (!fs.existsSync(savePath)) {
+                // 截图并保存到目录下
+                if (url.indexOf('http://') === -1) {
+                    url = 'http://' + url;
+                }
+
+                ue.snapshot(url, { callback: cb, image: savePath});
+                function cb() {
+                    res.render('changweibo', { img: relPath });
+                }
+            } else {
+                res.render('changweibo', { img: relPath });
+            }
+        }).otherwise(function (err) {
+            if (err.type === 'NotFoundError') {
+                return next();
+            }
+
+            return handleError(next)(err);
+        });
     },
 
     topic: function(req, res, next) {
