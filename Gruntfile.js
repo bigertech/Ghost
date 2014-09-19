@@ -853,7 +853,8 @@ var path           = require('path'),
         // `bower` does have some quirks, such as not running as root. If you have problems please try running
         // `grunt init --verbose` to see if there are any errors.
         grunt.registerTask('init', 'Prepare the project for development',
-            ['shell:bower', 'shell:ghost_ui', 'update_submodules', 'default']);
+            [ 'update_submodules', 'default']);
+        // 删掉任务 'shell:bower', 'shell:ghost_ui',
 
         // ### Production assets
         // `grunt prod` - will build the minified assets used in production.

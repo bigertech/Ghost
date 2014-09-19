@@ -37,7 +37,7 @@ var downsize        = require('downsize'),
     request         = require('request'),
     youkuUrl        = 'https://openapi.youku.com/v2/videos/show_basic.json';
     deleteTag       = ['youkuid'],
-    defaultBgImg = '/assets/images/def-bg.png';
+    defaultBgImg = '/content/images/def-bg.jpg';
 
 
 //初始化所有的 文章类型 和对应的url
@@ -58,7 +58,8 @@ if (!isProduction) {
  // @param  {Object} context date object
  // @param  {*} options
  // @return {Object} A Moment time / date object
-
+var yearFormat = 'YYYY年MMMDD日';
+var dayFormat = ' MMMDD日';
 coreHelpers.date = function (context, options) {
     if (!options && context.hasOwnProperty('hash')) {
         options = context;
@@ -74,13 +75,20 @@ coreHelpers.date = function (context, options) {
     // ensure that context is undefined, not null, as that can cause errors
     context = context === null ? undefined : context;
 
-    var f = options.hash.format || 'MMM DD YYYY HH:mm ',
+    var f = options.hash.format || 'MMMDD日',
         timeago = options.hash.timeago,
         date;
 
     moment.lang("zh-cn");
     if (timeago) {
-        date = moment(context).fromNow();
+        var diff = moment().diff(moment(context),'days');
+        if(diff < 30){    //30天以内显示  多久之前
+            date = moment(context).fromNow();
+        }else if( moment().format('YYYY') - moment(context).format('YYYY') < 1 ){   //一年内 显示 几月几号
+            date = moment(context).format(dayFormat);
+        }else{
+            date = moment(context).format(yearFormat);
+        }
     } else {
         date = moment(context).format(f);
     }
@@ -400,6 +408,22 @@ coreHelpers.duoshuo_block = function () {
     };
     return template.execute('duoshuo', context);
 };
+
+function getProductImage(img){
+    if (config.cdn.isProduction) {
+        img = getCdnImageUrl(img);
+    }
+    return  new hbs.handlebars.SafeString(img);
+}
+
+var coverImg = '/content/images/def-author.jpg';
+coreHelpers.author_cover = function(){
+    if(this.cover){
+        coverImg = this.cover;
+    }
+   return getProductImage(coverImg);
+}
+
 /*
 * 响应数据
 * { id: 'XNzI1NDU4ODI0',
@@ -502,11 +526,7 @@ coreHelpers.image = function () {
     if(!this.image){
         this.image = defaultBgImg;
     }
-
-    if (config.cdn.isProduction) {
-        this.image = getCdnImageUrl(this.image);
-    }
-    return  new hbs.handlebars.SafeString(this.image);
+    return getProductImage(this.image);
 };
 
 coreHelpers.image_sm = function() {
@@ -519,11 +539,7 @@ coreHelpers.image_sm = function() {
         var last_slug = image_url.lastIndexOf('\/');
         this.image = image_url.substr(0,last_slug)+'/'+config.images.dir+image_url.substr(last_slug,image_url.length);
     }
-
-    if (config.cdn.isProduction) {
-        this.image = getCdnImageUrl(this.image);
-    }
-    return  new hbs.handlebars.SafeString(this.image);
+    return getProductImage(this.image);
 };
 
 function getCdnImageUrl(image) {
@@ -1209,6 +1225,7 @@ registerHelpers = function (adminHbs, assetHash) {
     registerThemeHelper('post_star', coreHelpers.post_star);
     registerThemeHelper('post_desc', coreHelpers.post_desc);
     registerThemeHelper('duoshuo_block', coreHelpers.duoshuo_block);
+    registerThemeHelper('author_cover', coreHelpers.author_cover);
 
 
     //end add

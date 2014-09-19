@@ -35,12 +35,9 @@
 }
 
 #post-container {
-  max-width: @post-max-width;
+  width: 100%;
 }
 
-.pv-container {
-  max-width: 696px;
-}
 .readmore.center-block {
   max-width: 730px;
   width: 90%;
@@ -57,16 +54,29 @@
     top: 58px;
     display: block;
     content: "";
-    border-top: 1px #d8d8d8 solid;
+    border-top: 1px #ebebeb solid;
   }
 }
 
 //多说
 @thread-main-color: #53AE65;
+
+#ds-thread #ds-reset li.ds-post {
+  border-top: 1px solid #ebebeb !important;
+}
+#ds-thread #ds-reset .ds-comments, #ds-thread #ds-reset .ds-paginator {
+border-bottom: 1px solid #ebebeb;
+}
+
 #ds-thread {
   margin-top: 64px;
   margin-bottom: 50px;
   #ds-reset {
+    .ds-meta {
+      margin: 0 auto;
+      margin-bottom: 30px;
+      width: 85px !important;
+    }
     .ds-replybox {
       padding: 0 !important;
       .ds-avatar {
@@ -102,8 +112,9 @@
       }
     }
     .ds-icon-heart {
-      width: 16px !important;
-      height: 14px !important;
+      top: -8px !important;
+      width: 85px !important;
+      height: 43px !important;
       background: url("../images/unheart.png") no-repeat !important;
     }
     .ds-comments {
@@ -112,8 +123,14 @@
     .ds-like-tooltip {
       display: none;
     }
+    .ds-like-panel {
+      position: absolute;
+      left: 16px;
+      top: 50px;
+      color: #9f9f9f;
+    }
     .ds-highlight {
-      color: #333 !important;
+      color: #9f9f9f !important;
     }
   }
 }
@@ -127,8 +144,8 @@
 }
 .more-post {
   margin-bottom: 50px;
-  border-top: 1px solid #d8d8d8;
-  border-bottom: 1px solid #d8d8d8;
+  border-top: 1px solid #ebebeb ;
+  border-bottom: 1px solid #ebebeb;
   .post-item {
     display: block;
     margin-left: auto;
@@ -162,10 +179,11 @@
       }
       .count {
         margin-left: 15px;
-        color: #ff3f53;
+        color: #9eabb3;
       }
       .icon-unheart:before,
       .icon-view:before {
+        color: #ff3f53;
         padding-right: 5px;
       }
       .dot {
@@ -174,7 +192,7 @@
     }
   }
   li:first-child {
-    border-bottom: 1px solid #d8d8d8;
+    border-bottom: 1px solid #ebebeb;
   }
   &:after {
     content: "";
@@ -188,9 +206,13 @@
 //文章
 //-----------------------------------------------------
 .bg-img-small {
-  position: relative;
-  margin-top: 17px;
-  padding-top: 35px;
+  /* position: relative; */
+  margin-top: 30px;
+  /* padding-top: 35px; */
+  img {
+    width: 100%;
+    height: auto;
+  }
 }
 
 .bg-img {
@@ -240,10 +262,13 @@
     margin: 0 0 0 7px;
     padding-left: 18px;
     color: @article-font-color;
-    border-left: #d9d9d9 2px solid;
+    border-left: #ccc 3px solid;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
+    p {
+      color: #666;
+    }
   }
   img {
     max-width: 100%;
@@ -256,7 +281,14 @@
   p {
     margin: 16px 0;
     font-size: 16px;
+    text-align: justify;
+    text-justify: inter-ideograph;
     word-break: normal;
+    embed {
+      display: block;
+      width: 100%;
+      margin: 0 auto;
+    }
   }
   strong {
     font-weight: bold;
@@ -359,7 +391,7 @@
   }
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 1025px) {
   //共同部分
   //-----------------------------------------------------
   //导航
@@ -423,11 +455,11 @@
   .more-post {
     padding-top: 50px;
     padding-bottom: 50px;
-    width: 730px;
+    width: 745px;
     .post-item {
       position: relative;
       padding: 0;
-      width: 363px;
+      width: 367px;
       .isVideo {
         position: absolute;
         top: 18px;
@@ -461,9 +493,6 @@
         .avatar {
           display: none;
         }
-        .count {
-          display: none;
-        }
         .dot {
           padding-right: 5px;
           display: inline-block;
@@ -475,11 +504,11 @@
       float: left;
       padding-right: 50px;
       border-bottom: 0;
-      border-right: 1px solid #d8d8d8;
+      border-right: 1px solid #ebebeb;
     }
     li:last-child {
       float: right;
-      padding-left: 50px;
+      padding-left: 40px;
       .isVideo {
         top: 18px;
         left: 89px;
@@ -586,6 +615,10 @@
 
   #post-main {
     margin-top: -100px;
+  }
+
+  #post-container {
+    width: @post-max-width;
   }
 
   .post-info {

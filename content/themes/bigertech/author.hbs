@@ -5,11 +5,11 @@
 {{#author}}
 <div class="bg-header">
 
-  <div class="bg-cover"><img class="lazy" data-original="{{asset "dist/images/author.jpg" }}" /></div>
+  <div class="bg-cover"><img class="lazy" data-original="{{author_cover}}" /></div>
   <div class="bg-linear">
     <section class="author-profile">
       {{#if image}}
-        <img class="author-avatar" src="{{image}}" alt="{{name}} avatar" />
+        <a href="{{website}}"><img class="author-avatar" src="{{image}}" alt="{{name}} avatar" /></a>
       {{/if}}
       <h1 class="author-name">{{name}}</h1>
       <h2 class="author-bio">{{bio}}</h2>
