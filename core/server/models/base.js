@@ -265,18 +265,24 @@ ghostBookshelf.Model = ghostBookshelf.Model.extend({
 
         postCollection
             .query('where','title','!=', options.title)
-            .query('where','title','LIKE','%'+titleSegment[0].w+'%')
-            .query('where','html','LIKE','%'+titleSegment[0].w+'%');
+            .query('where','title','LIKE','%'+titleSegment[0].w+'%');
+            //.query('where','html','LIKE','%'+titleSegment[0].w+'%');
         if(titleSegment.length > 1){
             for(var i = titleSegment.length -1; i > 0;i--){
-                postCollection
-                    .query(function(qb){
-                        qb.orWhere('title','LIKE','%'+titleSegment[i].w+'%')
+                var word = titleSegment[i].w;
+                if(word.length > 1  && word !== '：'){
+                    postCollection
+                        .query(function(qb){
+                            qb.orWhere('title','LIKE','%'+word+'%')
                     });
+                }
             }
         }
         return postCollection
             .query('limit', parseInt(options.limit))
+            .query(function(qb){
+                qb.orderBy('id','desc');
+            })
             .fetch(options).then(function(result){
                 if (options.include) {
                     _.each(result.models, function (item) {
