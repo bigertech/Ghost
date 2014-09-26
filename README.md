@@ -135,6 +135,26 @@ add(data, options);
 destroy(options);
 ```
 
+## 长微博
+
+长微博的生成采用的是模拟浏览器截图的原理来生成的，使用的是`phantomjs`环境。
+
+### phantomjs ###
+
+确保当前服务器环境需要安装好[phantomjs](http://phantomjs.org/)。
+
+### 长微博文章页 ###
+
+```
+changweiboPage/:slug
+```
+
+### 长微博预览页 ###
+
+```
+changweibo/:slug
+```
+
 ## 新增改动
 *  文章类别选择
 *  每篇文章加入 文章图片
