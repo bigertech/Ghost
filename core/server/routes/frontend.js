@@ -34,8 +34,8 @@ frontendRoutes = function () {
     router.get('/topic/:slug/', frontend.topic);
 
     // ChangWeiBo
-    router.get('/changweiboPage/:slug', frontend.changweiboPage);
-    router.get('/changweibo/:slug', frontend.changweibo);
+    router.get('/cwbp/:slug', frontend.changweiboPage);
+    router.get('/cwb/:slug', frontend.changweibo);
 
     // Default
     router.get('/page/:page/', frontend.homepage);

@@ -380,6 +380,197 @@ Post = ghostBookshelf.Model.extend({
             // with the opts (to specify any eager relations, etc.)
             // Omitting the `page`, `limit`, `where` just to be sure
             // aren't used for other purposes.
+            .then(function(){   //排除专题文章
+                // If we have a tag instance we need to modify our query.
+                // We need to ensure we only select posts that contain
+                // the tag given in the query param.
+                if (tagInstance) {
+                    postCollection
+                        .query('join', 'posts_tags', 'posts_tags.post_id', '=', 'posts.id')
+                        .query('where', 'posts_tags.tag_id', '=', tagInstance.id);
+                }
+
+                if (authorInstance) {
+                    postCollection
+                        .query('where', 'author_id', '=', authorInstance.id);
+                }
+                return postCollection
+                    .query('limit', options.limit)
+                    .query('offset', options.limit * (options.page - 1))
+                    .query('orderBy', 'status', 'ASC')
+                    .query('orderBy', 'published_at', 'DESC')
+                    .query('orderBy', 'updated_at', 'DESC')
+                    .fetch(_.omit(options, 'page', 'limit'));
+            })
+
+            // Fetch pagination information
+            .then(function () {
+                var qb,
+                    tableName = _.result(postCollection, 'tableName'),
+                    idAttribute = _.result(postCollection, 'idAttribute');
+
+                // After we're done, we need to figure out what
+                // the limits are for the pagination values.
+                qb = ghostBookshelf.knex(tableName);
+
+                if (options.where) {
+                    qb.where(options.where);
+                }
+
+                if (tagInstance) {
+                    qb.join('posts_tags', 'posts_tags.post_id', '=', 'posts.id');
+                    qb.where('posts_tags.tag_id', '=', tagInstance.id);
+                }
+                if (authorInstance) {
+                    qb.where('author_id', '=', authorInstance.id);
+                }
+
+                return qb.count(tableName + '.' + idAttribute + ' as aggregate');
+            })
+
+            // Format response of data
+            .then(function (resp) {
+                var totalPosts = parseInt(resp[0].aggregate, 10),
+                    calcPages = Math.ceil(totalPosts / options.limit),
+                    pagination = {},
+                    meta = {},
+                    data = {};
+
+                pagination.page = options.page;
+                pagination.limit = options.limit;
+                pagination.pages = calcPages === 0 ? 1 : calcPages;
+                pagination.total = totalPosts;
+                pagination.next = null;
+                pagination.prev = null;
+
+                // Pass include to each model so that toJSON works correctly
+                if (options.include) {
+                    _.each(postCollection.models, function (item) {
+                        item.include = options.include;
+                    });
+                }
+
+                data.posts = postCollection.toJSON();
+                data.meta = meta;
+                meta.pagination = pagination;
+
+                if (pagination.pages > 1) {
+                    if (pagination.page === 1) {
+                        pagination.next = pagination.page + 1;
+                    } else if (pagination.page === pagination.pages) {
+                        pagination.prev = pagination.page - 1;
+                    } else {
+                        pagination.next = pagination.page + 1;
+                        pagination.prev = pagination.page - 1;
+                    }
+                }
+
+                if (tagInstance) {
+                    meta.filters = {};
+                    if (!tagInstance.isNew()) {
+                        meta.filters.tags = [tagInstance.toJSON()];
+                    }
+                }
+
+                if (authorInstance) {
+                    meta.filters = {};
+                    if (!authorInstance.isNew()) {
+                        meta.filters.author = authorInstance.toJSON();
+                    }
+                }
+
+                return data;
+            })
+            .catch(errors.logAndThrowError);
+    },
+    findPageNoTopic: function (options) {
+        options = options || {};
+        //add by liuxing
+        var post_type;
+        if(options.post_type > -1) {
+            post_type = options.post_type;
+        }
+        var pos = {
+            publish : 1
+        };
+
+        //end by liuxing
+
+        var postCollection = Posts.forge(),
+            tagInstance = options.tag !== undefined ? Tag.forge({slug: options.tag}) : false,
+            authorInstance = options.author !== undefined ? User.forge({slug: options.author}) : false;
+
+        if (options.limit) {
+            options.limit = parseInt(options.limit, 10) || 15;
+        }
+
+        if (options.page) {
+            options.page = parseInt(options.page, 10) || 1;
+        }
+
+        options = this.filterOptions(options, 'findPage');
+
+        // Set default settings for options
+        options = _.extend({
+            page: 1, // pagination page
+            limit: 15,
+            staticPages: false, // include static pages
+            status: 'published',
+            where: {}
+        }, options);
+
+        if (options.staticPages !== 'all') {
+            // convert string true/false to boolean
+            if (!_.isBoolean(options.staticPages)) {
+                options.staticPages = options.staticPages === 'true' || options.staticPages === '1' ? true : false;
+            }
+            options.where.page = options.staticPages;
+        }
+        /* add by liuxing  如果有类型查询，则加入 where 条件*/
+        if(post_type > -1){
+            options.where.post_type = post_type;
+        }
+        /* end add  by liuxing */
+        // Unless `all` is passed as an option, filter on
+        // the status provided.
+        if (options.status !== 'all') {
+            // make sure that status is valid
+            options.status = _.indexOf(['published', 'draft'], options.status) !== -1 ? options.status : 'published';
+            options.where.status = options.status;
+
+        }
+
+        // If there are where conditionals specified, add those
+        // to the query.
+        if (options.where) {
+            postCollection.query('where', options.where);
+        }
+
+        // Add related objects
+        options.withRelated = _.union([ 'tags', 'fields' ], options.include);
+
+        // If a query param for a tag is attached
+        // we need to fetch the tag model to find its id
+        function fetchTagQuery() {
+            if (tagInstance) {
+                return tagInstance.fetch();
+            }
+            return false;
+        }
+
+        function fetchAuthorQuery() {
+            if (authorInstance) {
+                return authorInstance.fetch();
+            }
+            return false;
+        }
+
+        return when.join(fetchTagQuery(), fetchAuthorQuery())
+
+            // Set the limit & offset for the query, fetching
+            // with the opts (to specify any eager relations, etc.)
+            // Omitting the `page`, `limit`, `where` just to be sure
+            // aren't used for other purposes.
             .then(function () {
                 return PositionRelation.findAll(pos).then(function (posts) {
                     var pr = posts.toJSON();
@@ -390,11 +581,11 @@ Post = ghostBookshelf.Model.extend({
                     return topicId;
                 })
             }).then(function(topicIds){   //排除专题文章
-                    if (options.status !== 'all') {
-                        postCollection.query('where', 'id', 'not in', topicIds);
-                    }
+                if (options.status !== 'all') {
+                    postCollection.query('where', 'id', 'not in', topicIds);
+                }
 
-                    // If we have a tag instance we need to modify our query.
+                // If we have a tag instance we need to modify our query.
                 // We need to ensure we only select posts that contain
                 // the tag given in the query param.
                 if (tagInstance) {
