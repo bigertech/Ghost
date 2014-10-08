@@ -29,13 +29,12 @@ config = {
         database: {
             client: 'mysql',
             connection: {
-                host     : 'localhost',
-                user     : 'root',
-                password : 'happen',
-                database : 'bigertech_ghost',
+                host     : '58.63.253.56',
+                user     : 'xiaomao',
+                password : 'xiaomao',
+                database : 'bigertech_blog',
                 charset  : 'UTF8_GENERAL_CI'
-            },
-            debug: true
+            }
         },
         server: {
             // Host to be passed to node's `net.Server#listen()`
@@ -48,13 +47,13 @@ config = {
         },
         cdn: {
             isProduction: false,
-            staticAssetsUrl: 'http://cdn.example.com/assets/',
-            dynamicAssetsUrl: 'http://cdn.example.com/assets/images/',
+            staticAssetsUrl: 'http://127.0.0.1:2368/assets/',
+            dynamicAssetsUrl: 'http://127.0.0.1:2368/assets/images/',
             syncImagesPath: '/data/static/images/'
         },
         images: {
             // 如果下面几项留空，则说明上传的图片无需截图
-            dir: 'dirname',
+            dir: 'image_sm',
             targetWidth: 180,
             // 目标宽度：目标长度的比例
             scale: 2
