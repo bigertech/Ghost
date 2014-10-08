@@ -74,9 +74,10 @@ posts = {
      *
      * @public
      * @param {{context, page, limit, status, staticPages, tag}} options (optional)
+     * @noTopic 是否包含主题文章
      * @returns {Promise(Posts)} Posts Collection with Meta
      */
-    browse: function browse(options) {
+    browse: function browse(options,noTipic) {
         options = options || {};
 
         if (!(options.context && options.context.user)) {
@@ -85,6 +86,9 @@ posts = {
 
         if (options.include) {
             options.include = prepareInclude(options.include);
+        }
+        if(noTipic){
+            return dataProvider.Post.findPageNoTopic(options);
         }
         return dataProvider.Post.findPage(options);
     },
