@@ -1,27 +1,59 @@
 {{!< default}}
-{{#contentFor "pageStyles"}}
-  <link rel="stylesheet" href="/assets/less/weibo.css"/>
-{{/contentFor}}
 
-<div class="weibo">
+<div id="topScroll">
     {{#post}}
-      <div class="wb-bg-img-small">
-        <img src="{{image}}"/>
-      </div>
-      <div class="wb-post-info wb-container">
-        <p class="wb-title">{{title}}</p>
-        <span class="wb-author">{{author}} • <time class="wb-post-time">{{date published_at timeago="ture"}}</time></span>
-      </div>
-      <div class="wb-post-content wb-container">
-        {{content}}
-        <div class="wb-desc">
-          <img src="/assets/images/weibo-foot.png" alt="简单 有趣 有价值"/>
-        </div>
-      </div>
-    {{/post}}
+  <div id="post-banner" class="pv-banner">
+      {{> "navbar"}}
+    <!-- <div class="embed-responsive embed-responsive-2by1 bg-img-small">
+      <img src="{{image}}"/>
+    </div> -->
+    <div class="bg-img-small">
+      <img src="{{image}}"/>
+    </div>
+    <div class="bg-img">
+      <img src="{{image}}"/>
+    </div>
+    <div class="post-info">
+      <p class="name">{{title}}</p>
+      <span class="author">{{author}} • <time class="post-time">{{date published_at timeago="ture"}}</time></span>
+    </div>
+
+    <a class="scroll-down" href="#post-container" data-offset="-45">
+      <span class="icon-down"></span>
+    </a>
+  </div>
 </div>
+<div id="post-main">
+  <div id="post-container" class="pv-container">
+    <div class="post">
+        <img src="/content/images/2014/Sep/mingren.jpg" alt="">
+        {{content}}
+        {{duoshuo_block}}
+    </div>
+  </div>
+  <div class="readmore center-block">
+    <p class="mores">更多阅读</p>
+    {{post_relative limit="2"}}
+  </div>
+{{/post}}
+</div>
+
 {{#contentFor "pageScripts"}}
   <script>
-    $('#footer').css('display', 'none');
+    (function(){var j=(function(){var w,y=-1;var v=window.navigator.userAgent;var t=v.indexOf("MSIE ");var u=v.indexOf("Trident/");if(t>0){y=parseInt(v.substring(t+5,v.indexOf(".",t)),10)}else{if(u>0){var x=v.indexOf("rv:");y=parseInt(v.substring(x+3,v.indexOf(".",x)),10)}}return((y>-1)?y:w)}());var g=[32,37,38,39,40],e=0;function c(t){t=t||window.event;if(t.preventDefault){t.preventDefault()}t.returnValue=false}function s(u){for(var t=g.length;t--;){if(u.keyCode===g[t]){c(u);return}}}function h(t){c(t)}function p(t){}function k(){window.onmousewheel=document.onmousewheel=p;document.onkeydown=s;document.body.ontouchmove=h}function r(){window.onmousewheel=document.onmousewheel=document.onkeydown=document.body.ontouchmove=null}var n=window.document.documentElement,f,a,d,b,i=document.getElementById("post-template");function l(){return window.pageYOffset||n.scrollTop}function m(){f=l();if(d&&!j){if(f<0){return false}window.scrollTo(0,0)}if(b){return false}if(f<=0&&a){o(0)}else{if(f>0&&!a){o(1)}}}function o(t){b=true;if(t){classie.add(i,"modify")}else{d=true;k();classie.remove(i,"modify")}setTimeout(function(){a=!a;b=false;if(t){d=false;r()}},600)}var q=l();d=q===0;if(q){a=true;classie.add(i,"modify")}if(document.body.clientWidth>1024){if(window.addEventListener){window.addEventListener("scroll",m,false)}else{if(window.attachEvent){window.attachEvent("onscroll",m)}else{window.onscroll=m}}}})();
+  </script>
+
+  <!-- 多说公共JS代码 start -->
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name: "bigertech"};
+    (function () {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';
+      ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
   </script>
 {{/contentFor}}
