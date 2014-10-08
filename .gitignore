@@ -61,7 +61,7 @@ CHANGELOG.md
 # Casper generated files
 /core/test/functional/*.png
 
-config.js
+
 /core/client/config.js
 
 # Built asset files
@@ -70,3 +70,7 @@ config.js
 # Coverage reports
 coverage.html
 
+config.js
+
+
+config.js
