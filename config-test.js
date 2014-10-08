@@ -26,14 +26,6 @@ config = {
         database: {
             client: 'mysql',
             connection: {
-<<<<<<< HEAD
-                host     : '58.63.253.56',
-                user     : 'xiaomao',
-                password : 'xiaomao',
-                database : 'bigertech_blog',
-                charset  : 'UTF8_GENERAL_CI'
-            }
-=======
                 host     : '127.0.0.1',
                 user     : 'liux',
                 password : 'liux',
@@ -41,7 +33,6 @@ config = {
                 charset  : 'UTF8_GENERAL_CI'
             },
             //debug: true
->>>>>>> 0927a428985d24e6d8a9a9ee71be537e7fffdfdb
         },
         server: {
             // Host to be passed to node's `net.Server#listen()`
@@ -54,27 +45,16 @@ config = {
         },
         cdn: {
             isProduction: false,
-<<<<<<< HEAD
-            staticAssetsUrl: 'http://127.0.0.1:2368/assets/',
-            dynamicAssetsUrl: 'http://127.0.0.1:2368/assets/images/',
-=======
             staticAssetsUrl: 'http://127.0.0.1:8001/assets/',
             dynamicAssetsUrl: 'http://127.0.0.1:8001/content/images/',
->>>>>>> 0927a428985d24e6d8a9a9ee71be537e7fffdfdb
             syncImagesPath: '/data/static/images/'
         },
         images: {
             // 如果下面几项留空，则说明上传的图片无需截图
             dir: 'image_sm',
-<<<<<<< HEAD
-            targetWidth: 180,
-            // 目标宽度：目标长度的比例
-            scale: 2
-=======
             targetWidth: 350,
             targetHeight: 210,
             scale: 0.6
->>>>>>> 0927a428985d24e6d8a9a9ee71be537e7fffdfdb
         },
         changweibo: {
             url: 'localhost:2368',

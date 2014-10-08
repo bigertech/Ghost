@@ -70,7 +70,7 @@ function getPostPage(options) {
             options.limit = postsPerPage;
         }
         options.include = 'author,tags,fields,post_type';
-        return api.posts.browse(options);
+        return api.posts.browse(options,true);
     });
 }
 //add by liuxing  获取文章的 多说信息

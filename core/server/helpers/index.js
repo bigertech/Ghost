@@ -58,8 +58,8 @@ if (!isProduction) {
  // @param  {Object} context date object
  // @param  {*} options
  // @return {Object} A Moment time / date object
-var yearFormat = 'YYYY年MMMDD日';
-var dayFormat = ' MMMDD日';
+var yearFormat = 'YYYY年M月D日';
+var dayFormat = ' MMMD日';
 coreHelpers.date = function (context, options) {
     if (!options && context.hasOwnProperty('hash')) {
         options = context;
@@ -75,7 +75,7 @@ coreHelpers.date = function (context, options) {
     // ensure that context is undefined, not null, as that can cause errors
     context = context === null ? undefined : context;
 
-    var f = options.hash.format || 'MMMDD日',
+    var f = options.hash.format || 'MMMDDD',
         timeago = options.hash.timeago,
         date;
 
