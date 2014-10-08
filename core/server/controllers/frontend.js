@@ -730,8 +730,9 @@ frontendControllers = {
                 if (url.indexOf('http://') === -1) {
                     url = 'http://' + url;
                 }
+                console.log(url);
                 ue.snapshot(url, {
-                    viewportSize:{width:320,heigth:680 },
+                    viewportSize:{width:110 },
                     callback: cb,
                     image: savePath
                 });
