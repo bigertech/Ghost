@@ -119,6 +119,10 @@ border-bottom: 1px solid #ebebeb;
     }
     .ds-comments {
       border: 0 !important;
+      .ds-comment-body p a[rel="nofollow"]:before{
+        content:" ";
+        display: block;
+      }
     }
     .ds-like-tooltip {
       display: none;
@@ -488,7 +492,13 @@ border-bottom: 1px solid #ebebeb;
           display: none;
         }
         a[href*="author"] {
+          padding-bottom: 2px;
           display: inline-block;
+          max-width: 90px;
+          height: 23px;
+          overflow: hidden;
+          vertical-align: middle;
+          text-overflow: ellipsis;
         }
         .avatar {
           display: none;
