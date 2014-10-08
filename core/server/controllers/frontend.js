@@ -720,9 +720,8 @@ frontendControllers = {
 
     changweibo: function(req, res, next) {
         var slug = req.params.slug;
-        var url = config.changweibo.url + '/changweiboPage/' + slug + '/';
+        var url = config.changweibo.url + '/cwbp/' + slug + '/';
         var savePath = config.paths.imagesPath + '/' + config.changweibo.dir + '/' + slug + '.png';
-
         api.posts.read({slug: slug}).then(function(result) {
             var relPath = '/' + config.paths.imagesRelPath + '/' + config.changweibo.dir + '/' + slug + '.png';
 
@@ -731,9 +730,13 @@ frontendControllers = {
                 if (url.indexOf('http://') === -1) {
                     url = 'http://' + url;
                 }
+                ue.snapshot(url, {
+                    viewportSize:{width:320,heigth:680 },
+                    callback: cb,
+                    image: savePath
+                });
+                function cb(data) {
 
-                ue.snapshot(url, { callback: cb, image: savePath});
-                function cb() {
                     res.render('changweibo', { img: relPath });
                 }
             } else {
