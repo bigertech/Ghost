@@ -1,8 +1,11 @@
 <html xmlns:wb="http://open.weibo.com/wb">
 <head lang="zh-CN">
   <meta charset="utf-8">
+{{#post}}
+  <title>{{title}}</title>
+  <meta name="description" content="{{meta_description}}"/>
+{{/post}}
   <script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>
-  <title>笔戈科技长微博</title>
   <style>
     body {
       font: 14px Arial,Helvetica,sans-serif;
@@ -14,7 +17,7 @@
       margin: 20px auto;
       padding-top: 20px;
       border-radius: 5px;
-      width: 540px;
+      width: 500px;
       text-align: center;
       background: #fff;
     }
