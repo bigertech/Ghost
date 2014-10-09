@@ -707,17 +707,14 @@ frontendControllers = {
         api.settings.read('permalinks').then(function (response) {
             var postLookup = _.pick({ slug: req.params.slug }, 'slug');
             postLookup.include = 'author,tags,fields';
-
             return api.posts.read(postLookup);
         }).then(function (result) {
             var post = result.posts[0];
-
             res.render('changweiboPage', formatResponse(post));
         }).otherwise(function (err) {
             if (err.type === 'NotFoundError') {
                 return next();
             }
-
             return handleError(next)(err);
         });
     },
@@ -728,24 +725,25 @@ frontendControllers = {
         var savePath = config.paths.imagesPath + '/' + config.changweibo.dir + '/' + slug + '.png';
         api.posts.read({slug: slug}).then(function(result) {
             var relPath = '/' + config.paths.imagesRelPath + '/' + config.changweibo.dir + '/' + slug + '.png';
-
+            result.post = result.posts[0];
+            delete result.posts;
             if (!fs.existsSync(savePath)) {
                 // 截图并保存到目录下
                 if (url.indexOf('http://') === -1) {
                     url = 'http://' + url;
                 }
-                console.log(url);
                 ue.snapshot(url, {
-                    viewportSize:{width:110 },
+                    viewportSize:{width:480 },
                     callback: cb,
                     image: savePath
                 });
                 function cb(data) {
-
-                    res.render('changweibo', { img: relPath });
+                    result.weiboImg = relPath;
+                    res.render('changweibo', result);
                 }
             } else {
-                res.render('changweibo', { img: relPath });
+                result.weiboImg = relPath;
+                res.render('changweibo', result);
             }
         }).otherwise(function (err) {
             if (err.type === 'NotFoundError') {
