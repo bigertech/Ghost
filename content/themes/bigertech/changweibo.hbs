@@ -2,10 +2,51 @@
 <head lang="zh-CN">
   <meta charset="utf-8">
   <script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>
+  <title>笔戈科技长微博</title>
+  <style>
+    body {
+      font: 14px Arial,Helvetica,sans-serif;
+      color: #333;
+      line-height: 1.5em;
+      background: #E0E0E0;
+    }
+    #content {
+      margin: 20px auto;
+      padding-top: 20px;
+      border-radius: 5px;
+      width: 540px;
+      text-align: center;
+      background: #fff;
+    }
+    #side {
+      position: fixed;
+      margin-left: 310px;
+      left: 50%;
+      top: 70px;
+      cursor: pointer;
+      z-index: 2;
+      width: 142px;
+      padding: 40px;
+      background: #efefef;
+      border-radius: 5px;
+      box-shadow: 0 2px 8px #ddd;
+    }
+  </style>
 </head>
 <body>
-<img src="{{weiboImg}}" alt="changweibo">
-<wb:share-button addition="simple" type="button" ralateUid="3972907549" language="zh_cn"></wb:share-button>
+<div id="content">
+  <img src="{{image}}" alt="changweibo">
+</div>
+{{#post}}
+<div id="side">
+  <wb:share-button appkey="2ihBIw" addition="simple" type="button" ralateUid="3972907549"
+    default_text="{{#if meta_description}}
+        {{post_desc}}
+    {{else}}
+        {{excerpt words="20"}}
+    {{/if}}"{{/post}}
+  pic="{{image}}"></wb:share-button>
+</div>
 
 </body>
 </html>

@@ -11,6 +11,7 @@
 
 body {
   width: 440px;
+  margin: 0 auto;
   font-family: "SourceHanSans";
 }
 
@@ -24,35 +25,37 @@ body {
 }
 
 .wb-post-info {
-  padding-top: 73px;
+  padding-top: 5px;
   font-weight: 400;
   line-height: 1.1;
   .wb-title {
-    font-size: 56px;
-  }
-  .wb-author {
-    display: block;
-    padding-top: 60px;
-  }
-  a,
-  .wb-post-time {
-    color: #898989;
+    margin: 10px 0;
     font-size: 33px;
   }
-}
+  .wb-author {
+    color: #898989;
+    display: block;
+    font-size: 20px;
+  }
+  a {
+    color: #898989;
+    text-decoration: none;
+  }
+  .wb-post-time {
 
+  }
+}
+@article-font-color: #3F484F;
 .wb-post-content {
   padding-top: 24px;
-  font-size: 33px;
-  p {
-    padding-top: 15px;
-    padding-bottom: 15px;
+  font-size: 20px;
+  p{
+    margin: 10px 0;
   }
   p:first-child,
   p:nth-child(2) {
     padding: 0;
   }
-
   img[alt="bg"] {
     display: none;
   }
@@ -65,14 +68,50 @@ body {
     font-family: "SourceHanSans";
     font-weight: bold;
   }
+  a {
+    text-decoration: none;
+    color: #53ae65;
+  }
+  ol, ul {
+    padding-left: 40px;
+  }
+  ul {
+    list-style: disc;
+  }
+  ol {
+    list-style-type: decimal;
+  }
+  em {
+    font-style: italic;
+  }
+  blockquote {
+    margin: 0 0 0 7px;
+    padding-left: 18px;
+    color: @article-font-color;
+    border-left: #ccc 3px solid;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    p {
+      color: #666;
+    }
+  }
+  code {
+    font-size: 0.85em;
+    white-space: pre-wrap;
+    background: #f1f0ea;
+    border: 1px solid #dddbcc;
+    border-radius: 2px;
+    padding: 1px 3px;
+  }
   br {
     display: none;
   }
 }
 
 .wb-desc {
-  padding-top: 90px;
-  padding-bottom: 110px;
+  padding-top: 40px;
+  padding-bottom: 50px;
   text-align: center;
 }
 
