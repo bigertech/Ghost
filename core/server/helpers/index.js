@@ -551,7 +551,6 @@ coreHelpers.index_main = function (options) {
             relation[0].siteUrl = relation[0].url;
             data = relation[0];
         }
-        console.log(data);
         return template.execute('index_main', {topic:data});
     })
 };
