@@ -26,9 +26,9 @@ config = {
         database: {
             client: 'mysql',
             connection: {
-                host     : '127.0.0.1',
-                user     : 'liux',
-                password : 'liux',
+                host     : '192.168.20.21',
+                user     : 'meizu_bigertech',
+                password : 'nkLWmeUSPwlbLtNU',
                 database : 'bigertech_blog',
                 charset  : 'UTF8_GENERAL_CI'
             },
@@ -36,7 +36,7 @@ config = {
         },
         server: {
             // Host to be passed to node's `net.Server#listen()`
-            host: '127.0.0.1',
+            host: '121.14.58.212',
             // Port to be passed to node's `net.Server#listen()`, for iisnode set this to `process.env.PORT`
             port: '8001'
         },
@@ -44,9 +44,9 @@ config = {
             contentPath: path.join(__dirname, '/content/')
         },
         cdn: {
-            isProduction: false,
-            staticAssetsUrl: 'http://127.0.0.1:8001/assets/',
-            dynamicAssetsUrl: 'http://127.0.0.1:8001/content/images/',
+            isProduction: true,
+            staticAssetsUrl: 'http://bigertech.res.meizu.com/blog/static/',
+            dynamicAssetsUrl: 'http://bigertech.res.meizu.com/blog/res/content/images/',
             syncImagesPath: '/data/static/images/'
         },
         images: {
@@ -56,7 +56,9 @@ config = {
             targetHeight: 210,
             scale: 0.6
         },
-        changweibo: {
+
+
+    changweibo: {
             url: 'localhost:2368',
             dir: 'changweibo'
         }
