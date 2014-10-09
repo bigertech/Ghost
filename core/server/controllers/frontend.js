@@ -738,7 +738,7 @@ frontendControllers = {
                     image: savePath
                 });
                 function cb(data) {
-                    result.weiboImg = relPath;
+                    result.image = relPath;
                     res.render('changweibo', result);
                 }
             } else {
