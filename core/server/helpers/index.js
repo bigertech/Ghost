@@ -362,6 +362,28 @@ coreHelpers.content = function (options) {
 
     return new hbs.handlebars.SafeString(this.html);
 };
+coreHelpers.contentNoLazy = function (options) {
+    var truncateOptions = (options || {}).hash || {};
+    truncateOptions = _.pick(truncateOptions, ['words', 'characters']);
+    _.keys(truncateOptions).map(function (key) {
+        truncateOptions[key] = parseInt(truncateOptions[key], 10);
+    });
+
+    if (truncateOptions.hasOwnProperty('words') || truncateOptions.hasOwnProperty('characters')) {
+        // Due to weirdness in downsize the 'words' option
+        // must be passed as a string. refer to #1796
+        // TODO: when downsize fixes this quirk remove this hack.
+        if (truncateOptions.hasOwnProperty('words')) {
+            truncateOptions.words = truncateOptions.words.toString();
+        }
+        return new hbs.handlebars.SafeString(
+            downsize(this.html, truncateOptions)
+        );
+    }
+    this.html = addblank(this.html);  //加空格和 「」
+
+    return new hbs.handlebars.SafeString(this.html);
+};
 
 //add by liuxing add helper
 coreHelpers.title = function () {
@@ -1217,6 +1239,7 @@ registerHelpers = function (adminHbs, assetHash) {
     registerAsyncThemeHelper('post_relative', coreHelpers.post_relative);
     registerAsyncThemeHelper('index_topic', coreHelpers.index_topic);
 
+    registerThemeHelper('contentNoLazy', coreHelpers.contentNoLazy);
     registerThemeHelper('uuid', coreHelpers.uuid);
     registerThemeHelper('slug', coreHelpers.slug);
     registerThemeHelper('image', coreHelpers.image);
