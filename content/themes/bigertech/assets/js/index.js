@@ -5,7 +5,10 @@ jQuery(function($) {
   }
 
   if($("img.lazy") && $("img.lazy").length > 0)
-    $("img.lazy").lazyload({effect: "fadeIn"});
+    $("img.lazy").lazyload({
+      effect: "fadeIn",
+      threshold : 300
+    });
 
   $(document).ready( function() {
       var qrcode = $(".qrcode");

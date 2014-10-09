@@ -20,7 +20,8 @@
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!--[if lt IE 9]>
-    <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <script src="http://cdnjscn.b0.upaiyun.com/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="http://cdnjscn.b0.upaiyun.com/libs/respond.js/1.4.2/respond.min.js"></script>
   <![endif]-->
 </head>
 <body class="{{body_class}}" id="{{body_class}}">
@@ -34,6 +35,11 @@
   <script charset="utf-8">
     $(document).ready(function(){
       $("img.lazy").lazyload();
+
+
+      $("#topcontrol").delay(4000).on("click", "#toTop", function() {
+        console.log("das");
+      });
     });
   </script>
 
