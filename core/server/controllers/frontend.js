@@ -25,6 +25,7 @@ var moment      = require('moment'),
     dummyRouter = require('express').Router(),
     //add by liuxing  post type  and url relation
     typeLinks = [],
+    typeNames = [],
     request = require('request'),
     doshuoUrl = 'http://api.duoshuo.com/threads/counts.json?short_name=bigertech&threads=';
 
@@ -32,6 +33,7 @@ api.postType.browse().then(function(result){
     if(result.postTypes){
         _.forEach(result.postTypes,function(item){
             typeLinks.push(item.slug);
+            typeNames.push(item.name);
         });
     }
 });
@@ -238,12 +240,12 @@ frontendControllers = {
         // Parse the page number
         var category = req.params.category,
             post_type = _.indexOf(typeLinks,category),
+            meta_title = typeNames[post_type],
             pageParam = req.params.page !== undefined ? parseInt(req.params.page, 10) : 1,
             options = {
                 page: pageParam,
                 post_type:post_type
             };
-
         // No negative pages, or page 1
         if (isNaN(pageParam) || pageParam < 1 || (pageParam === 1 && req.route.path === '/page/:page/')) {
             return res.redirect(config.paths.subdir + '/');
@@ -268,6 +270,8 @@ frontendControllers = {
 
                     //res.render('list-'+view, formatPageResponse(posts, page));
                     formatPageResponseDuoshuo(posts, page).then(function(data){
+                        data.meta_title = meta_title;
+                        console.log(data);
                         res.render('list-'+view, data);
                     });
                 });

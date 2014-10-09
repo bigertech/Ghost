@@ -836,6 +836,8 @@ coreHelpers.meta_title = function (options) {
             title = this.tag.name + ' - ' + blog.title;
         } else if (this.author) {
             title = this.author.name + ' - ' + blog.title;
+        }else{
+            title = this.meta_title;
         }
     }
 
