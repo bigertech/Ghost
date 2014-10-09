@@ -1,0 +1,22 @@
+<div class="bg-header">
+{{#topic}}
+	{{#if post}}
+		{{#post}}
+        <div class="bg-cover"><img class="lazy" data-original="{{img}}" alt="{{title}}"/></div>
+        <div class="bg-linear">
+            <div class="bg-slogan">
+                <a class="topic-wrapper" href="{{slug}}" target="_blank">
+		              <h1 class="bg-description">{{title}}</h1>
+		            </a>
+            </div>
+        </div>
+		{{/post}}
+	{{else}}
+      <a class="topic-wrapper" href="{{siteUrl}}" target="_blank">
+          <img class="topic-img lazy" data-original="{{img}}" alt="{{title}}" />
+          <span class="topic-title">{{title}}</span>
+      </a>
+	{{/if}}
+{{/topic }}
+</div>
+

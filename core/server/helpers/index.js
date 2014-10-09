@@ -539,6 +539,22 @@ coreHelpers.index_topic = function (options) {
         return template.execute('topic', {topic:data});
     })
 };
+coreHelpers.index_main = function (options) {
+    var option = (options || {}).hash || {};
+    // 得到指定slug专题下的所有文章
+    return api.positions.getRelationsByPositionSlug(option.data, {publish: 1 }).then(function(relation) {
+        if (!relation) {
+            //return when.reject(new errors.NotFoundError('Topic not be found.'));
+        }
+        var data = {};
+        if(relation && relation[0]){
+            relation[0].siteUrl = relation[0].url;
+            data = relation[0];
+        }
+        console.log(data);
+        return template.execute('index_main', {topic:data});
+    })
+};
 
 //end add
 
@@ -1238,6 +1254,7 @@ registerHelpers = function (adminHbs, assetHash) {
     registerAsyncThemeHelper('video_play_count', coreHelpers.video_play_count);
     registerAsyncThemeHelper('post_relative', coreHelpers.post_relative);
     registerAsyncThemeHelper('index_topic', coreHelpers.index_topic);
+    registerAsyncThemeHelper('index_main', coreHelpers.index_main);
 
     registerThemeHelper('contentNoLazy', coreHelpers.contentNoLazy);
     registerThemeHelper('uuid', coreHelpers.uuid);
