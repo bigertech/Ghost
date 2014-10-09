@@ -742,7 +742,7 @@ frontendControllers = {
                     res.render('changweibo', result);
                 }
             } else {
-                result.weiboImg = relPath;
+                result.image = relPath;
                 res.render('changweibo', result);
             }
         }).otherwise(function (err) {
