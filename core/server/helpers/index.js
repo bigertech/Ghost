@@ -414,7 +414,7 @@ coreHelpers.type_class = function () {
  获取到点赞数量
 * */
 coreHelpers.post_star = function () {
-    var star = this.duoshuo ? this.duoshuo.likes:0;
+    var star = this.duoshuo ? this.duoshuo.comments:0;
     return  new hbs.handlebars.SafeString(star);
 };
 //输出文章的简介
