@@ -1,8 +1,37 @@
-{{!< default}}
-{{#contentFor "pageStyles"}}
-  <link rel="stylesheet" href="/assets/less/weibo.css"/>
-{{/contentFor}}
+<!DOCTYPE html>
+<html>
+<head lang="zh-CN">
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="HandheldFriendly" content="True"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
+<<<<<<< HEAD
+  <title>{{meta_title}}</title>
+  <meta name="description" content="{{meta_description}}"/>
+  <meta name="keywords" content="笔戈科技,魅族，手机，评测，科技，博客,长微博，{{meta_title}}">
+  <link href="/assets/less/weibo.css" rel="stylesheet">
+</head>
+<body>
+
+{{#post}}
+  <div class="wb-bg-img-small">
+    <img src="{{image}}"/>
+  </div>
+  <div class="wb-post-info wb-container">
+    <p class="wb-title">{{title}}</p>
+    <span class="wb-author">{{author}} • <time class="wb-post-time">{{date published_at timeago="ture"}}</time></span>
+  </div>
+  <div class="wb-post-content wb-container">
+      {{content}}
+    <div class="wb-desc">
+      <img src="/assets/images/weibo-foot.png" alt="简单 有趣 有价值"/>
+    </div>
+  </div>
+{{/post}}
+</body>
+</html>
+=======
 <div class="weibo">
     {{#post}}
       <div class="wb-bg-img-small">
@@ -13,7 +42,7 @@
         <span class="wb-author">{{author}} • <time class="wb-post-time">{{date published_at timeago="ture"}}</time></span>
       </div>
       <div class="wb-post-content wb-container">
-        {{content}}
+        {{contentNoLazy}}
         <div class="wb-desc">
           <img src="/assets/images/weibo-foot.png" alt="简单 有趣 有价值"/>
         </div>
@@ -25,3 +54,4 @@
     $('#footer').css('display', 'none');
   </script>
 {{/contentFor}}
+>>>>>>> f836de1793fbede0550ec41c5b9abb79270531c6
