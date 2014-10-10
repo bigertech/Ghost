@@ -13,7 +13,7 @@
         <h2 class="post-title">{{title}}</h2>
       </a>
       <div class="post-meta">
-        {{#if author.image}}<img class="avatar lazy" data-original="{{author.image}}" alt="Author image" />{{/if}}
+        <!-- {{#if author.image}}<img class="avatar lazy" data-original="{{author.image}}" alt="Author image" />{{/if}} -->
         {{author}}
         <time class="publish-time" datetime="{{date published_at timeago="ture"}}">
           <span class="dot">•</span>{{date published_at timeago="ture"}}
@@ -27,12 +27,14 @@
       </div>
 
       <p class="post-description desktop-display">
-      {{#if meta_description}}
-        {{post_desc}}
-      {{else}}
-        {{excerpt words="30"}}
-      {{/if}}
+        {{#if meta_description}}
+          {{post_desc}}
+        {{else}}
+          {{excerpt words="30"}}
+        {{/if}}
+        <!-- <a class="post-readmore" href="#">继续阅读</a> -->
       </p>
+
     </li>
   {{/foreach}}
   </ul>

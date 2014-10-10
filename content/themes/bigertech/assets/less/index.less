@@ -9,7 +9,7 @@
   margin-top: 380px;
   background-color: #fff;
   .container {
-    width: 730px;
+    width: 740px;
   }
 }
 
@@ -233,6 +233,7 @@
     }
     .bg-description {
       color: #fff;
+      font-size: 38px;
     }
   }
   // 作者界面简介
@@ -272,14 +273,14 @@ border-bottom-left-radius: 122px;  // 解决部分浏览器不支持百分比和
   .topic-item-left, .topic-item-right {
     position: relative;
     display: inline-block;
-    width: 363px;
-    height: 170px;
-    margin-top: 50px;
-    margin-bottom: 50px;
+    width: 367px;
+    height: 192px;
+    margin-top: 47px;
+    margin-bottom: 47px;
     .topic-wrapper {
       display: block;
-      width: 312px;
-      height: 170px;
+      width: 320px;
+      height: 192px;
       overflow: hidden;
       &:hover {
         .topic-title {
@@ -287,7 +288,8 @@ border-bottom-left-radius: 122px;  // 解决部分浏览器不支持百分比和
         }
       }
       .topic-img {
-        width: 100%;
+        width: 320px;
+        height: 190px;
         -webkit-transition: all 0.3s ease-in-out;
            -moz-transition: all 0.3s ease-in-out;
             -ms-transition: all 0.3s ease-in-out;
@@ -304,9 +306,9 @@ border-bottom-left-radius: 122px;  // 解决部分浏览器不支持百分比和
     }
     .topic-title, &:after {
       position: absolute;
-      top: 120px;
+      top: 145px;
       left: 0px;
-      width: 312px;
+      width: 320px;
       height: 35px;
       padding-left: 5px;
       font-size: 22px;
@@ -325,13 +327,13 @@ border-bottom-left-radius: 122px;  // 解决部分浏览器不支持百分比和
     }
   }
   .topic-item-left {
-    padding-right: 50px;
+    padding-right: 47px;
     border-right: 1px solid #ebebeb;
   }
   .topic-item-right {
-    padding-left: 50px;
+    padding-left: 47px;
     .topic-title, &:after {
-      left: 50px;
+      left: 47px;
     }
   }
 }
@@ -346,27 +348,29 @@ border-bottom-left-radius: 122px;  // 解决部分浏览器不支持百分比和
   width: 100%;
   .post-item {
     position: relative;
-    padding-top: 50px;
-    padding-bottom: 50px;
+    padding-top: 47px;
+    padding-bottom: 47px;
+    height: 226px;
     border-bottom: 1px solid #ebebeb;
     .isVideo {
       position: absolute;
-      top: 82.5px;
-      left: 66.5px;
+      top: 92px;
+      left: 89px;
       font-size: 42px;
       color: #fff;
       cursor: pointer;
     }
     .post-image {
-      width: 175px;
-      height: 105px;
+      width: 220px;
+      height: 132px;
       margin-right: 32px;
     }
     .post-title {
       max-height: 1.2em;
       line-height: 1.2em;
-      font-size: 24px;
+      font-size: 20px;
       font-weight: 400;
+      color: #333;
       overflow: hidden;
       white-space:nowrap;
       -o-text-overflow:ellipsis;
@@ -376,6 +380,7 @@ border-bottom-left-radius: 122px;  // 解决部分浏览器不支持百分比和
       margin-top: 5px;
       margin-bottom: 5px;
       font-size: 14px;
+      color: #999;
       .avatar {
         float: left;
         width: 24px;
@@ -388,11 +393,11 @@ border-bottom-left-radius: 122px;  // 解决部分浏览器不支持百分比和
         border-radius: 999px; // 解决部分浏览器不支持百分比
         border-radius: 50%;
       }
-      a[href*="author"], .publish-time, .count {
-        color: #9EABB3;
+      a[href*="author"] {
+        color: #999;
       }
       .count {
-        margin-left: 25px;
+        margin-left: 10px;
         &:before {
           margin-right: 5px;
           color: #ff3f53;
@@ -403,17 +408,17 @@ border-bottom-left-radius: 122px;  // 解决部分浏览器不支持百分比和
       }
     }
     .post-description {
-      height: 50px;
-      font-size: 14px;
-      line-height: 1.7em;
-      color: #4e4e4e;
+      height: 78px;
+      font-size: 16px;
+      line-height: 1.68em;
+      color: #666;
       /* text-align: justify;
       text-justify: inter-ideograph; */
       overflow: hidden;
       display: -webkit-box;
-      -webkit-line-clamp: 2;
+      -webkit-line-clamp: 3;
       -webkit-box-orient: vertical;
-         text-overflow:ellipsis;
+      text-overflow:ellipsis;
     }
   }
 }
