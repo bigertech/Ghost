@@ -13,17 +13,14 @@
         <h2 class="post-title">{{title}}</h2>
       </a>
       <div class="post-meta">
-        <!-- {{#if author.image}}<img class="avatar lazy" data-original="{{author.image}}" alt="Author image" />{{/if}} -->
+        {{#if author.image}}
+          <img class="mobile-display avatar lazy" data-original="{{author.image}}" alt="Author image" />
+        {{/if}}
         {{author}}
         <time class="publish-time" datetime="{{date published_at timeago="ture"}}">
           <span class="dot">•</span>{{date published_at timeago="ture"}}
         </time>
-        <!-- {{#if isVideo}}
-          <span class="count icon-view">{{video_play_count}}</span>
-        {{else}} -->
-
-        <!-- {{/if}} -->
-        <span class="count icon-unheart">{{post_star}}</span>
+        <span class="count icon-commend">{{post_star}}条评论</span>
       </div>
 
       <p class="post-description desktop-display">
@@ -32,9 +29,8 @@
         {{else}}
           {{excerpt words="30"}}
         {{/if}}
-        <!-- <a class="post-readmore" href="#">继续阅读</a> -->
       </p>
-
+      <!-- <a class="post-readmore" href="#">继续阅读</a> -->
     </li>
   {{/foreach}}
   </ul>

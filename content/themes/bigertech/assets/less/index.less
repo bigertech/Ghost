@@ -146,7 +146,9 @@
 .icon-next-page:before {
 	content: "\e601";
 }
-
+.icon-commend:before {
+	content: "\e613";
+}
 
 
 
@@ -379,7 +381,7 @@ border-bottom-left-radius: 122px;  // 解决部分浏览器不支持百分比和
     .post-meta {
       margin-top: 5px;
       margin-bottom: 5px;
-      font-size: 14px;
+      font-size: 16px;
       color: #999;
       .avatar {
         float: left;
@@ -398,9 +400,11 @@ border-bottom-left-radius: 122px;  // 解决部分浏览器不支持百分比和
       }
       .count {
         margin-left: 10px;
+        font-weight: bold;
+        color: #999;
         &:before {
-          margin-right: 5px;
-          color: #ff3f53;
+          margin-right: 4px;
+          font-size: 14px;
         }
       }
       .dot {
@@ -561,6 +565,7 @@ border-bottom-left-radius: 122px;  // 解决部分浏览器不支持百分比和
       .bg-description {
         line-height: 1em;
         font-size: 18px;
+        letter-spacing: 0.02em;
       }
     }
     .author-profile {
@@ -584,6 +589,7 @@ border-bottom-left-radius: 122px;  // 解决部分浏览器不支持百分比和
     .post-item {
       display: block;
       width: 90%;
+      height: 116px;
       margin-left: auto;
       margin-right: auto;
       padding-top: 28px;
