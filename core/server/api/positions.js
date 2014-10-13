@@ -18,7 +18,6 @@ positions = {
             if (position) {
                 return posts.findByIn(position.toJSON().posts);
             }
-
             return null;
         });
     },

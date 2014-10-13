@@ -51,7 +51,7 @@ posts = {
                 authors.forEach(function(author) {
                     if (author.id == post.author) {
                         posts[key].author = _.pick(author,
-                            'id', 'uuid', 'slug', 'email', 'image'
+                            'id', 'uuid', 'slug','name','email', 'image'
                         );
                     }
                 });
