@@ -12,6 +12,7 @@ var _              = require('lodash'),
     User           = require('./user').User,
     ghostBookshelf = require('./base'),
     xmlrpc         = require('../xmlrpc'),
+    util       = require('../utils/'),
     PositionRelation = require('./positionRelation').PositionRelation,
     Post,
     Posts;
@@ -729,7 +730,40 @@ Post = ghostBookshelf.Model.extend({
         // Add related objects
         options.withRelated = _.union([ 'tags', 'fields','author_id'], options.include);
 
-        return ghostBookshelf.Model.findRelate.call(this, data, options);
+
+        var titleSegment = util.segement(options.title);  //分词
+        //delete options.title;
+        options.include = ['author_id'];
+
+        var postCollection = ghostBookshelf.Collection.forge(data,{model: this});
+        postCollection
+            .query('where','title','LIKE','%'+titleSegment[0].w+'%');
+        if(titleSegment.length > 1){
+            for(var i = titleSegment.length -1; i > 0;i--){
+                var word = titleSegment[i].w;
+                if(word.length > 1  && word !== '：'){
+                    postCollection
+                        .query(function(qb){
+                            qb.orWhere('title','LIKE','%'+word+'%')
+                        });
+                }
+            }
+        }
+        return postCollection
+            .query('limit', parseInt(options.limit))
+            .query(function(qb){
+                qb.orderBy('id','desc');
+            })
+            .fetch(options).then(function(result){
+                if (options.include) {
+                    _.each(result.models, function (item) {
+                        item.include = options.include;
+                    });
+                }
+                return result;
+            });
+
+        //return ghostBookshelf.Model.findRelate.call(this, data, options);
 
 
 

@@ -252,47 +252,6 @@ ghostBookshelf.Model = ghostBookshelf.Model.extend({
         return this.forge(data, {include: options.include}).fetch(options);
     },
 
-    findRelate: function (data, options) {
-        //data = this.filterData(data);
-        //options = this.filterOptions(options, 'findOne');
-        // We pass include to forge so that toJSON has access
-
-        var titleSegment = util.segement(options.title);  //分词
-        //delete options.title;
-        options.include = ['author_id'];
-
-        var postCollection = ghostBookshelf.Collection.forge(data,{model: this});
-
-        postCollection
-            .query('where','title','!=', options.title)
-            .query('where','title','LIKE','%'+titleSegment[0].w+'%');
-            //.query('where','html','LIKE','%'+titleSegment[0].w+'%');
-        if(titleSegment.length > 1){
-            for(var i = titleSegment.length -1; i > 0;i--){
-                var word = titleSegment[i].w;
-                if(word.length > 1  && word !== '：'){
-                    postCollection
-                        .query(function(qb){
-                            qb.orWhere('title','LIKE','%'+word+'%')
-                    });
-                }
-            }
-        }
-        return postCollection
-            .query('limit', parseInt(options.limit))
-            .query(function(qb){
-                qb.orderBy('id','desc');
-            })
-            .fetch(options).then(function(result){
-                if (options.include) {
-                    _.each(result.models, function (item) {
-                        item.include = options.include;
-                    });
-                }
-                return result;
-            });
-    },
-
 
     /**
      * ### Edit
