@@ -1,21 +1,32 @@
 <div class="bg-header">
 {{#topic}}
 	{{#if post}}
-        <div class="bg-cover"><img class="lazy" data-original="{{img}}" /></div>
 		{{#post}}
-        <div class="bg-linear">
-            <div class="bg-slogan">
-                <a class="topic-wrapper bg-description" href="{{slug}}" target="_blank">
-		              {{title}}
-		            </a>
-            </div>
-        </div>
+    <div class="bg-cover">
+			<img class="lazy" data-original="{{image}}" />
+		</div>
+		<a class="topic-post" href="{{slug}}" target="_blank">
+	    <div class="bg-linear">
+	      <div class="bg-slogan container center-block">
+	        <div class="topic-wrapper bg-description">
+	          {{title}}
+	        </div>
+					<div class="topic-post-meta">
+						{{author}}
+						<time class="publish-time" datetime="{{date published_at timeago="ture"}}">
+							<span class="dot">•</span>{{date published_at timeago="ture"}}
+						</time>
+						<span class="count icon-commend">{{post_star}}条评论</span>
+					</div>
+	      </div>
+	    </div>
+		</a>
 		{{/post}}
 	{{else}}
-      <a class="topic-wrapper" href="{{siteUrl}}" target="_blank">
-          <img class="topic-img lazy" data-original="{{img}}" alt="{{title}}" />
-          <span class="topic-title">{{title}}</span>
-      </a>
+    <a class="topic-wrapper" href="{{siteUrl}}" target="_blank">
+      <img class="topic-img lazy" data-original="{{img}}" alt="{{title}}" />
+      <span class="topic-title">{{title}}</span>
+    </a>
 	{{/if}}
 {{/topic }}
 </div>

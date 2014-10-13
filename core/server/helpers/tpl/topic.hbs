@@ -4,7 +4,16 @@
 		{{#post}}
       <a class="topic-wrapper" href="{{slug}}" target="_blank">
         <img class="topic-img lazy" data-original="{{image}}" alt="{{title}}" />
-        <span class="topic-title">{{title}}</span>
+        <div class="topic-title">
+					{{title}}
+					<div class="topic-post-meta">
+						{{author}}
+						<time class="publish-time" datetime="{{date published_at timeago="ture"}}">
+							<span class="dot">•</span>{{date published_at timeago="ture"}}
+						</time>
+						<span class="count icon-commend">{{post_star}}条评论</span>
+					</div>
+				</div>
       </a>
 		{{/post}}
 	{{else}}
