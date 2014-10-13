@@ -4,17 +4,19 @@
 		{{#post}}
       <a class="topic-wrapper" href="{{slug}}" target="_blank">
         <img class="topic-img lazy" data-original="{{image}}" alt="{{title}}" />
-        <div class="topic-title">
+			</a>
+		  <div class="topic-title">
+				<a href="{{slug}}" target="_blank">
 					{{title}}
-					<div class="topic-post-meta">
-						{{author}}
-						<time class="publish-time" datetime="{{date published_at timeago="ture"}}">
-							<span class="dot">•</span>{{date published_at timeago="ture"}}
-						</time>
-						<span class="count icon-commend">{{post_star}}条评论</span>
-					</div>
+				</a>
+				<div class="topic-post-meta">
+					{{author}}
+					<time class="publish-time" datetime="{{date published_at timeago="ture"}}">
+						<span class="dot">•</span>{{date published_at timeago="ture"}}
+					</time>
+					<span class="count icon-commend">{{post_star}}</span>
 				</div>
-      </a>
+			</div>
 		{{/post}}
 	{{else}}
     <a class="topic-wrapper" href="{{siteUrl}}" target="_blank">

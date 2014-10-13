@@ -37,6 +37,12 @@
   }
 }
 
+.home-template {
+  .bg-linear {
+    cursor: pointer;
+  }
+}
+
 .author-template {
   .bg-linear {
     display: table;
@@ -267,28 +273,24 @@ border-bottom-left-radius: 122px;  // 解决部分浏览器不支持百分比和
   }
 }
 
-.topic-post {
-  &:hover {
-    text-decoration: none;
-    .topic-wrapper {
-      text-decoration: underline;
-    }
-  }
-}
-
 .topic-wrapper {
   width: 740px;
   overflow: hidden;
   white-space:nowrap;
   -o-text-overflow:ellipsis;
      text-overflow:ellipsis;
+  a {
+    color: #fff;
+  }
   .topic-post-meta {
     position: absolute;
     top: 34px;
+    margin-top: 0px;
   }
 }
 
 .topic-post-meta {
+  margin-top: -4px;
   font-size: 16px;
   line-height: 1em;
   color: #fff;
@@ -366,7 +368,7 @@ border-bottom-left-radius: 122px;  // 解决部分浏览器不支持百分比和
       top: 145px;
       left: 0px;
       width: 340px;
-      height: 58px;
+      height: 60px;
       padding-left: 5px;
       font-size: 22px;
       color: #fff;
@@ -388,6 +390,9 @@ border-bottom-left-radius: 122px;  // 解决部分浏览器不支持百分比和
       background: linear-gradient(to bottom,  rgba(255,255,255,0) 0%,rgba(96,90,89,1) 100%); /* W3C */
       filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#605a59',GradientType=0 ); /* IE6-9 */
 
+    }
+    a {
+      color: #fff;
     }
   }
   .topic-item-left {
