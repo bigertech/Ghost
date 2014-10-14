@@ -39,7 +39,7 @@
 
 .home-template {
   .bg-linear {
-    cursor: pointer;
+  /*   cursor: pointer; */
   }
 }
 
@@ -311,7 +311,7 @@ border-bottom-left-radius: 122px;  // 解决部分浏览器不支持百分比和
   }
   .count {
     margin-left: 10px;
-    font-weight: bold;
+    -webkit-font-smoothing: initial;
     &:before {
       margin-right: 4px;
       font-size: 14px;
@@ -436,7 +436,7 @@ border-bottom-left-radius: 122px;  // 解决部分浏览器不支持百分比和
     .post-title {
       max-height: 1.2em;
       line-height: 1.2em;
-      font-size: 20px;
+      font-size: 22px;
       font-weight: 400;
       color: #333;
       overflow: hidden;
@@ -468,6 +468,7 @@ border-bottom-left-radius: 122px;  // 解决部分浏览器不支持百分比和
         margin-left: 10px;
         /* font-weight: bold; */
         color: #999;
+        -webkit-font-smoothing: initial;
         &:before {
           margin-right: 4px;
           font-size: 14px;
@@ -480,10 +481,8 @@ border-bottom-left-radius: 122px;  // 解决部分浏览器不支持百分比和
     .post-description {
       height: 78px;
       font-size: 16px;
-      line-height: 1.68em;
+      line-height: 1.58em;
       color: #666;
-      /* text-align: justify;
-      text-justify: inter-ideograph; */
       overflow: hidden;
       display: -webkit-box;
       -webkit-line-clamp: 3;
@@ -576,6 +575,12 @@ border-bottom-left-radius: 122px;  // 解决部分浏览器不支持百分比和
     padding-bottom: 40px;
     font-size: 12px;
     color: #fff;
+    .jobs {
+      display: inline-block;
+      font-size: 12px;
+      color: #fff;
+      margin-bottom: 2px;
+    }
   }
 }
 
@@ -733,13 +738,13 @@ border-bottom-left-radius: 122px;  // 解决部分浏览器不支持百分比和
 
 
 // keyframes for bg-logo
-.home-template .bg-logo {
+.home-template .bg-description {
   -webkit-animation: fade-in-down 0.6s;
           animation: fade-in-down 0.6s;
   -webkit-animation-delay: 0.2s;
           animation-delay: 0.2s;
 }
-.home-template .bg-description {
+.home-template .topic-post-meta {
   -webkit-animation: fade-in-down 0.9s;
           animation: fade-in-down 0.9s;
   -webkit-animation-delay: 0.1s;

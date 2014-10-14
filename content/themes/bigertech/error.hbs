@@ -1,10 +1,77 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Document</title>
+<html>
+<head lang="zh-CN">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>笔戈科技</title>
+    <meta name="description" content="简单、有趣、有价值">
+    <meta name="keywords" content="笔戈科技,魅族，手机，评测，科技，博客,笔戈科技">
+
+    <style>
+        html {
+          display: table;
+          height: 100%;
+          width: 100%;
+        }
+        body {
+          display: table-cell;
+          vertical-align: middle;
+          font-family: Helvetica, Tahoma, Arial, 'Hiragino Sans GB', "冬青黑体", "Microsoft Yahei", "微软雅黑", STXihei, "华文细黑", SimSun, "宋体", sans-serif;
+        }
+        #content {
+          margin: 167px auto;
+          width: 568px;
+          height: 400px;
+          text-align: center;
+        }
+        #content .headerImg {
+          margin-bottom: 50px;
+        }
+        #content .describe {
+          color: #8b8b8b;
+          font-size: 24px;
+          margin-bottom: 50px;
+        }
+        #content .goToIndex {
+          background-color: #55ae67;
+          height: 55px;
+          width: 210px;
+          margin: 0 auto;
+        }
+        #content .goToIndex a {
+          display: inline-block;
+          font-size: 17px;
+          text-decoration: none;
+          color: white;
+          height: 100%;
+          width: 100%;
+        }
+        @media (max-width: 568px) {
+          #content {
+            width: auto;
+          }
+          #content .headerImg img {
+            height: auto;
+            width: 100%;
+          }
+        }
+    </style>
 </head>
 <body>
-  <h1>test</h1>
+    <div id="content">
+        <div class="headerImg">
+            <img src="{{asset "dist/images/keyboard.png"}}">
+        </div>
+        <div class="describe">
+            <p>抱歉  此页面被键盘大侠拿去指点江山了</p>
+        </div>
+        <div class="goToIndex">
+            <a href="http://www.bigertech.com">
+                <p>返 回 首 页</p>
+            </a>
+        </div>
+    </div>
 </body>
 </html>
