@@ -722,12 +722,13 @@ frontendControllers = {
     changweibo: function(req, res, next) {
         var slug = req.params.slug;
         var url = config.changweibo.url + '/cwbp/' + slug + '/';
+        var newPic = req.query.new || false; // 更新一张图片
         var savePath = config.paths.imagesPath + '/' + config.changweibo.dir + '/' + slug + '.png';
         api.posts.read({slug: slug}).then(function(result) {
             var relPath = '/' + config.paths.imagesRelPath + '/' + config.changweibo.dir + '/' + slug + '.png';
             result.post = result.posts[0];
             delete result.posts;
-            if (!fs.existsSync(savePath)) {
+            if (!fs.existsSync(savePath) || newPic) {
                 // 截图并保存到目录下
                 if (url.indexOf('http://') === -1) {
                     url = 'http://' + url;

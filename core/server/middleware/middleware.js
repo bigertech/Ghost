@@ -11,7 +11,7 @@ var _           = require('lodash'),
     passport    = require('passport'),
     errors      = require('../errors'),
     utils       = require('../utils'),
-
+    _           = require('lodash'),
     expressServer,
     oauthServer,
     loginSecurity = [],
@@ -30,7 +30,22 @@ function cacheServer(server) {
 function cacheOauthServer(server) {
     oauthServer = server;
 }
-
+/**
+ * 检测url 是否需要登录，适用于新增的链接
+ * @param req
+ */
+function needAuth(req){
+    var urls = ['positions','position'];
+    var path = req.path.substring(config.paths.subdir.length);
+    var result = false;
+    _.forEach(urls,function(item){
+        if(path.indexOf(item) !== -1){
+            result = true;
+            return ;
+        }
+    });
+    return result;
+}
 var middleware = {
 
     // ### Authenticate Middleware
@@ -50,16 +65,23 @@ var middleware = {
         });
 
         if (res.isAdmin) {
-            if (subPath.indexOf('/ghost/api/') === 0
-                && path.indexOf('/ghost/api/v0.1/authentication/') !== 0) {
-
-                return passport.authenticate('bearer', { session: false, failWithError: true },
+            if ((subPath.indexOf('/ghost/api/') === 0
+                && path.indexOf('/ghost/api/v0.1/authentication/') !== 0) || needAuth(req)){
+                //add by liuxing  非ghost的url,从 cookie 中取得 accsessToken
+                if(needAuth(req) && req.cookies){
+                    req.headers.authorization= req.cookies.auth;
+                }
+                if(req.headers.authorization && req.headers.authorization != req.cookies.auth){
+                    res.cookie('auth', req.headers.authorization,{ expires: new Date(Date.now() +  1800000), httpOnly: true });
+                }
+                //end add
+                return passport.authenticate('bearer', {failWithError: true },
                     function (err, user, info) {
                         if (err) {
                             return next(err); // will generate a 500 error
                         }
                         // Generate a JSON response reflecting authentication status
-                        if (! user) {
+                        if (!user) {
                             var msg = {
                                 type: 'error',
                                 message: 'Please Sign In',
@@ -75,6 +97,7 @@ var middleware = {
                     }
                 )(req, res, next);
             }
+
         }
         next();
     },

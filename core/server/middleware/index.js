@@ -19,6 +19,7 @@ var api            = require('../api'),
     storage        = require('../storage'),
     url            = require('url'),
     _              = require('lodash'),
+    cookieParser   = require('cookie-parser'),
     passport       = require('passport'),
     oauth          = require('./oauth'),
     oauth2orize    = require('oauth2orize'),
@@ -303,6 +304,7 @@ setupMiddleware = function (server) {
 
     // Body parsing
     expressServer.use(bodyParser.json());
+    expressServer.use(cookieParser('bigertech'));
     expressServer.use(bodyParser.urlencoded({ extended: true }));
 
     expressServer.use(passport.initialize());

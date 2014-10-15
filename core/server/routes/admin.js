@@ -2,7 +2,6 @@ var admin       = require('../controllers/admin'),
     config      = require('../config'),
     express     = require('express'),
     utils       = require('../utils'),
-
     adminRoutes;
 
 adminRoutes = function (middleware) {
