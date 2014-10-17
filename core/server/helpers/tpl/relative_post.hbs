@@ -1,27 +1,18 @@
 {{! 相关文章推荐  post_relative limit="2"  }}
 
-<div class="more-post">
+<!--<div class="readmore embed-responsive embed-responsive-2by1">
+      <img class="embed-responsive-item lazy" data-original=""/>
+</div>-->
+
+<div class="readmore ">
     {{#foreach relatePosts}}
-      <li class="post-item">
-          {{#if isVideo}}
-            <div class="isVideo icon-play desktop-display"></div>
-          {{/if}}
-        <a href="{{url}}" target="_blank">
-          <img class="post-image left desktop-display lazy" data-original="{{image_sm}}" />
-          <h2 class="post-title">{{title}}</h2>
-        </a>
-        <div class="post-meta">
-            {{#if author.image}}<img class="avatar lazy" data-original="{{author.image}}" alt="Author image" />{{/if}}
-            {{author}}
-          <time class="publish-time" datetime="{{date published_at timeago="ture"}}">
-            <span class="dot desktop-display">•</span>{{date published_at timeago="ture"}}
-          </time>
-            {{#if isVideo}}
-              <span class="count icon-view">{{video_play_count}}</span>
-            {{else}}
-              <span class="count icon-unheart">{{post_star}}</span>
-            {{/if}}
-        </div>
-      </li>
+      <div class="post-img" style="background-image: url({{image}});"></div>
+
+      <div class="more post-container pv-container">
+        <a href="{{url}}"><h3 class="next">下一篇</h3></a>
+        <a href="{{url}}"><p class="name">{{title}}</p></a>
+        <span class="author">{{author}} • <time class="post-time">{{date published_at timeago="ture"}}</time></span>
+      </div>
+
     {{/foreach}}
 </div>
