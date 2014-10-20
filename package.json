@@ -63,7 +63,7 @@
     "rss": "0.2.1",
     "segment": "0.0.5",
     "semver": "2.2.1",
-    "showdown": "http://bigertech.res.meizu.com/blog/showdown-0.3.2-ghost.tar.gz",
+    "showdown": "https://github.com/ErisDS/showdown/archive/v0.3.2-ghost.tar.gz",
     "sqlite3": "2.2.3",
     "static-favicon": "1.0.2",
     "unidecode": "0.1.3",
