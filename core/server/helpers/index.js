@@ -523,6 +523,24 @@ coreHelpers.post_relative = function (options) {
     });
 
 };
+coreHelpers.next_post = function (options) {
+    var data = (options || {}).hash ||{};
+    var option =  {};
+    option.include = 'author';
+    return api.posts.nextRow(data.postId,option).then(function(posts){
+       return template.execute('relative_post', {posts:posts});
+    });
+};
+coreHelpers.pre_post = function (options) {
+    var data = (options || {}).hash ||{};
+    var option =  {
+        include :'author',
+        limit : data.limit ? data.limit:1
+    };
+    return api.posts.preRow(data.postId,option).then(function(posts){
+        return template.execute('relative_post', {posts:posts});
+    });
+};
 
 coreHelpers.index_topic = function (options) {
     var option = (options || {}).hash || {};
@@ -1256,6 +1274,8 @@ registerHelpers = function (adminHbs, assetHash) {
     registerAsyncThemeHelper('post_relative', coreHelpers.post_relative);
     registerAsyncThemeHelper('index_topic', coreHelpers.index_topic);
     registerAsyncThemeHelper('index_main', coreHelpers.index_main);
+    registerAsyncThemeHelper('next_post', coreHelpers.next_post);
+    registerAsyncThemeHelper('pre_post', coreHelpers.pre_post);
 
     registerThemeHelper('contentNoLazy', coreHelpers.contentNoLazy);
     registerThemeHelper('uuid', coreHelpers.uuid);

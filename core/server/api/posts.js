@@ -129,7 +129,41 @@ posts = {
         });
     },
     //add by liuxing
-    /**
+    nextRow: function nextRow(id,options) {
+        var attrs = ['id', 'slug', 'status'],
+            data = _.pick(options, attrs);
+        options = _.omit(options, attrs);
+
+        // only published posts if no user is present
+
+        if (options.include) {
+            options.include = prepareInclude(options.include);
+        }
+        return dataProvider.Post.nextRow(id,data, options).then(function (result) {
+            if (result) {
+                return  result.toJSON();
+            }
+
+            return when.reject(new errors.NotFoundError('Post not found.'));
+        });
+     },
+    preRow: function nextRow(id,options) {
+        var attrs = ['id', 'slug', 'status'],
+            data = _.pick(options, attrs);
+        options = _.omit(options, attrs);
+
+        // only published posts if no user is present
+        if (options.include) {
+            options.include = prepareInclude(options.include);
+        }
+        return dataProvider.Post.preRow(id,data, options).then(function (result) {
+            if (result) {
+                return  result.toJSON();
+            }
+            return when.reject(new errors.NotFoundError('Post not found.'));
+        });
+    },
+     /**
      * ### Read
      * Find a post, by ID or Slug
      *

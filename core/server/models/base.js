@@ -237,6 +237,39 @@ ghostBookshelf.Model = ghostBookshelf.Model.extend({
             return result;
         });
     },
+    //add by liuxing  get Next row
+    nextRow: function(id,data,options){
+        data = this.filterData(data);
+        var limit = options.limit ? options.limit:1;
+        return ghostBookshelf.Collection.forge(data, {model: this}).query(function(q){
+            q.where('id','>',id);
+            q.orderBy('id','asc');
+            q.limit(limit);
+        }).fetch(options).then(function (result) {
+            if (options.include) {
+                _.each(result.models, function (item) {
+                    item.include = options.include;
+                });
+            }
+            return result;
+        });
+    },
+    preRow: function(id,data,options){
+        data = this.filterData(data);
+        var limit = options.limit ? options.limit:1;
+        return ghostBookshelf.Collection.forge(data, {model: this}).query(function(q){
+            q.where('id','<',id);
+            q.orderBy('id','desc');
+            q.limit(limit);
+        }).fetch(options).then(function (result) {
+            if (options.include) {
+                _.each(result.models, function (item) {
+                    item.include = options.include;
+                });
+            }
+            return result;
+        });
+    },
 
     /**
      * ### Find One
