@@ -525,9 +525,11 @@ coreHelpers.post_relative = function (options) {
 };
 coreHelpers.next_post = function (options) {
     var data = (options || {}).hash ||{};
-    var option =  {};
-    option.include = 'author';
-    return api.posts.nextRow(data.postId,option).then(function(posts){
+    var option =  {
+        include :'author',
+        limit : data.limit ? data.limit:1
+    };
+    return api.posts.nextRow(this.id,option).then(function(posts){
        return template.execute('relative_post', {posts:posts});
     });
 };
@@ -537,7 +539,7 @@ coreHelpers.pre_post = function (options) {
         include :'author',
         limit : data.limit ? data.limit:1
     };
-    return api.posts.preRow(data.postId,option).then(function(posts){
+    return api.posts.preRow(this.id,option).then(function(posts){
         return template.execute('relative_post', {posts:posts});
     });
 };
