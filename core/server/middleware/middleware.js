@@ -81,7 +81,7 @@ var middleware = {
                             return next(err); // will generate a 500 error
                         }
                         // Generate a JSON response reflecting authentication status
-                        if (!user) {
+                        if (! user) {
                             var msg = {
                                 type: 'error',
                                 message: 'Please Sign In',
@@ -97,7 +97,6 @@ var middleware = {
                     }
                 )(req, res, next);
             }
-
         }
         next();
     },

@@ -184,7 +184,6 @@ posts = {
         if (options.include) {
             options.include = prepareInclude(options.include);
         }
-
         return dataProvider.Post.findRelate(data, options).then(function (result) {
             if (result) {
                 var data = _.filter(result.toJSON(),function(post){ //排除掉自己
