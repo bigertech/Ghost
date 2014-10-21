@@ -25,10 +25,13 @@
       <div class="share">
         <a title="生成长微博" href="/cwb{{url}}" class="changweibo left">生成长微博</a>
       </div>
+
+      <div class="duoshuo">
         {{duoshuo_block}}
+      </div>
     </div>
 
-    {{post_relative limit="1"}}
+    {{next_post limit=1}}
 
   </div>
 {{/post}}

@@ -1,18 +1,18 @@
-{{! 相关文章推荐  post_relative limit="2"  }}
+{{! 相关文章推荐  next_post limit=1  }}
 
-<!--<div class="readmore embed-responsive embed-responsive-2by1">
-      <img class="embed-responsive-item lazy" data-original=""/>
-</div>-->
 
 <div class="readmore ">
-    {{#foreach relatePosts}}
-      <div class="post-img" style="background-image: url({{image}});"></div>
+    {{#foreach posts}}
+      <div class="readmore-container">
 
-      <div class="more post-container pv-container">
-        <a href="{{url}}"><h3 class="next">下一篇</h3></a>
-        <a href="{{url}}"><p class="name">{{title}}</p></a>
-        <span class="author">{{author}} • <time class="post-time">{{date published_at timeago="ture"}}</time></span>
+        <div class="post-img" style="background-image: url('{{image}}');"></div>
+
+        <div class="more post-container pv-container">
+          <a href="{{url}}"><h3 class="next">下一篇</h3></a>
+          <a href="{{url}}"><p class="name">{{title}}</p></a>
+                <span class="author">{{author}} • <time
+                  class="post-time">{{date published_at timeago="ture"}}</time></span>
+        </div>
       </div>
-
     {{/foreach}}
 </div>
