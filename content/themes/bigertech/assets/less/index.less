@@ -8,9 +8,9 @@
   width: 100%;
   margin-top: 380px;
   background-color: #fff;
-}
-.container {
-  width: 740px;
+  .container {
+    width: 730px;
+  }
 }
 
 // 回到顶部
@@ -28,27 +28,15 @@
 //主页、文章或视频页面的主图黑色渐变
 .home-template, .category-template, .author-template {
   .bg-linear {
-    background-image: -ms-linear-gradient(top,rgba(192, 192, 192, 0.17) 0, rgba(0, 0, 0, 0.3) 100%);
-    background-image: -moz-linear-gradient(top,rgba(192, 192, 192, 0.17) 0, rgba(0, 0, 0, 0.3) 100%);
-    background-image: -o-linear-gradient(top,rgba(192, 192, 192, 0.17) 0, rgba(0, 0, 0, 0.3) 100%);
-    background-image: -webkit-linear-gradient(top, rgba(192, 192, 192, 0.17) 0, rgba(0, 0, 0, 0.3) 100%);
-    background-image: linear-gradient(top,rgba(192, 192, 192, 0.17) 0, rgba(0, 0, 0, 0.3) 100%);
+    background-image: -ms-linear-gradient(top,rgba(0,0,0,.1) 0,rgba(0,0,0,.4) 100%);
+    background-image: -moz-linear-gradient(top,rgba(0,0,0,.1) 0,rgba(0,0,0,.4) 100%);
+    background-image: -o-linear-gradient(top,rgba(0,0,0,.1) 0,rgba(0,0,0,.4) 100%);
+    background-image: -webkit-gradient(linear,left top,right bottom,color-stop(0,rgba(0,0,0,.4)),color-stop(1,#00a3ef));
+    background-image: -webkit-linear-gradient(top,rgba(255,255,255,.1) 0,rgba(0,0,0,.4) 100%);
+    background-image: linear-gradient(top,rgba(0,0,0,.1) 0,rgba(0,0,0,.4) 100%);
     background-repeat: repeat-x;
   }
 }
-
-.category-template, .author-template {
-  .bg-linear {
-    display: table;
-    .bg-slogan {
-      display: table-cell;
-      vertical-align: middle;
-      text-align: center;
-      padding-top: 0;
-    }
-  }
-}
-
 
 // 滚动后，导航条固定。
 .archive-template {
@@ -77,89 +65,89 @@
 // FONTFACE
 //----------------------------------------------------------
 @font-face {
-	font-family: 'icomoon';
-	src:url('../fonts/icomoon.eot?ppibvj');
-	src:url('../fonts/icomoon.eot?#iefixppibvj') format('embedded-opentype'),
-		url('../fonts/icomoon.woff?ppibvj') format('woff'),
-		url('../fonts/icomoon.ttf?ppibvj') format('truetype'),
-		url('../fonts/icomoon.svg?ppibvj#icomoon') format('svg');
-	font-weight: normal;
-	font-style: normal;
+  font-family: 'icomoon';
+  src:url('../fonts/icomoon.eot?ppibvj');
+  src:url('../fonts/icomoon.eot?#iefixppibvj') format('embedded-opentype'),
+  url('../fonts/icomoon.woff?ppibvj') format('woff'),
+  url('../fonts/icomoon.ttf?ppibvj') format('truetype'),
+  url('../fonts/icomoon.svg?ppibvj#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
 }
 
 [class^="icon-"], [class*=" icon-"] {
-	font-family: 'icomoon';
-	speak: none;
-	font-style: normal;
-	font-weight: normal;
-	font-variant: normal;
-	text-transform: none;
-	line-height: 1;
+  font-family: 'icomoon';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
 
-	/* Better Font Rendering =========== */
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   &:hover {
     text-decoration: none;
   }
 }
 
 .icon-video-navi:before {
-	content: "\e611";
+  content: "\e611";
 }
 .icon-tag:before {
-	content: "\e603";
+  content: "\e603";
 }
 .icon-bglogo:before {
-	content: "\e60e";
+  content: "\e60e";
 }
 .icon-menu:before {
-	content: "\e60f";
+  content: "\e60f";
 }
 .icon-close:before {
-	content: "\e602";
+  content: "\e602";
 }
 .icon-search:before {
-	content: "\e604";
+  content: "\e604";
 }
 .icon-down:before {
-	content: "\e60c";
+  content: "\e60c";
 }
 .icon-up:before {
-	content: "\e60d";
+  content: "\e60d";
 }
 .icon-play:before {
-	content: "\e610";
+  content: "\e610";
 }
 .icon-unheart:before {
-	content: "\e609";
+  content: "\e609";
 }
 .icon-heart:before {
-	content: "\e60a";
+  content: "\e60a";
 }
 .icon-view:before {
-	content: "\e60b";
+  content: "\e60b";
 }
 .icon-rss:before {
-	content: "\e605";
+  content: "\e605";
 }
 .icon-youku:before {
-	content: "\e606";
+  content: "\e606";
 }
 .icon-wechat:before {
-	content: "\e607";
+  content: "\e607";
 }
 .icon-weibo:before {
-	content: "\e608";
+  content: "\e608";
 }
 .icon-prev-page:before {
-	content: "\e600";
+  content: "\e600";
 }
 .icon-next-page:before {
-	content: "\e601";
+  content: "\e601";
 }
 .icon-commend:before {
-	content: "\e613";
+  content: "\e613";
 }
 
 
@@ -174,8 +162,8 @@
   height: 58px;
   width: 100%;
   -webkit-transition: all 0.6s ease-in-out;
-     -moz-transition: all 0.6s ease-in-out;
-          transition: all 0.6s ease-in-out;
+  -moz-transition: all 0.6s ease-in-out;
+  transition: all 0.6s ease-in-out;
   .icon-bglogo, .icon-search, .icon-video-navi, .icon-tag {
     display: inline-block;
     margin-top: 15px;
@@ -196,11 +184,11 @@
 .navbar-pinned {
   background-color: rgba(255,255,255,0.97);
   -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
-      filter:alpha(opacity=30);
+  filter:alpha(opacity=30);
   z-index: 89;
   -webkit-box-shadow: 0 0 1px rgba(0,0,0,0.15);
-     -moz-box-shadow: 0 0 1px rgba(0,0,0,0.15);
-          box-shadow: 0 0 1px rgba(0,0,0,0.15);
+  -moz-box-shadow: 0 0 1px rgba(0,0,0,0.15);
+  box-shadow: 0 0 1px rgba(0,0,0,0.15);
   .icon-bglogo, .icon-search, .icon-video-navi, .icon-tag {
     color: #585a66;
   }
@@ -230,11 +218,14 @@
     }
   }
   .bg-linear {
+    display: table;
     width: 100%;
     height: 100%;
   }
   .bg-slogan {
-    padding-top: 270px;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
     .bg-logo {
       display: block;
       max-width: 100%;
@@ -244,7 +235,6 @@
     }
     .bg-description {
       color: #fff;
-      font-size: 40px;
     }
   }
   // 作者界面简介
@@ -256,11 +246,7 @@
       width: 122px;
       height: 122px;
       border: 2px solid #fff;
-      border-radius: 122px; // 解决部分浏览器不支持百分比
-/*       border-top-left-radius: 122px;     // 解决部分浏览器不支持百分比和缩写
-border-top-right-radius: 122px;    // 解决部分浏览器不支持百分比和缩写
-border-bottom-right-radius: 122px; // 解决部分浏览器不支持百分比和缩写
-border-bottom-left-radius: 122px;  // 解决部分浏览器不支持百分比和缩写 */
+      border-radius: 122px;
     }
     .author-name {
       font-size: 36px;
@@ -273,54 +259,6 @@ border-bottom-left-radius: 122px;  // 解决部分浏览器不支持百分比和
   }
 }
 
-.topic-wrapper {
-  width: 740px;
-  overflow: hidden;
-  white-space:nowrap;
-  -o-text-overflow:ellipsis;
-     text-overflow:ellipsis;
-  a {
-    color: #fff;
-  }
-  .topic-post-meta {
-    position: absolute;
-    top: 34px;
-    margin-top: 0px;
-  }
-}
-
-.topic-post-meta {
-  margin-top: -4px;
-  font-size: 16px;
-  line-height: 1em;
-  color: #fff;
-  .avatar {
-    float: left;
-    width: 24px;
-    height: 24px;
-    margin-right: 12px;
-    border-top-left-radius: 999px;     // 解决部分浏览器不支持百分比和缩写
-    border-top-right-radius: 999px;    // 解决部分浏览器不支持百分比和缩写
-    border-bottom-right-radius: 999px; // 解决部分浏览器不支持百分比和缩写
-    border-bottom-left-radius: 999px;  // 解决部分浏览器不支持百分比和缩写
-    border-radius: 999px; // 解决部分浏览器不支持百分比
-    border-radius: 50%;
-  }
-  a[href*="author"] {
-    color: #fff;
-  }
-  .count {
-    margin-left: 10px;
-    -webkit-font-smoothing: initial;
-    &:before {
-      margin-right: 4px;
-      font-size: 14px;
-    }
-  }
-  .dot {
-    padding-right: 3px;
-  }
-}
 
 
 
@@ -332,14 +270,14 @@ border-bottom-left-radius: 122px;  // 解决部分浏览器不支持百分比和
   .topic-item-left, .topic-item-right {
     position: relative;
     display: inline-block;
-    width: 370px;
-    height: 204px;
-    margin-top: 33px;
-    margin-bottom: 33px;
+    width: 363px;
+    height: 170px;
+    margin-top: 50px;
+    margin-bottom: 50px;
     .topic-wrapper {
       display: block;
-      width: 340px;
-      height: 204px;
+      width: 312px;
+      height: 170px;
       overflow: hidden;
       &:hover {
         .topic-title {
@@ -347,28 +285,28 @@ border-bottom-left-radius: 122px;  // 解决部分浏览器不支持百分比和
         }
       }
       .topic-img {
-        width: 340px;
-        height: 204px;
+        width: 100%;
+        height: 170px;
         -webkit-transition: all 0.3s ease-in-out;
-           -moz-transition: all 0.3s ease-in-out;
-            -ms-transition: all 0.3s ease-in-out;
-             -o-transition: all 0.3s ease-in-out;
-                transition: all 0.3s ease-in-out;
+        -moz-transition: all 0.3s ease-in-out;
+        -ms-transition: all 0.3s ease-in-out;
+        -o-transition: all 0.3s ease-in-out;
+        transition: all 0.3s ease-in-out;
         &:hover {
           webkit-transform: scale(1.1);
-            -moz-transform: scale(1.1);
-             -ms-transform: scale(1.1);
-              -o-transform: scale(1.1);
-                 transform: scale(1.1);
+          -moz-transform: scale(1.1);
+          -ms-transform: scale(1.1);
+          -o-transform: scale(1.1);
+          transform: scale(1.1);
         }
       }
     }
     .topic-title, &:after {
       position: absolute;
-      top: 145px;
+      top: 120px;
       left: 0px;
-      width: 340px;
-      height: 60px;
+      width: 312px;
+      height: 35px;
       padding-left: 5px;
       font-size: 22px;
       color: #fff;
@@ -376,37 +314,59 @@ border-bottom-left-radius: 122px;  // 解决部分浏览器不支持百分比和
       overflow: hidden;
       white-space:nowrap;
       -o-text-overflow:ellipsis;
-         text-overflow:ellipsis;
+      text-overflow:ellipsis;
     }
     &:after {
       content: "";
+      background-color: #000;
+      opacity: 0.5;
       z-index: 88;
-
-      background: -moz-linear-gradient(top,  rgba(255,255,255,0) 0%, rgba(96,90,89,1) 100%); /* FF3.6+ */
-      background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0)), color-stop(100%,rgba(96,90,89,1))); /* Chrome,Safari4+ */
-      background: -webkit-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(96,90,89,1) 100%); /* Chrome10+,Safari5.1+ */
-      background: -o-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(96,90,89,1) 100%); /* Opera 11.10+ */
-      background: -ms-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(96,90,89,1) 100%); /* IE10+ */
-      background: linear-gradient(to bottom,  rgba(255,255,255,0) 0%,rgba(96,90,89,1) 100%); /* W3C */
-      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#605a59',GradientType=0 ); /* IE6-9 */
-
-    }
-    a {
-      color: #fff;
     }
   }
   .topic-item-left {
-    padding-right: 30px;
+    float: left;
+    padding-right: 50px;
+    border-right: 1px solid #ebebeb;
   }
   .topic-item-right {
-    padding-left: 30px;
+    padding-left: 50px;
     .topic-title, &:after {
-      left: 30px;
+      left: 50px;
     }
   }
 }
 
-
+@media screen and (max-width: 740px) {
+  .topics {
+    width: 100%;
+    .topic-item-left, .topic-item-right {
+      display: block;
+      width: 90%;
+      margin: 0 auto;
+      float: none;
+      .topic-wrapper {
+        width: 100%;
+      }
+      .topic-title {
+        width: 90%;
+        padding-left: 7%;
+      }
+      &:after {
+        margin-left: 5%;
+      }
+    }
+    .topic-item-left {
+      padding-right: 0px;
+      border-right: 0px;
+    }
+    .topic-item-right {
+      padding-left: 0px;
+      .topic-title, &:after {
+        left: 0px;
+      }
+    }
+  }
+}
 
 
 
@@ -416,21 +376,20 @@ border-bottom-left-radius: 122px;  // 解决部分浏览器不支持百分比和
   width: 100%;
   .post-item {
     position: relative;
-    padding-top: 47px;
-    padding-bottom: 47px;
-    height: 226px;
+    padding-top: 50px;
+    padding-bottom: 50px;
     border-bottom: 1px solid #ebebeb;
     .isVideo {
       position: absolute;
-      top: 92px;
-      left: 89px;
+      top: 82.5px;
+      left: 66.5px;
       font-size: 42px;
       color: #fff;
       cursor: pointer;
     }
     .post-image {
-      width: 220px;
-      height: 132px;
+      width: 175px;
+      height: 105px;
       margin-right: 32px;
     }
     .post-title {
@@ -438,17 +397,15 @@ border-bottom-left-radius: 122px;  // 解决部分浏览器不支持百分比和
       line-height: 1.2em;
       font-size: 22px;
       font-weight: 400;
-      color: #333;
       overflow: hidden;
       white-space:nowrap;
       -o-text-overflow:ellipsis;
-         text-overflow:ellipsis;
+      text-overflow:ellipsis;
     }
     .post-meta {
       margin-top: 5px;
       margin-bottom: 5px;
-      font-size: 16px;
-      color: #999;
+      font-size: 14px;
       .avatar {
         float: left;
         width: 24px;
@@ -461,17 +418,17 @@ border-bottom-left-radius: 122px;  // 解决部分浏览器不支持百分比和
         border-radius: 999px; // 解决部分浏览器不支持百分比
         border-radius: 50%;
       }
-      a[href*="author"] {
-        color: #999;
+      a[href*="author"], .publish-time, .count {
+        color: #9EABB3;
       }
       .count {
         margin-left: 10px;
-        /* font-weight: bold; */
-        color: #999;
         -webkit-font-smoothing: initial;
+        -moz-osx-font-smoothing: initial;
         &:before {
           margin-right: 4px;
-          font-size: 14px;
+          font-size: 11px;
+          color: #9EABB3;
         }
       }
       .dot {
@@ -479,13 +436,15 @@ border-bottom-left-radius: 122px;  // 解决部分浏览器不支持百分比和
       }
     }
     .post-description {
-      height: 78px;
-      font-size: 16px;
-      line-height: 1.58em;
-      color: #666;
+      height: 50px;
+      font-size: 14px;
+      line-height: 1.7em;
+      color: #4e4e4e;
+      /* text-align: justify;
+      text-justify: inter-ideograph; */
       overflow: hidden;
       display: -webkit-box;
-      -webkit-line-clamp: 3;
+      -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
       text-overflow:ellipsis;
     }
@@ -576,16 +535,13 @@ border-bottom-left-radius: 122px;  // 解决部分浏览器不支持百分比和
     font-size: 12px;
     color: #fff;
     .jobs {
-      display: inline-block;
-      font-size: 12px;
       color: #fff;
-      margin-bottom: 2px;
     }
   }
 }
 
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 740px) {
 
   .navbar {
     position: absolute;
@@ -604,8 +560,8 @@ border-bottom-left-radius: 122px;  // 解决部分浏览器不支持百分比和
     .navbar {
       background-color: rgba(255,255,255,0.97);
       -webkit-box-shadow: 0 0 1px rgba(0,0,0,0.15);
-         -moz-box-shadow: 0 0 1px rgba(0,0,0,0.15);
-              box-shadow: 0 0 1px rgba(0,0,0,0.15);
+      -moz-box-shadow: 0 0 1px rgba(0,0,0,0.15);
+      box-shadow: 0 0 1px rgba(0,0,0,0.15);
       .icon-bglogo, .icon-search, .icon-tag, .icon-video-navi {
         color: #585a66;
       }
@@ -629,9 +585,6 @@ border-bottom-left-radius: 122px;  // 解决部分浏览器不支持百分比和
       }
     }
     .bg-slogan {
-      width: 90%;
-      padding-top: 194px;
-      padding-left: 28px;
       .bg-logo {
         width: 180px;
         margin-bottom: 5px;
@@ -639,7 +592,6 @@ border-bottom-left-radius: 122px;  // 解决部分浏览器不支持百分比和
       .bg-description {
         line-height: 1em;
         font-size: 18px;
-        letter-spacing: 0.02em;
       }
     }
     .author-profile {
@@ -659,18 +611,10 @@ border-bottom-left-radius: 122px;  // 解决部分浏览器不支持百分比和
     }
   }
 
-  .topic-wrapper {
-    width: 90%;
-  }
-  .topic-post-meta {
-    margin-top: 8px;
-  }
-
   .posts {
     .post-item {
       display: block;
       width: 90%;
-      height: 116px;
       margin-left: auto;
       margin-right: auto;
       padding-top: 28px;
@@ -695,11 +639,7 @@ border-bottom-left-radius: 122px;  // 解决部分浏览器不支持百分比和
           display: block;
         }
         .count {
-          margin-left: 8px;
-          &:before {
-            margin-right: 2px;
-            font-size: 10px;
-          }
+          margin-left: 15px;
         }
         .dot {
           display: none;
@@ -738,41 +678,41 @@ border-bottom-left-radius: 122px;  // 解决部分浏览器不支持百分比和
 
 
 // keyframes for bg-logo
-.home-template .bg-description {
+.home-template .bg-logo {
   -webkit-animation: fade-in-down 0.6s;
-          animation: fade-in-down 0.6s;
+  animation: fade-in-down 0.6s;
   -webkit-animation-delay: 0.2s;
-          animation-delay: 0.2s;
+  animation-delay: 0.2s;
 }
-.home-template .topic-post-meta {
+.home-template .bg-description {
   -webkit-animation: fade-in-down 0.9s;
-          animation: fade-in-down 0.9s;
+  animation: fade-in-down 0.9s;
   -webkit-animation-delay: 0.1s;
-          animation-delay: 0.1s;
+  animation-delay: 0.1s;
 }
 
 @-webkit-keyframes fade-in-down {
   0% {
     opacity: 0;
     -webkit-transform: translateY(-10px);
-            transform: translateY(-10px);
+    transform: translateY(-10px);
   }
   100% {
     opacity: 1;
     -webkit-transform: translateY(0);
-            transform: translateY(0);
+    transform: translateY(0);
   }
 }
 @keyframes fade-in-down {
   0% {
     opacity: 0;
     -webkit-transform: translateY(-10px);
-            transform: translateY(-10px);
+    transform: translateY(-10px);
   }
   100% {
     opacity: 1;
     -webkit-transform: translateY(0);
-            transform: translateY(0);
+    transform: translateY(0);
   }
 }
 
@@ -781,19 +721,19 @@ border-bottom-left-radius: 122px;  // 解决部分浏览器不支持百分比和
 // keyframes for navbar-pinned
 .navbar-pinned {
   -webkit-animation: fade-in-down-navbar 0.6s;
-          animation: fade-in-down-navbar 0.6s;
+  animation: fade-in-down-navbar 0.6s;
 }
 
 @-webkit-keyframes fade-in-down-navbar {
   0% {
     opacity: 0;
     -webkit-transform: translateY(-10px);
-            transform: translateY(-10px);
+    transform: translateY(-10px);
   }
   100% {
     opacity: 0.97;
     -webkit-transform: translateY(0);
-            transform: translateY(0);
+    transform: translateY(0);
   }
 }
 
@@ -801,11 +741,11 @@ border-bottom-left-radius: 122px;  // 解决部分浏览器不支持百分比和
   0% {
     opacity: 0;
     -webkit-transform: translateY(-10px);
-            transform: translateY(-10px);
+    transform: translateY(-10px);
   }
   100% {
     opacity: 0.97;
     -webkit-transform: translateY(0);
-            transform: translateY(0);
+    transform: translateY(0);
   }
 }

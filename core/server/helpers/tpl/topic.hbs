@@ -1,27 +1,16 @@
 
 {{#topic}}
-	{{#if post}}
-		{{#post}}
+  {{#if post}}
+    {{#post}}
       <a class="topic-wrapper" href="{{slug}}" target="_blank">
         <img class="topic-img lazy" data-original="{{image}}" alt="{{title}}" />
-			</a>
-		  <div class="topic-title">
-				<a href="{{slug}}" target="_blank">
-					{{title}}
-				</a>
-				<div class="topic-post-meta">
-					{{author}}
-					<time class="publish-time" datetime="{{date published_at timeago="ture"}}">
-						<span class="dot">•</span>{{date published_at timeago="ture"}}
-					</time>
-					<span class="count icon-commend">{{post_star}}</span>
-				</div>
-			</div>
-		{{/post}}
-	{{else}}
+        <span class="topic-title">{{title}}</span>
+      </a>
+    {{/post}}
+  {{else}}
     <a class="topic-wrapper" href="{{siteUrl}}" target="_blank">
       <img class="topic-img lazy" data-original="{{img}}" alt="{{title}}" />
       <span class="topic-title">{{title}}</span>
     </a>
-	{{/if}}
+  {{/if}}
 {{/topic }}
