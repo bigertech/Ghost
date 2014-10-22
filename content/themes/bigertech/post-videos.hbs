@@ -15,39 +15,33 @@
       <span class="author">{{author}} •  <time>{{date published_at timeago="ture"}}</time></span>
     </div>
     <div class="embed-responsive embed-responsive-youku ">
-		    <input type="hidden" id="videoId" value="{{videoId}}">
+	  <input type="hidden" id="videoId" value="{{videoId}}">
       <div id="youkuplayer" class="embed-responsive-item">
       </div>
     </div>
+    <input id="post_desc" type="hidden" value="{{#if meta_description}}{{post_desc}}{{else}}{{excerpt words="10"}}{{/if}}">
+      {{#if meta_description}}{{post_desc}}{{else}}{{excerpt words="10"}}{{/if}}
     <div class="video-desc">
         {{content}}
+    </div>
+    <div class="video-share">
+      <div class="bdsharebuttonbox">
+        <a href="#" class="bds_tsina icon-weibo" data-cmd="tsina" title="分享到新浪微博"></a>
+        <a href="#" class="bds_weixin share-wechat icon-wechat " data-cmd="weixin" title="分享到微信"></a>
+      </div>
     </div>
   </div>
 </div>
 
 <div id="video-container" class="pv-container duoshuo">
-  {{duoshuo_block}}
 
+  {{duoshuo_block}}
 </div>
 
   {{next_post limit=1}}
 {{/post}}
 
 {{#contentFor "pageScripts"}}
-
-  <!-- 多说公共JS代码 start -->
-  <script type="text/javascript">
-    var duoshuoQuery = {short_name: "bigertech"};
-    (function () {
-      var ds = document.createElement('script');
-      ds.type = 'text/javascript';
-      ds.async = true;
-      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-      ds.charset = 'UTF-8';
-      (document.getElementsByTagName('head')[0]
-        || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-  </script>
 
   <script type="text/javascript" src="http://player.youku.com/jsapi">
     player = new YKU.Player('youkuplayer', {
@@ -56,5 +50,7 @@
       vid: document.getElementById('videoId').value
     });
   </script>
+  {{> "duoshuoJS"}}
+  {{> "share"}}
 
 {{/contentFor}}

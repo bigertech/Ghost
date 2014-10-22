@@ -1,0 +1,186 @@
+//多说
+@thread-main-color: #53AE65;
+
+.pv-container {
+
+  #ds-reset .ds-service-link {
+    background: none;
+    padding-left: 0px;
+  }
+
+  #ds-thread {
+    padding-top: 0px;
+
+    .ds-highlight {
+      color: #999 !important;
+    }
+    #ds-reset {
+      // 喜欢
+      .ds-meta {
+        display: none;
+      }
+
+      // 评论 和 微博的tab
+      li.ds-tab {
+        a {
+          font-size: 14px ;
+        }
+        a.ds-current {
+          border-bottom: 0 !important;
+        }
+        a.ds-current,
+        a {
+          padding: 5px;
+          border: none;
+          background-color: #fff;
+        }
+        a:hover {
+          background-color: #fff;
+        }
+        a.ds-current {
+          border-bottom: 1px solid #919191;
+        }
+        a:hover {
+          background-color: #fff;
+        }
+      }
+      li.ds-tab a.ds-comments-tab-weibo {
+        display: none;
+      }
+      li.ds-tab.ds-current a:hover {
+        background-color: #fff;
+        border-bottom: 1px solid #000;
+      }
+
+      // 最新最早最热
+      .ds-sort,
+      .ds-powered-by {
+        display: none;
+      }
+
+      // 评论显示
+      .ds-post-self {
+        padding: 20px 2px;
+      }
+
+      .ds-comments {
+        border: 0 ;
+
+        .ds-comment-body {
+          padding-left: 50px;
+
+          p a[rel="nofollow"]:before {
+            content: " ";
+            display: block;
+          }
+        }
+      }
+      .ds-comments-info {
+        padding: 0;
+      }
+      .ds-comment-body p {
+        font-size: 16px;
+        color: #000;
+      }
+      .ds-comment-actions {
+        .ds-post-repost {
+          display: none;
+        }
+      }
+      li.ds-post {
+        border-top: 1px solid #f1f2f3;
+      }
+      .ds-post-self:hover .ds-post-report {
+        display: none;
+      }
+      .ds-like-tooltip {
+        display: none;
+      }
+      .ds-like-panel {
+        position: absolute;
+        left: 16px;
+        top: 50px;
+        color: #9f9f9f;
+      }
+      .ds-avatar img {
+        .border-radius (100px);
+      }
+
+      // 评论框
+      .ds-replybox {
+        .ds-avatar {
+          display: block;
+          margin-left: 2px ;
+          img {
+            .border-radius (100px);
+          }
+        }
+      }
+      .ds-login-buttons {
+        .ds-service-list {
+          li:nth-child(3),
+          li:nth-child(4),
+          li:nth-child(5) {
+            display: none;
+          }
+          li {
+            width: 32px;
+          }
+        }
+        .ds-social-links {
+          float: inherit;
+        }
+      }
+      .ds-post-options {
+        margin-top: 10px;
+        border: none;
+      }
+      .ds-textarea-wrapper {
+        .border-radius (4px);
+        border-bottom: 1px solid #ccc;
+
+        textarea {
+          overflow: hidden;
+          height: 16px;
+        }
+      }
+      .ds-gradient-bg {
+        background: none;
+      }
+      .ds-post-button {
+        .border-radius (4px);
+        background: none repeat scroll 0% 0% #53ae65;
+        &:hover {
+          background: #62c776;
+        }
+      }
+    }
+  }
+
+  #ds-reset .ds-avatar img {
+    width: 40px !important;
+    height: 40px !important;
+  }
+
+  #ds-thread.ds-narrow #ds-reset .ds-replybox {
+    padding-left: 50px;
+  }
+
+  #ds-reset .ds-service-icon {
+    display: none;
+  }
+}
+@media screen and (max-width: 568px) {
+  .pv-container #ds-thread {
+    padding-top: 9px;
+  }
+  .pv-container #ds-thread #ds-reset .ds-post-options .ds-sync {
+    right: 1px;
+  }
+}
+.border-radius (@radius) {
+  -moz-border-radius: @radius;
+  -ms-border-radius: @radius;
+  -o-border-radius: @radius;
+  border-radius: @radius;
+}

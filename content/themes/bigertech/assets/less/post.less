@@ -239,7 +239,8 @@
 }
 
 
-.share {
+.post-share,
+.video-share{
   display: none;
 }
 
@@ -473,11 +474,18 @@
     }
   }
 
-  .share {
+  .post-share {
     display: block;
     margin-top: 85px;
     height: 30px;
-
+  }
+  .video-share {
+    display: block;
+    margin-top: 55px;
+    height: 30px;
+  }
+  .post-share,
+  .video-share {
     .changweibo {
       display: block;
       width: 112px;
@@ -495,8 +503,31 @@
         color: #fff;
       }
     }
-    .weibo {
-      padding-right: 10px;
+
+    .bdsharebuttonbox {
+      float: right;
+
+      a {
+        display: inline-block;
+        margin: 0;
+        padding-left: 5px;
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+        font-size: 19px;
+        color: #9b9b9b;
+        background-image: none;
+        border: 1px solid #9b9b9b;
+        border-radius: 50px;
+
+        &:hover {
+          color: #fff;
+          background: #9b9b9b;
+        }
+      }
+      a.share-wechat {
+        margin-left: 10px;
+      }
     }
   }
 
