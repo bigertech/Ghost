@@ -6,6 +6,18 @@
         <img class="topic-img lazy" data-original="{{image}}" alt="{{title}}" />
         <span class="topic-title">{{title}}</span>
       </a>
+
+      <div class="post-meta mobile-display">
+        {{#if author.image}}
+          <img class="mobile-display avatar lazy" data-original="{{author.image}}" alt="Author image" />
+        {{/if}}
+        {{author}}
+        <time class="publish-time" datetime="{{date published_at timeago="ture"}}">
+          <span class="dot">•</span>{{date published_at timeago="ture"}}
+        </time>
+        <span class="count icon-commend">{{post_star}}</span>
+      </div>
+
     {{/post}}
   {{else}}
     <a class="topic-wrapper" href="{{siteUrl}}" target="_blank">
