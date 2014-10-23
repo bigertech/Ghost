@@ -19,10 +19,10 @@
       <div id="youkuplayer" class="embed-responsive-item">
       </div>
     </div>
-    <input id="post_desc" type="hidden" value="{{#if meta_description}}{{post_desc}}{{else}}{{excerpt words="10"}}{{/if}}">
-      {{#if meta_description}}{{post_desc}}{{else}}{{excerpt words="10"}}{{/if}}
+    <input id="post_desc" type="hidden" value="{{#if meta_description}}{{post_desc}}{{else}}{{excerpt words="20"}}{{/if}}">
+
     <div class="video-desc">
-        {{content}}
+        {{post_desc}}
     </div>
     <div class="video-share">
       <div class="bdsharebuttonbox">
