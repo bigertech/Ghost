@@ -11,7 +11,7 @@ jQuery(function($) {
   if($("img.lazy") && $("img.lazy").length > 0)
     $("img.lazy").lazyload({
       effect: "fadeIn",
-      threshold : 300
+      threshold : 500
     });
 
   $(document).ready( function() {
