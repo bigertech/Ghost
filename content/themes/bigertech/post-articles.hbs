@@ -32,8 +32,8 @@
         <a title="生成长微博" href="/cwb{{url}}" class="changweibo left">生成长微博</a>
 
         <div class="bdsharebuttonbox">
-          <a href="#" class="bds_tsina icon-weibo" data-cmd="tsina" title="分享到新浪微博"></a>
-          <a href="#" class="bds_weixin share-wechat icon-wechat " data-cmd="weixin" title="分享到微信"></a>
+          <a href="###" class="bds_tsina icon-weibo" data-cmd="tsina" title="分享到新浪微博"></a>
+          <a href="###" class="bds_weixin share-wechat icon-wechat " data-cmd="weixin" title="分享到微信"></a>
         </div>
 
       </div>
@@ -50,5 +50,13 @@
 
   {{> "duoshuoJS"}}
   {{> "share"}}
+  <script src="http://code.jboxcdn.com/0.3.2/jBox.min.js"></script>
 
+  <script>
+    $(document).ready( function() {
+      $(".share-wechat").on( "click", function() {
+        console.log("test share");
+      });
+    });
+  </script>
 {{/contentFor}}
