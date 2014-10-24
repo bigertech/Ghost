@@ -8,21 +8,42 @@
  * Copyright 2013, Codrops
  * http://www.codrops.com
  */
+
 var animatedHeader = (function() {
 
 	var docElem = document.documentElement,
-		navbar = document.querySelector( '.navbar' ),
-		didScroll = false,
-		changeHeaderOn = 312;
+		  navbar = document.querySelector( '.navbar' ),
+		  didScroll = false,
+		  changeHeaderOn = 312;
 
 	function init() {
-		window.addEventListener( 'scroll', function( event ) {
-			if( !didScroll ) {
-				didScroll = true;
-				setTimeout( scrollPage, 250 );
-			}
-		}, false );
+    if (window.addEventListener) {
+      window.addEventListener( 'scroll', function( event ) {
+        if( !didScroll ) {
+          didScroll = true;
+          setTimeout( scrollPage, 250 );
+        }
+      }, false );
+    } else {
+      window.attachEvent( 'onscroll', function( event ) {
+        if ( !didScroll ) {
+          didScroll = true;
+          setTimeout( scrollPage, 250 );
+        }
+      });
+    }
 	}
+
+//  function init() {
+//    if (window.addEventListener) {
+//      window.addEventListener( 'scroll', function( event ) {
+//        if( !didScroll ) {
+//          didScroll = true;
+//          setTimeout( scrollPage, 250 );
+//        }
+//      }, false );
+//    }
+//  }
 
 	function scrollPage() {
 		var sy = scrollY();
@@ -41,7 +62,7 @@ var animatedHeader = (function() {
 	}
 
 	if ( document.querySelector( '.home-template' ) ) {
-		if (document.body.clientWidth > 768 ) {
+		if (document.body.clientWidth > 740 ) {
 			init();
 		}
 	}
@@ -50,7 +71,7 @@ var animatedHeader = (function() {
 		if ( document.querySelector( '.archive-template' ) ) {
 			return false;
 		} else {
-			if (document.body.clientWidth > 768 ) {
+			if (document.body.clientWidth > 740 ) {
 				init();
 			}
 		}
@@ -60,7 +81,7 @@ var animatedHeader = (function() {
 		if ( document.querySelector( '.archive-template' ) ) {
 			return false;
 		} else {
-			if (document.body.clientWidth > 768 ) {
+			if (document.body.clientWidth > 740 ) {
 				init();
 			}
 		}
