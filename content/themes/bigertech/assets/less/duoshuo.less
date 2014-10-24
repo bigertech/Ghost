@@ -118,9 +118,9 @@
       }
       .ds-login-buttons {
         .ds-service-list {
-          li:nth-child(3),
-          li:nth-child(4),
-          li:nth-child(5) {
+          .ds-renren,
+          .ds-douban,
+          .ds-more-services {
             display: none;
           }
           li {
@@ -169,7 +169,12 @@
   #ds-reset .ds-service-icon {
     display: none;
   }
+
+  #ds-thread .ds-no-transition#ds-reset .ds-post-button {
+    background-color: #53ae65 !important;
+  }
 }
+
 @media screen and (max-width: 568px) {
   .pv-container #ds-thread {
     padding-top: 9px;
