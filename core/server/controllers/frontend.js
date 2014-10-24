@@ -271,7 +271,7 @@ frontendControllers = {
                     //res.render('list-'+view, formatPageResponse(posts, page));
                     formatPageResponseDuoshuo(posts, page).then(function(data){
                         data.meta_title = meta_title;
-                    
+                   
                         res.render('list-'+view, data);
                     });
                 });
