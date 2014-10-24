@@ -18,7 +18,7 @@ var moment      = require('moment'),
     filters     = require('../../server/filters'),
     template    = require('../helpers/template'),
     errors      = require('../errors'),
-
+    fileUtil    = require('../utils/fileUtil'),
     frontendControllers,
     staticPostPermalink,
     oldRoute,
@@ -723,9 +723,10 @@ frontendControllers = {
         var slug = req.params.slug;
         var url = config.changweibo.url + '/cwbp/' + slug + '/';
         var newPic = req.query.new || false; // 更新一张图片
-        var savePath = config.paths.imagesPath + '/' + config.changweibo.dir + '/' + slug + '.png';
+        var pic_path = config.changweibo.dir + '/' + slug + '.png';
+        var savePath = config.paths.imagesPath + '/' + pic_path;
         api.posts.read({slug: slug}).then(function(result) {
-            var relPath = '/' + config.paths.imagesRelPath + '/' + config.changweibo.dir + '/' + slug + '.png';
+            var relPath = '/' + config.paths.imagesRelPath + '/' + pic_path;
             result.post = result.posts[0];
             delete result.posts;
             if (!fs.existsSync(savePath) || newPic) {
@@ -740,6 +741,7 @@ frontendControllers = {
                 });
                 function cb(data) {
                     result.image = relPath;
+                    fileUtil.copyFile(savePath,config.cdn.syncImagesPath+pic_path);
                     res.render('changweibo', result);
                 }
             } else {
