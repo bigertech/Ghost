@@ -177,14 +177,21 @@
   #ds-thread .ds-no-transition#ds-reset .ds-post-button {
     background-color: #53ae65 !important;
   }
+
+  #ds-thread.ds-narrow {
+    #ds-reset .ds-post-options {
+      margin-right: 0px;
+
+      .ds-sync {
+        right: 70px;
+      }
+    }
+  }
 }
 
 @media screen and (max-width: 568px) {
   .pv-container #ds-thread {
     padding-top: 9px;
-  }
-  .pv-container #ds-thread #ds-reset .ds-post-options .ds-sync {
-    right: 1px;
   }
 }
 .border-radius (@radius) {
