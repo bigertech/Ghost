@@ -6,12 +6,14 @@
   <div id="topScroll">
     <div id="post-banner" class="pv-banner">
         {{> "navbar"}}
-      <div class="bg-img-small">
-        <img class="lazy" data-original="{{image}}"/>
-      </div>
       <div class="bg-img">
         <img class="lazy" data-original="{{image}}"/>
       </div>
+      <div class="bg-img-small">
+        <!--<img class="lazy bg-img-small-sm" data-original="{{image_sm}}"/>-->
+        <img class="lazy bg-img-small-md" data-original="{{image}}" />
+      </div>
+
       <div class="post-info">
         <p class="name">{{title}}</p>
         <span class="author">{{author}} • <time class="post-time">{{date published_at timeago="ture"}}</time></span>
