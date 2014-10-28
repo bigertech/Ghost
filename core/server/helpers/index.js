@@ -727,8 +727,8 @@ coreHelpers.body_class = function (options) {
     } else if (post) {
         classes.push('post-template');
     }
-    //add by liuxing
-    if( this.relativeUrl.match(/^.*(category).*$/)){
+    //add by liuxingc
+    if( this.relativeUrl.match(/^.*\/(c)\/.*$/)){
         classes.push('category-template');
     }
     //end by liuxing
