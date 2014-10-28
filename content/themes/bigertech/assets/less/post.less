@@ -8,6 +8,7 @@
 @post-max-width: 726px;
 @video-max-width: 806px;
 @article-font-color:rgba(0, 0, 0, 0.8);;
+@main-color: #53ae65;
 
 //相同部分
 //-------------------------------------------------
@@ -201,7 +202,7 @@
     font-weight: bold;
   }
   a {
-    color: #53ae65;
+    color: @main-color;
   }
   ol, ul {
     padding-left: 40px;
@@ -491,14 +492,14 @@
       width: 112px;
       height: 30px;
       font-size: 14px;
-      color: #9b9b9b;
-      border: 1px #9b9b9b solid;
+      color: @main-color;
+      border: 1px @main-color solid;
       .border-radius (50px);
       text-align: center;
 
       &:hover {
         text-decoration: none;
-        background: #9b9b9b;
+        background: @main-color;
         color: #fff;
       }
     }
@@ -509,19 +510,20 @@
       a {
         display: inline-block;
         margin: 0;
-        padding-left: 5px;
+        padding: 0;
         width: 30px;
         height: 30px;
         line-height: 30px;
         font-size: 19px;
-        color: #9b9b9b;
+        text-align: center;
+        color: @main-color;
         background-image: none;
-        border: 1px solid #9b9b9b;
+        border: 1px solid @main-color;
         border-radius: 50px;
 
         &:hover {
           color: #fff;
-          background: #9b9b9b;
+          background: @main-color;
         }
       }
       a.share-wechat {
