@@ -75,6 +75,32 @@ function getPostPage(options) {
         return api.posts.browse(options,true);
     });
 }
+function getPostPageType(options) {
+    return api.settings.read('postsPerPage').then(function (response) {
+        var postPP = response.settings[0],
+            postsPerPage = parseInt(postPP.value, 10);
+
+        // No negative posts per page, must be number
+        if (!isNaN(postsPerPage) && postsPerPage > 0) {
+            options.limit = postsPerPage;
+        }
+        options.include = 'author,tags,fields,post_type';
+        return api.posts.browse(options);
+    });
+}
+function getPostPageNoTypes2(options) {
+    return api.settings.read('postsPerPage').then(function (response) {
+        var postPP = response.settings[0],
+            postsPerPage = parseInt(postPP.value, 10);
+
+        // No negative posts per page, must be number
+        if (!isNaN(postsPerPage) && postsPerPage > 0) {
+            options.limit = postsPerPage;
+        }
+        options.include = 'author,tags,fields,post_type';
+        return api.posts.browseNoTypes2(options,true);
+    });
+}
 //add by liuxing  获取文章的 多说信息
 function postAddDuoshuo(posts, postUuids) {
     var defer = when.defer();
@@ -82,11 +108,16 @@ function postAddDuoshuo(posts, postUuids) {
        if(err){
 
        }
-       var reposonse =JSON.parse(res.body).response;
-       posts = _.each(posts,function(post){
-           post.duoshuo = reposonse[post.uuid];
-           return post;
-       });
+        if(!res){
+            defer.resolve(posts);
+        }else{
+            var reposonse =JSON.parse(res.body).response;
+            posts = _.each(posts,function(post){
+                post.duoshuo = reposonse[post.uuid];
+                return post;
+            });
+        }
+
        defer.resolve(posts);
     });
     return defer.promise;
@@ -206,7 +237,7 @@ frontendControllers = {
             return res.redirect(config.paths.subdir + '/');
         }
 
-        return getPostPage(options).then(function (page) {
+        return getPostPageNoTypes2(options).then(function (page) {
 
             // If page is greater than number of pages we have, redirect to last page
             if (pageParam > page.meta.pagination.pages) {
@@ -250,7 +281,7 @@ frontendControllers = {
         if (isNaN(pageParam) || pageParam < 1 || (pageParam === 1 && req.route.path === '/page/:page/')) {
             return res.redirect(config.paths.subdir + '/');
         }
-        return getPostPage(options).then(function (page) {
+        return getPostPageType(options).then(function (page) {
             // If page is greater than number of pages we have, redirect to last page
             if (pageParam > page.meta.pagination.pages) {
                 return res.redirect(page.meta.pagination.pages === 1 ? config.paths.subdir + '/' : (config.paths.subdir + '/page/' + page.meta.pagination.pages + '/'));

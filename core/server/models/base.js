@@ -238,7 +238,7 @@ ghostBookshelf.Model = ghostBookshelf.Model.extend({
         });
     },
     //add by liuxing  get Next row
-    nextRow: function(id,data,options){
+    preRow: function(id,data,options){
         data = this.filterData(data);
         var limit = options.limit ? options.limit:1;
         return ghostBookshelf.Collection.forge(data, {model: this}).query(function(q){
@@ -254,7 +254,7 @@ ghostBookshelf.Model = ghostBookshelf.Model.extend({
             return result;
         });
     },
-    preRow: function(id,data,options){
+    nextRow: function(id,data,options){
         data = this.filterData(data);
         var limit = options.limit ? options.limit:1;
         return ghostBookshelf.Collection.forge(data, {model: this}).query(function(q){

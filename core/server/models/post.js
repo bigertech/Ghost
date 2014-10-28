@@ -355,7 +355,6 @@ Post = ghostBookshelf.Model.extend({
         if (options.where) {
             postCollection.query('where', options.where);
         }
-
         // Add related objects
         options.withRelated = _.union([ 'tags', 'fields'], options.include);
 
@@ -484,7 +483,7 @@ Post = ghostBookshelf.Model.extend({
             })
             .catch(errors.logAndThrowError);
     },
-    findPageNoTopic: function (options) {
+    findPageNoTopic: function (options,noTyp2) {
         options = options || {};
         //add by liuxing
         var post_type;
@@ -538,7 +537,6 @@ Post = ghostBookshelf.Model.extend({
             // make sure that status is valid
             options.status = _.indexOf(['published', 'draft'], options.status) !== -1 ? options.status : 'published';
             options.where.status = options.status;
-
         }
 
         // If there are where conditionals specified, add those
@@ -546,7 +544,11 @@ Post = ghostBookshelf.Model.extend({
         if (options.where) {
             postCollection.query('where', options.where);
         }
-
+        if(noTyp2 && !options.post_type){
+            postCollection.query(function(qs){
+                qs.where('post_type','!=',2);  //排除点评
+            });
+        }
         // Add related objects
         options.withRelated = _.union([ 'tags', 'fields' ], options.include);
 

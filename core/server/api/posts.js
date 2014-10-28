@@ -92,7 +92,30 @@ posts = {
         }
         return dataProvider.Post.findPage(options);
     },
+    browseNoTypes2: function browse(options) {
+        options = options || {};
 
+        if (!(options.context && options.context.user)) {
+            options.status = 'published';
+        }
+
+        if (options.include) {
+            options.include = prepareInclude(options.include);
+        }
+        return dataProvider.Post.findPageNoTopic(options,true);
+    },
+    browseByTypes: function browse(options,noTipic) {
+        options = options || {};
+
+        if (!(options.context && options.context.user)) {
+            options.status = 'published';
+        }
+
+        if (options.include) {
+            options.include = prepareInclude(options.include);
+        }
+        return dataProvider.Post.findPage(options);
+    },
     findAll: function(options) {
         return dataProvider.Post.fetchAll(options);
     },

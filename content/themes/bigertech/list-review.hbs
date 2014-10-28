@@ -1,0 +1,62 @@
+{{!< default}}
+<style>
+    blockquote{
+		    margin-left: 0;
+    }
+    .content-wrapper .container{
+		    width: 600px;
+    }
+    .post{
+		    margin-top: 0;
+    }
+    .post p{
+		    font-size: 17px;
+    }
+    .posts .post-item{
+        text-align: justify;
+    }
+    .posts .post-item .post-title{
+        margin:0 0 1em 0;
+        display: block;
+        font-size: 1.5em;
+    }
+    .posts .post-item .post-meta{
+		    margin-top: 1em;
+    }
+		.posts .recom{
+				color: #9eabb3;
+		}
+    @media screen and (max-width: 768px) {
+        .content-wrapper .container{
+		        width: 100%;
+        }
+        .posts .post-item{
+		        width: 100%;
+		        padding:0 1em ;
+            margin: 1em 0;
+        }
+        .content-wrapper{
+		        margin-top: 280px;
+        }
+    }
+</style>
+{{> "navbar"}}
+
+<div class="bg-header">
+    <div class="bg-cover"><img class="lazy" data-original="{{asset "dist/images/wallhaven2.jpg" }}" /></div>
+    <div class="bg-linear">
+        <div class="bg-slogan">
+            <img class="bg-logo" src="{{asset "dist/images/bigertech-white.png" }}" alt="bigertech" />
+            <h2 class="bg-description">点  评</h2>
+        </div>
+    </div>
+</div>
+
+<div class="content-wrapper" >
+
+  {{> "loop2"}}
+  {{pagination}}
+
+</div>
+
+{{> "footer"}}
