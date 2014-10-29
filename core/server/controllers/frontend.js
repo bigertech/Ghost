@@ -10,7 +10,7 @@ var moment      = require('moment'),
     url         = require('url'),
     when        = require('when'),
     cheerio     = require('cheerio'),
-    //ue          = require('url-extract'),
+    ue          = require('url-extract'),
     fs          = require('fs'),
 
     api         = require('../api'),
@@ -765,11 +765,11 @@ frontendControllers = {
                 if (url.indexOf('http://') === -1) {
                     url = 'http://' + url;
                 }
-//                ue.snapshot(url, {
-//                    viewportSize:{width:480 },
-//                    callback: cb,
-//                    image: savePath
-//                });
+                ue.snapshot(url, {
+                    viewportSize:{width:480 },
+                    callback: cb,
+                    image: savePath
+                });
                 function cb(data) {
                     result.image = relPath;
                     fileUtil.copyFile(savePath,config.cdn.syncImagesPath+pic_path);
