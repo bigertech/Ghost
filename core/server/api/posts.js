@@ -153,9 +153,9 @@ posts = {
     },
     //add by liuxing
     nextRow: function nextRow(id,options) {
-        var attrs = ['id', 'slug', 'status'],
+        var attrs = ['id', 'slug', 'status','post_type'],
             data = _.pick(options, attrs);
-        options = _.omit(options, attrs);
+            options = _.omit(options, attrs);
 
         // only published posts if no user is present
 
@@ -171,7 +171,7 @@ posts = {
         });
      },
     preRow: function nextRow(id,options) {
-        var attrs = ['id', 'slug', 'status'],
+        var attrs = ['id', 'slug', 'status','post_type'],
             data = _.pick(options, attrs);
         options = _.omit(options, attrs);
 

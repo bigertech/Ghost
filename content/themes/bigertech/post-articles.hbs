@@ -31,7 +31,7 @@
           {{content}}
       </div>
       <div class="post-share">
-        <a title="生成长微博" href="/cwb{{url}}" class="changweibo left">生成长微博</a>
+        <a href="/cwb{{url}}" title="生成长微博" target="_blank" class="changweibo left">生成长微博</a>
 
         <div class="bdsharebuttonbox">
           <a href="###" class="bds_tsina icon-weibo" data-cmd="tsina" title="分享到新浪微博"></a>
@@ -44,7 +44,7 @@
       </div>
     </div>
 
-      {{next_post limit=1}}
+      {{next_post limit=1 type=0}}
 
   </div>
 {{/post}}

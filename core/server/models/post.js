@@ -715,7 +715,6 @@ Post = ghostBookshelf.Model.extend({
     //add by liuxing
     nextRow: function(id,data,options){
         options = options || {};
-
         data = _.extend({
             status: 'published'
         }, data || {});
