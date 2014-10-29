@@ -524,12 +524,13 @@ coreHelpers.post_relative = function (options) {
 
 };
 coreHelpers.next_post = function (options) {
-    var data = (options || {}).hash ||{};
-    var option =  {
+    var options = (options || {}).hash ||{};
+    var options =  {
         include :'author',
-        limit : data.limit ? data.limit:1
+        limit : options.limit ? options.limit:1,
+        post_type : options.type ? parseInt(options.type):0
     };
-    return api.posts.nextRow(this.id,option).then(function(posts){
+    return api.posts.nextRow(this.id,options).then(function(posts){
        return template.execute('relative_post', {posts:posts});
     });
 };
@@ -537,7 +538,8 @@ coreHelpers.pre_post = function (options) {
     var data = (options || {}).hash ||{};
     var option =  {
         include :'author',
-        limit : data.limit ? data.limit:1
+        limit : data.limit ? data.limit:1,
+        type : data.type ? parseInt(data.type):0
     };
     return api.posts.preRow(this.id,option).then(function(posts){
         return template.execute('relative_post', {posts:posts});

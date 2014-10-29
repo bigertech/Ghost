@@ -715,14 +715,13 @@ Post = ghostBookshelf.Model.extend({
     //add by liuxing
     nextRow: function(id,data,options){
         options = options || {};
-
         data = _.extend({
             status: 'published'
         }, data || {});
         if (data.status === 'all') {
             delete data.status;
         }
-
+        console.log(data);
         // Add related objects
         options.withRelated = _.union([ 'tags', 'fields' ], options.include);
         return ghostBookshelf.Model.nextRow.call(this,id,data, options);

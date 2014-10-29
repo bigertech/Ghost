@@ -3,25 +3,29 @@
     blockquote{
 		    margin-left: 0;
     }
+	.post a{
+		color: #000;
+	}
     .content-wrapper .container{
 		    width: 600px;
     }
     .post{
-		    margin-top: 0;
+		margin-top: 0;
     }
     .post p{
 		    font-size: 17px;
     }
     .posts .post-item{
         text-align: justify;
+		padding: 32px 0 16px;
     }
     .posts .post-item .post-title{
-        margin:0 0 1em 0;
+        margin:0 0 16px 0;
         display: block;
         font-size: 1.5em;
     }
     .posts .post-item .post-meta{
-		    margin-top: 1em;
+		    margin-top: 16px;
     }
 		.posts .recom{
 				color: #9eabb3;
@@ -35,15 +39,15 @@
         }
         .posts .post-item{
 		        width: 100%;
-		        padding:0 1em ;
-            margin: 2em 0;
+		        padding:0 16px ;
+            	margin: 32px 0;
         }
     }
 </style>
 {{> "navbar"}}
 
 <div class="bg-header">
-    <div class="bg-cover"><img class="lazy" data-original="{{asset "dist/images/wallhaven2.jpg" }}" /></div>
+    <div class="bg-cover"><img class="lazy" data-original="{{asset "dist/images/review.jpg" }}" /></div>
     <div class="bg-linear">
         <div class="bg-slogan">
             <img class="bg-logo" src="{{asset "dist/images/bigertech-white.png" }}" alt="bigertech" />
@@ -51,7 +55,6 @@
         </div>
     </div>
 </div>
-
 <div class="content-wrapper" >
 
   {{> "loop2"}}
@@ -60,3 +63,18 @@
 </div>
 
 {{> "footer"}}
+{{#contentFor "pageScripts"}}
+<script>
+    (function($){
+        $(document).ready(function(){
+            var posts = $("li.post-item");
+            posts.each(function(index){
+                var source_url = $(this).find("source");
+                var url = source_url.attr("href");
+                var name = source_url.attr("name");
+				$(this).find("a.source_url").attr('href',url);
+            });
+        });
+    })($);
+</script>
+{{/contentFor}}
