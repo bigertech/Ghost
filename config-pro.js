@@ -9,7 +9,7 @@ config = {
     // ### Development **(default)**
     development: {
         // The url to use when providing links to the site, E.g. in RSS and email.
-        url: 'http://my-ghost-blog.com',
+        url: 'http://www.bigertech.com',
 
         // Example mail config
         // Visit http://support.ghost.org/mail for instructions
@@ -56,10 +56,8 @@ config = {
             targetHeight: 210,
             scale: 0.6
         },
-
-
-    changweibo: {
-            url: 'localhost:2368',
+        changweibo: {
+            url: 'http://www.bigertech',
             dir: 'changweibo'
         }
     },
