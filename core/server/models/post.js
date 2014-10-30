@@ -509,7 +509,6 @@ Post = ghostBookshelf.Model.extend({
         }
 
         options = this.filterOptions(options, 'findPage');
-
         // Set default settings for options
         options = _.extend({
             page: 1, // pagination page
@@ -518,7 +517,6 @@ Post = ghostBookshelf.Model.extend({
             status: 'published',
             where: {}
         }, options);
-
         if (options.staticPages !== 'all') {
             // convert string true/false to boolean
             if (!_.isBoolean(options.staticPages)) {
@@ -530,6 +528,7 @@ Post = ghostBookshelf.Model.extend({
         if(post_type > -1){
             options.where.post_type = post_type;
         }
+
         /* end add  by liuxing */
         // Unless `all` is passed as an option, filter on
         // the status provided.
@@ -545,8 +544,8 @@ Post = ghostBookshelf.Model.extend({
             postCollection.query('where', options.where);
         }
         if(noTyp2 && !options.post_type){
-            postCollection.query(function(qs){
-                qs.where('post_type','!=',2);  //排除点评
+            postCollection.query(function(qb){
+                qb.whereIn('post_type',[0,1]);  //输出文章和视频
             });
         }
         // Add related objects
@@ -567,7 +566,7 @@ Post = ghostBookshelf.Model.extend({
             }
             return false;
         }
-
+        var topicIds ;
         return when.join(fetchTagQuery(), fetchAuthorQuery())
 
             // Set the limit & offset for the query, fetching
@@ -581,6 +580,7 @@ Post = ghostBookshelf.Model.extend({
                     topicId = _.filter(topicId, function (num) {
                         return num > 0;
                     });
+                    topicIds = topicId
                     return topicId;
                 })
             }).then(function(topicIds){   //排除专题文章
@@ -619,11 +619,17 @@ Post = ghostBookshelf.Model.extend({
                 // After we're done, we need to figure out what
                 // the limits are for the pagination values.
                 qb = ghostBookshelf.knex(tableName);
-
                 if (options.where) {
                     qb.where(options.where);
                 }
-
+                //add by liuxing
+                if(noTyp2 && !options.post_type){
+                    qb.whereIn('post_type',[0,1]);  //输出文章和视频
+                }
+                if (options.status !== 'all') {
+                    qb.whereNotIn('id', topicIds);
+                }
+                //end add
                 if (tagInstance) {
                     qb.join('posts_tags', 'posts_tags.post_id', '=', 'posts.id');
                     qb.where('posts_tags.tag_id', '=', tagInstance.id);
