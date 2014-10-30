@@ -90,6 +90,9 @@
         .ds-post-repost {
           display: none;
         }
+        .ds-post-report {
+          display: none;
+        }
       }
       li.ds-post {
         border-top: 1px solid #f1f2f3;
@@ -114,7 +117,8 @@
       .ds-replybox {
         .ds-avatar {
           display: block;
-          margin-left: 2px ;
+          margin-left: 2px;
+
           img {
             .border-radius (100px);
           }
@@ -182,13 +186,16 @@
     background-color: #53ae65 !important;
   }
 
-  #ds-thread.ds-narrow {
-    #ds-reset .ds-post-options {
+  #ds-thread.ds-narrow #ds-reset {
+    .ds-post-options {
       margin-right: 0px;
 
       .ds-sync {
         right: 70px;
       }
+    }
+    .ds-post-self {
+      padding: 20px 2px;
     }
   }
 }
@@ -196,6 +203,10 @@
 @media screen and (max-width: 568px) {
   .pv-container #ds-thread {
     padding-top: 9px;
+  }
+  .pv-container #ds-thread #ds-reset .ds-comment-body p {
+    font-size: 14px;
+    color: #000;
   }
 }
 .border-radius (@radius) {
