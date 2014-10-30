@@ -19,7 +19,7 @@
         <span class="author">{{author}} • <time class="post-time">{{date published_at timeago="ture"}}</time></span>
       </div>
 
-      <input id="post_desc" type="hidden" value="{{#if meta_description}}{{post_desc}}{{else}}{{excerpt words="40"}}{{/if}}">
+      <input id="post_desc" type="hidden" value="{{#if meta_description}}{{post_desc}}{{else}}{{excerpt characters="120"}}{{/if}}">
 
       <a class="scroll-down icon-down" href="#post-main" data-offset="-45">
       </a>
