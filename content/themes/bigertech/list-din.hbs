@@ -1,0 +1,83 @@
+{{!< default}}
+<style>
+    blockquote{
+		    margin-left: 0;
+    }
+	.post a{
+		color: #000;
+	}
+    .content-wrapper{
+        margin-top: 398px;
+	}
+    .content-wrapper .container{
+		    width: 600px;
+    }
+    .post{
+		margin-top: 0;
+    }
+    .post p{
+		    font-size: 17px;
+    }
+    .posts .post-item{
+        text-align: justify;
+		padding: 32px 0 16px;
+    }
+    .posts .post-item .post-title{
+        margin:0 0 16px 0;
+        display: block;
+        font-size: 1.5em;
+    }
+    .posts .post-item .post-meta{
+		    margin-top: 16px;
+    }
+		.posts .recom{
+				color: #9eabb3;
+		}
+    @media screen and (max-width: 768px) {
+        .category-template .content-wrapper{
+				    margin-top: 300px;
+		    }
+        .content-wrapper .container{
+		        width: 100%;
+        }
+        .posts .post-item{
+		        width: 100%;
+		        padding:0 16px ;
+            	margin: 32px 0;
+        }
+    }
+</style>
+{{> "navbar"}}
+
+<div class="bg-header">
+    <div class="bg-cover"><img class="lazy" data-original="{{asset "dist/images/review.jpg" }}" /></div>
+    <div class="bg-linear">
+        <div class="bg-slogan">
+            <img class="bg-logo" src="{{asset "dist/images/bigertech-white.png" }}" alt="bigertech" />
+            <h2 class="bg-description">盯</h2>
+        </div>
+    </div>
+</div>
+<div class="content-wrapper" >
+
+  {{> "loop2"}}
+  {{pagination}}
+
+</div>
+
+{{> "footer"}}
+{{#contentFor "pageScripts"}}
+<script>
+    (function($){
+        $(document).ready(function(){
+            var posts = $("li.post-item");
+            posts.each(function(index){
+                var source_url = $(this).find("source");
+                var url = source_url.attr("href");
+                var name = source_url.attr("name");
+				$(this).find("a.source_url").attr('href',url);
+            });
+        });
+    })($);
+</script>
+{{/contentFor}}

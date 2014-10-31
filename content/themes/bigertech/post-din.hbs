@@ -1,0 +1,54 @@
+{{!< default}}
+
+
+
+{{#post}}
+    <div id="topScroll">
+        <div id="post-banner" class="pv-banner">
+					{{> "navbar"}}
+            <div class="bg-img-small">
+                <img class="lazy" data-original="{{image}}"/>
+            </div>
+            <div class="bg-img">
+                <img class="lazy" data-original="{{image}}"/>
+            </div>
+            <div class="post-info">
+                <p class="name">{{title}}</p>
+                <span class="author">{{author}} • <time class="post-time">{{date published_at timeago="ture"}}</time></span>
+            </div>
+
+            <input id="post_desc" type="hidden" value="{{#if meta_description}}{{post_desc}}{{else}}{{excerpt words="40"}}{{/if}}">
+
+            <a class="scroll-down icon-down" href="#post-main" data-offset="-45">
+            </a>
+        </div>
+    </div>
+    <div id="post-main">
+        <div class="post-container pv-container">
+            <div class="post">
+							{{content}}
+            </div>
+            <div class="post-share">
+                <a title="生成长微博" href="/cwb{{url}}" class="changweibo left">生成长微博</a>
+
+                <div class="bdsharebuttonbox">
+                    <a href="###" class="bds_tsina icon-weibo" data-cmd="tsina" title="分享到新浪微博"></a>
+                    <a href="###" class="bds_weixin share-wechat icon-wechat " data-cmd="weixin" title="分享到微信"></a>
+                </div>
+
+            </div>
+            <div class="duoshuo">
+							{{duoshuo_block}}
+            </div>
+        </div>
+
+			{{next_post limit=1 type=2}}
+
+    </div>
+{{/post}}
+{{#contentFor "pageScripts"}}
+
+	{{> "duoshuoJS"}}
+	{{> "share"}}
+
+{{/contentFor}}

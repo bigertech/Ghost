@@ -57,7 +57,7 @@ config = {
             scale: 0.6
         },
         changweibo: {
-            url: 'http://www.bigertech',
+            url: 'http://www.bigertech.com',
             dir: 'changweibo'
         }
     },

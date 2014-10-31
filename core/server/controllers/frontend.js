@@ -10,7 +10,7 @@ var moment      = require('moment'),
     url         = require('url'),
     when        = require('when'),
     cheerio     = require('cheerio'),
-    ue          = require('url-extract'),
+    ue          = require('url-extract')(),
     fs          = require('fs'),
 
     api         = require('../api'),
@@ -765,6 +765,7 @@ frontendControllers = {
                 if (url.indexOf('http://') === -1) {
                     url = 'http://' + url;
                 }
+                console.log('snapshot url:'+url);
                 ue.snapshot(url, {
                     viewportSize:{width:480 },
                     callback: cb,
